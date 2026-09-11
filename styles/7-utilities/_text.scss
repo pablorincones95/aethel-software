@@ -1,0 +1,29 @@
+// ═══════════════════════════════════════════════════════
+// Utilities Layer: Text
+// ═══════════════════════════════════════════════════════
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.text-primary { color: var(--ae-primary-container); }
+.text-secondary { color: var(--ae-secondary); }
+.text-muted { color: var(--ae-text-muted); }
+.text-ice { color: var(--ae-text-ice); }
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.text-tabular {
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,50 @@
+// ═══════════════════════════════════════════════════════
+// Objects Layer: Grid
+// ═══════════════════════════════════════════════════════
+
+@use '../0-config/scss-variables' as *;
+
+.grid {
+  display: grid;
+  gap: var(--ae-gutter-sm);
+
+  @media (min-width: $breakpoint-md) {
+    gap: var(--ae-gutter);
+  }
+
+  @media (min-width: $breakpoint-xl) {
+    gap: var(--ae-gutter-lg);
+  }
+
+  &--2 {
+    grid-template-columns: repeat(1, 1fr);
+
+    @media (min-width: $breakpoint-md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &--3 {
+    grid-template-columns: repeat(1, 1fr);
+
+    @media (min-width: $breakpoint-md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: $breakpoint-xl) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &--4 {
+    grid-template-columns: repeat(1, 1fr);
+
+    @media (min-width: $breakpoint-md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: $breakpoint-xl) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}

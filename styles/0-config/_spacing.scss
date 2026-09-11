@@ -1,0 +1,27 @@
+// ═══════════════════════════════════════════════════════
+// AETHEL SOFTWARE — Precision Engineering Atelier
+// Config Layer: Spacing Tokens (4px grid)
+// ═══════════════════════════════════════════════════════
+
+// ── Base Unit ──
+$space-unit: 4px;
+
+// ── Scale ──
+$space-xs: $space-unit * 1;   // 4px
+$space-sm: $space-unit * 2;   // 8px
+$space-md: $space-unit * 3;   // 12px
+$space-base: $space-unit * 4; // 16px
+$space-lg: $space-unit * 6;   // 24px
+$space-xl: $space-unit * 8;   // 32px
+$space-2xl: $space-unit * 10; // 40px
+$space-3xl: $space-unit * 12; // 48px
+
+// ── Gutter ──
+$gutter-sm: 1rem;   // 16px
+$gutter: 1.5rem;    // 24px
+$gutter-lg: 2rem;   // 32px
+
+// ── Margin ──
+$margin: 2rem;         // 32px
+$margin-mobile: 1.25rem; // 20px
+$margin-desktop: 4rem;   // 64px

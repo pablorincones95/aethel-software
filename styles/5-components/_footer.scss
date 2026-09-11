@@ -1,0 +1,98 @@
+// ═══════════════════════════════════════════════════════
+// Components Layer: Footer
+// ═══════════════════════════════════════════════════════
+
+@use '../0-config/scss-variables' as *;
+
+.footer {
+  border-top: 1px solid var(--ae-border-subtle);
+  background-color: var(--ae-surface-abyssal);
+  padding: var(--ae-space-3xl) 0;
+
+  &__inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 var(--ae-margin-mobile);
+
+    @media (min-width: $breakpoint-xl) {
+      padding: 0 var(--ae-margin-desktop);
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--ae-gutter);
+    margin-bottom: var(--ae-space-3xl);
+
+    @media (min-width: $breakpoint-md) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__brand {
+    @media (min-width: $breakpoint-md) {
+      grid-column: 1 / 2;
+    }
+  }
+
+  &__brand-name {
+    font-family: var(--ae-font-display);
+    font-size: 16px;
+    font-weight: $font-weight-semibold;
+    color: var(--ae-text-ice);
+    margin-bottom: var(--ae-space-sm);
+  }
+
+  &__brand-desc {
+    font-size: 12px;
+    color: var(--ae-text-muted);
+    max-width: 320px;
+  }
+
+  &__column-title {
+    font-family: var(--ae-font-display);
+    font-size: 11px;
+    font-weight: $font-weight-semibold;
+    line-height: 16px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ae-text-muted);
+    margin-bottom: var(--ae-space-base);
+  }
+
+  &__link {
+    display: block;
+    font-size: 12px;
+    color: var(--ae-on-surface-variant);
+    transition: color 200ms ease;
+
+    &:hover {
+      color: var(--ae-primary-container);
+    }
+  }
+
+  &__bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ae-space-sm);
+    padding-top: var(--ae-gutter);
+    border-top: 1px solid var(--ae-border-subtle);
+
+    @media (min-width: $breakpoint-md) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  &__copyright {
+    font-size: 12px;
+    color: var(--ae-text-muted);
+  }
+
+  &__legal {
+    display: flex;
+    gap: var(--ae-gutter);
+  }
+}

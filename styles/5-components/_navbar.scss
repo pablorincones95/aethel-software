@@ -1,0 +1,87 @@
+// ═══════════════════════════════════════════════════════
+// Components Layer: Navbar
+// ═══════════════════════════════════════════════════════
+
+@use '../0-config/scss-variables' as *;
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background-color: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--ae-border-subtle);
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 var(--ae-margin-mobile);
+    height: 72px;
+
+    @media (min-width: $breakpoint-xl) {
+      padding: 0 var(--ae-margin-desktop);
+    }
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--ae-space-sm);
+    font-family: var(--ae-font-display);
+    font-size: 16px;
+    font-weight: $font-weight-semibold;
+    color: var(--ae-text-ice);
+  }
+
+  &__logo-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: var(--ae-primary-container);
+    border-radius: var(--ae-radius-default);
+    font-weight: $font-weight-bold;
+    font-size: 14px;
+    color: var(--ae-on-primary);
+  }
+
+  &__nav {
+    display: none;
+    align-items: center;
+    gap: var(--ae-gutter);
+
+    @media (min-width: $breakpoint-lg) {
+      display: flex;
+    }
+  }
+
+  &__link {
+    font-family: var(--ae-font-display);
+    font-size: 11px;
+    font-weight: $font-weight-semibold;
+    line-height: 16px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ae-text-muted);
+    transition: color 200ms ease;
+
+    &:hover {
+      color: var(--ae-primary-container);
+    }
+  }
+
+  &__cta {
+    display: none;
+
+    @media (min-width: $breakpoint-lg) {
+      display: inline-flex;
+    }
+  }
+}

@@ -1,0 +1,54 @@
+// ═══════════════════════════════════════════════════════
+// Components Layer: Blueprint Divider
+// ═══════════════════════════════════════════════════════
+
+.blueprint-divider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+
+  &__line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--ae-border-gold) 20%,
+      var(--ae-border-gold) 50%,
+      var(--ae-border-gold) 80%,
+      transparent 100%
+    );
+  }
+
+  &__node {
+    position: relative;
+    z-index: 1;
+    width: 8px;
+    height: 8px;
+    background-color: var(--ae-secondary);
+    transform: rotate(45deg);
+    box-shadow: 0 0 12px rgba(226, 201, 116, 0.3);
+  }
+
+  &__node--sm {
+    width: 4px;
+    height: 4px;
+    background-color: var(--ae-outline);
+    box-shadow: none;
+  }
+
+  &__node--left {
+    position: absolute;
+    left: 30%;
+  }
+
+  &__node--right {
+    position: absolute;
+    right: 30%;
+  }
+}

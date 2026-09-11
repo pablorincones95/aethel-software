@@ -1,0 +1,29 @@
+// ═══════════════════════════════════════════════════════
+// Elements Layer: Links
+// ═══════════════════════════════════════════════════════
+
+a {
+  transition: color 200ms ease;
+
+  &:hover {
+    color: var(--ae-primary-container);
+  }
+}
+
+.link {
+  color: var(--ae-primary-container);
+  text-decoration: none;
+  transition: color 200ms ease, opacity 200ms ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &--gold {
+    color: var(--ae-secondary);
+
+    &:hover {
+      color: var(--ae-on-secondary-container);
+    }
+  }
+}

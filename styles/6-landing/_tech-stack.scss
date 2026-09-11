@@ -1,0 +1,95 @@
+// ═══════════════════════════════════════════════════════
+// Landing Layer: Tech Stack Section
+// ═══════════════════════════════════════════════════════
+
+@use '../0-config/scss-variables' as *;
+
+.tech-stack {
+  padding: var(--ae-space-3xl) 0;
+
+  &__inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 var(--ae-margin-mobile);
+
+    @media (min-width: $breakpoint-xl) {
+      padding: 0 var(--ae-margin-desktop);
+    }
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: var(--ae-space-3xl);
+  }
+
+  &__label {
+    font-family: var(--ae-font-display);
+    font-size: 11px;
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ae-primary-container);
+    margin-bottom: var(--ae-space-sm);
+    display: block;
+  }
+
+  &__title {
+    font-family: var(--ae-font-display);
+    font-size: clamp(24px, 4vw, 32px);
+    font-weight: $font-weight-semibold;
+    line-height: 1.25;
+    color: var(--ae-text-ice);
+    margin-bottom: var(--ae-space-sm);
+  }
+
+  &__subtitle {
+    font-size: 16px;
+    line-height: 26px;
+    color: var(--ae-text-muted);
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--ae-gutter-sm);
+
+    @media (min-width: $breakpoint-md) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: $breakpoint-xl) {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ae-space-sm);
+    padding: var(--ae-gutter);
+    border-radius: var(--ae-radius-lg);
+    border: 1px solid var(--ae-border-subtle);
+    background-color: rgba(17, 24, 39, 0.4);
+    transition: border-color 200ms ease, background-color 200ms ease;
+
+    &:hover {
+      border-color: var(--ae-border-active);
+      background-color: rgba(0, 229, 255, 0.04);
+    }
+  }
+
+  &__item-icon {
+    width: 40px;
+    height: 40px;
+    color: var(--ae-primary-container);
+  }
+
+  &__item-name {
+    font-family: var(--ae-font-display);
+    font-size: 12px;
+    font-weight: $font-weight-medium;
+    color: var(--ae-text-ice);
+    text-align: center;
+  }
+}

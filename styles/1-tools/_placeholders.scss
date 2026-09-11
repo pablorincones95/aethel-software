@@ -1,0 +1,77 @@
+// ═══════════════════════════════════════════════════════
+// AETHEL SOFTWARE — Precision Engineering Atelier
+// Tools Layer: Placeholder Selectors (%)
+// ═══════════════════════════════════════════════════════
+
+// ── Elevation Layers ──
+%elevation-0 {
+  background-color: $color-canvas-void;
+}
+
+%elevation-1 {
+  background-color: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid $color-border-subtle;
+}
+
+%elevation-2 {
+  background-color: rgba(17, 24, 39, 0.9);
+  border: 1px solid $color-border-subtle;
+}
+
+%elevation-3 {
+  background-color: rgba(9, 13, 22, 0.96);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+// ── Label Caps Base ──
+%label-caps {
+  font-family: $font-display;
+  font-size: $font-size-label-caps;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-label-caps;
+  letter-spacing: $letter-spacing-label-caps;
+  text-transform: uppercase;
+}
+
+// ── Base Typography ──
+%text-display-xl {
+  font-family: $font-display;
+  font-size: $font-size-display-xl;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-display-xl;
+  letter-spacing: $letter-spacing-display-xl;
+}
+
+%text-headline-lg {
+  font-family: $font-display;
+  font-size: $font-size-headline-lg;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-headline-lg;
+  letter-spacing: $letter-spacing-headline-lg;
+}
+
+%text-headline-md {
+  font-family: $font-display;
+  font-size: $font-size-headline-md;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-headline-md;
+  letter-spacing: $letter-spacing-headline-md;
+}
+
+%text-body-lg {
+  font-family: $font-body;
+  font-size: $font-size-body-lg;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-body-lg;
+  letter-spacing: $letter-spacing-body-lg;
+}
+
+%text-body-md {
+  font-family: $font-body;
+  font-size: $font-size-body-md;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-body-md;
+  letter-spacing: $letter-spacing-body-md;
+}

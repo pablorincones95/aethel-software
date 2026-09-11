@@ -1,0 +1,36 @@
+// ═══════════════════════════════════════════════════════
+// Elements Layer: Forms
+// ═══════════════════════════════════════════════════════
+
+input, textarea, select {
+  background-color: var(--ae-surface-abyssal);
+  border: 1px solid var(--ae-border-subtle);
+  border-radius: var(--ae-radius-default);
+  padding: var(--ae-space-sm) var(--ae-space-base);
+  font-size: 14px;
+  color: var(--ae-text-ice);
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+
+  &::placeholder {
+    color: var(--ae-text-muted);
+    opacity: 0.5;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--ae-primary-container);
+    box-shadow: 0 0 0 1px var(--ae-primary-container);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+label {
+  font-family: var(--ae-font-display);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ae-text-ice);
+}

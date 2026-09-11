@@ -1,0 +1,108 @@
+// ═══════════════════════════════════════════════════════
+// Landing Layer: Services Section
+// ═══════════════════════════════════════════════════════
+
+@use '../0-config/scss-variables' as *;
+
+.services {
+  padding: var(--ae-space-3xl) 0;
+
+  &__inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 var(--ae-margin-mobile);
+
+    @media (min-width: $breakpoint-xl) {
+      padding: 0 var(--ae-margin-desktop);
+    }
+  }
+
+  &__header {
+    margin-bottom: var(--ae-space-3xl);
+    max-width: 600px;
+  }
+
+  &__label {
+    font-family: var(--ae-font-display);
+    font-size: 11px;
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ae-secondary);
+    margin-bottom: var(--ae-space-sm);
+    display: block;
+  }
+
+  &__title {
+    font-family: var(--ae-font-display);
+    font-size: clamp(24px, 4vw, 32px);
+    font-weight: $font-weight-semibold;
+    line-height: 1.25;
+    color: var(--ae-text-ice);
+    margin-bottom: var(--ae-space-sm);
+  }
+
+  &__subtitle {
+    font-size: 16px;
+    line-height: 26px;
+    color: var(--ae-text-muted);
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--ae-gutter);
+
+    @media (min-width: $breakpoint-md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: $breakpoint-xl) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__card {
+    background-color: rgba(17, 24, 39, 0.7);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--ae-border-subtle);
+    border-radius: var(--ae-radius-lg);
+    padding: var(--ae-space-xl);
+    transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      border-color: var(--ae-border-active);
+      box-shadow: 0 0 24px -4px rgba(0, 229, 255, 0.15);
+    }
+  }
+
+  &__card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: var(--ae-space-base);
+    background-color: rgba(0, 229, 255, 0.08);
+    border: 1px solid var(--ae-border-active);
+    border-radius: var(--ae-radius-default);
+    color: var(--ae-primary-container);
+  }
+
+  &__card-title {
+    font-family: var(--ae-font-display);
+    font-size: 16px;
+    font-weight: $font-weight-semibold;
+    line-height: 24px;
+    letter-spacing: 0.04em;
+    color: var(--ae-text-ice);
+    margin-bottom: var(--ae-space-sm);
+  }
+
+  &__card-desc {
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--ae-on-surface-variant);
+  }
+}
