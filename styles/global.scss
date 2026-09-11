@@ -1,0 +1,45 @@
+// ═══════════════════════════════════════════════════════
+// AETHEL SOFTWARE — Precision Engineering Atelier
+// Master SCSS Import (ITCSS Order)
+//
+// Design tokens are exposed as CSS custom properties
+// in 0-config/_css-variables.scss via :root {}
+// This makes them available everywhere without @use
+// scoping issues. SCSS variables ($var) are only
+// available within the same file or imported files.
+// ═══════════════════════════════════════════════════════
+
+// ── 1. Config (CSS Variables — global tokens) ──
+@use '0-config/css-variables';
+
+// ── 2. Generic (Reset — lowest specificity) ──
+@use '2-generic/reset';
+@use '2-generic/scrollbar';
+
+// ── 3. Elements (Bare HTML element styling) ──
+@use '3-elements/headings';
+@use '3-elements/links';
+@use '3-elements/forms';
+
+// ── 4. Objects (Layout patterns) ──
+@use '4-objects/container';
+@use '4-objects/grid';
+@use '4-objects/wrapper';
+
+// ── 5. Components (Global UI components) ──
+@use '5-components/navbar';
+@use '5-components/footer';
+@use '5-components/blueprint-divider';
+
+// ── 6. Landing (Section-specific styles) ──
+@use '6-landing/hero';
+@use '6-landing/services';
+@use '6-landing/tech-stack';
+@use '6-landing/process';
+@use '6-landing/portfolio';
+@use '6-landing/value-proposition';
+@use '6-landing/contact';
+
+// ── 7. Utilities (Helper classes) ──
+@use '7-utilities/text';
+@use '7-utilities/visibility';

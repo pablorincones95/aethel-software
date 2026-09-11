@@ -1,0 +1,95 @@
+// ═══════════════════════════════════════════════════════
+// AETHEL SOFTWARE — Precision Engineering Atelier
+// Config Layer: CSS Custom Properties (Global Tokens)
+//
+// These are exposed as CSS variables in :root {},
+// making them available to ALL SCSS files via var().
+// SCSS variables ($var) remain local to each file.
+// ═══════════════════════════════════════════════════════
+
+:root {
+  // ── Canvas & Substrates ──
+  --ae-canvas-void: #030712;
+  --ae-surface-abyssal: #090D16;
+  --ae-surface-architectural: #111827;
+  --ae-surface: #0e131f;
+  --ae-surface-bright: #343946;
+  --ae-surface-variant: #2f3542;
+  --ae-surface-container-lowest: #080e1a;
+  --ae-surface-container-low: #161c28;
+  --ae-surface-container: #1a202c;
+  --ae-surface-container-high: #242a36;
+  --ae-surface-container-highest: #2f3542;
+
+  // ── Primary: Electric Cyan ──
+  --ae-primary: #c3f5ff;
+  --ae-primary-container: #00e5ff;
+  --ae-on-primary: #00363d;
+  --ae-on-primary-container: #00626e;
+  --ae-inverse-primary: #006875;
+  --ae-primary-fixed: #9cf0ff;
+  --ae-primary-fixed-dim: #00daf3;
+
+  // ── Secondary: Champagne Gold ──
+  --ae-secondary: #dec571;
+  --ae-secondary-container: #5d4c00;
+  --ae-on-secondary: #3b2f00;
+  --ae-on-secondary-container: #d6be6a;
+
+  // ── Tertiary ──
+  --ae-tertiary: #cdf3ff;
+  --ae-tertiary-container: #60e1ff;
+  --ae-on-tertiary: #003640;
+  --ae-on-tertiary-container: #006273;
+
+  // ── Error ──
+  --ae-error: #ffb4ab;
+  --ae-error-container: #93000a;
+  --ae-on-error: #690005;
+  --ae-on-error-container: #ffdad6;
+
+  // ── Text ──
+  --ae-text-ice: #F8FAFC;
+  --ae-text-muted: #94A3B8;
+  --ae-on-surface: #dde2f3;
+  --ae-on-surface-variant: #bac9cc;
+
+  // ── Borders ──
+  --ae-border-subtle: rgba(255, 255, 255, 0.08);
+  --ae-border-active: rgba(0, 229, 255, 0.45);
+  --ae-border-gold: rgba(226, 201, 116, 0.4);
+  --ae-outline: #849396;
+
+  // ── Spacing (4px grid) ──
+  --ae-space-xs: 4px;
+  --ae-space-sm: 8px;
+  --ae-space-md: 12px;
+  --ae-space-base: 16px;
+  --ae-space-lg: 24px;
+  --ae-space-xl: 32px;
+  --ae-space-2xl: 40px;
+  --ae-space-3xl: 48px;
+
+  // ── Gutter ──
+  --ae-gutter-sm: 1rem;
+  --ae-gutter: 1.5rem;
+  --ae-gutter-lg: 2rem;
+
+  // ── Margin ──
+  --ae-margin-mobile: 1.25rem;
+  --ae-margin: 2rem;
+  --ae-margin-desktop: 4rem;
+
+  // ── Border Radius ──
+  --ae-radius-sm: 0.125rem;
+  --ae-radius-default: 0.25rem;
+  --ae-radius-md: 0.375rem;
+  --ae-radius-lg: 0.5rem;
+  --ae-radius-xl: 0.75rem;
+  --ae-radius-2xl: 1rem;
+  --ae-radius-full: 9999px;
+
+  // ── Typography ──
+  --ae-font-display: 'Space Grotesk', sans-serif;
+  --ae-font-body: 'Hanken Grotesk', sans-serif;
+}

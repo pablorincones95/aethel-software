@@ -1,0 +1,70 @@
+// ═══════════════════════════════════════════════════════
+// AETHEL SOFTWARE — Precision Engineering Atelier
+// Config Layer: Color Tokens
+// ═══════════════════════════════════════════════════════
+
+// ── Canvas & Substrates ──
+$color-canvas-void: #030712;
+$color-surface-abyssal: #090D16;
+$color-surface-architectural: #111827;
+$color-surface: #0e131f;
+$color-surface-dim: #0e131f;
+$color-surface-bright: #343946;
+$color-surface-variant: #2f3542;
+
+// ── Surface Containers ──
+$color-surface-container-lowest: #080e1a;
+$color-surface-container-low: #161c28;
+$color-surface-container: #1a202c;
+$color-surface-container-high: #242a36;
+$color-surface-container-highest: #2f3542;
+
+// ── Primary: Electric Cyan ──
+$color-primary: #c3f5ff;
+$color-primary-container: #00e5ff;
+$color-on-primary: #00363d;
+$color-on-primary-container: #00626e;
+$color-inverse-primary: #006875;
+$color-primary-fixed: #9cf0ff;
+$color-primary-fixed-dim: #00daf3;
+
+// ── Secondary: Champagne Gold ──
+$color-secondary: #dec571;
+$color-secondary-container: #5d4c00;
+$color-on-secondary: #3b2f00;
+$color-on-secondary-container: #d6be6a;
+
+// ── Tertiary ──
+$color-tertiary: #cdf3ff;
+$color-tertiary-container: #60e1ff;
+$color-on-tertiary: #003640;
+$color-on-tertiary-container: #006273;
+
+// ── Error ──
+$color-error: #ffb4ab;
+$color-error-container: #93000a;
+$color-on-error: #690005;
+$color-on-error-container: #ffdad6;
+
+// ── Text ──
+$color-text-ice: #F8FAFC;
+$color-text-muted: #94A3B8;
+
+// ── Surface Text ──
+$color-on-surface: #dde2f3;
+$color-on-surface-variant: #bac9cc;
+$color-on-background: #dde2f3;
+$color-inverse-surface: #dde2f3;
+$color-inverse-on-surface: #2b303d;
+
+// ── Borders ──
+$color-border-subtle: rgba(255, 255, 255, 0.08);
+$color-border-active: rgba(0, 229, 255, 0.45);
+$color-border-gold: rgba(226, 201, 116, 0.4);
+$color-outline: #849396;
+$color-outline-variant: #3b494c;
+$color-surface-tint: #00daf3;
+
+// ── Semantic Aliases ──
+$color-success: #22c55e;
+$color-warning: #f59e0b;

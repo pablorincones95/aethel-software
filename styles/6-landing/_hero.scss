@@ -1,0 +1,94 @@
+// ═══════════════════════════════════════════════════════
+// Landing Layer: Hero Section
+// ═══════════════════════════════════════════════════════
+
+@use '../0-config/scss-variables' as *;
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: 72px;
+
+  &__inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 var(--ae-margin-mobile);
+    width: 100%;
+
+    @media (min-width: $breakpoint-xl) {
+      padding: 0 var(--ae-margin-desktop);
+    }
+  }
+
+  &__content {
+    max-width: 800px;
+  }
+
+  &__label {
+    font-family: var(--ae-font-display);
+    font-size: 11px;
+    font-weight: $font-weight-semibold;
+    line-height: 16px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ae-primary-container);
+    margin-bottom: var(--ae-gutter);
+    display: block;
+  }
+
+  &__title {
+    font-family: var(--ae-font-display);
+    font-size: clamp(36px, 8vw, 56px);
+    font-weight: $font-weight-bold;
+    line-height: 1.14;
+    letter-spacing: -0.02em;
+    color: var(--ae-text-ice);
+    margin-bottom: var(--ae-gutter);
+  }
+
+  &__subtitle {
+    font-family: var(--ae-font-body);
+    font-size: 16px;
+    line-height: 26px;
+    color: var(--ae-text-muted);
+    margin-bottom: var(--ae-space-2xl);
+    max-width: 600px;
+  }
+
+  &__metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--ae-gutter);
+
+    @media (min-width: $breakpoint-md) {
+      gap: var(--ae-gutter-lg);
+    }
+  }
+
+  &__metric {
+    text-align: left;
+  }
+
+  &__metric-value {
+    font-family: var(--ae-font-display);
+    font-size: clamp(24px, 4vw, 32px);
+    font-weight: $font-weight-bold;
+    line-height: 1.25;
+    color: var(--ae-primary-container);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: var(--ae-space-xs);
+  }
+
+  &__metric-label {
+    font-family: var(--ae-font-display);
+    font-size: 11px;
+    font-weight: $font-weight-semibold;
+    line-height: 16px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ae-text-muted);
+  }
+}

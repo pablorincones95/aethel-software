@@ -1,0 +1,26 @@
+// ═══════════════════════════════════════════════════════
+// Generic Layer: Custom Scrollbar
+// ═══════════════════════════════════════════════════════
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ae-surface-abyssal);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ae-surface-container-high);
+  border-radius: var(--ae-radius-full);
+
+  &:hover {
+    background: var(--ae-surface-bright);
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ae-surface-container-high) var(--ae-surface-abyssal);
+}

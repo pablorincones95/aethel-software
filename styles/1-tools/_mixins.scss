@@ -1,0 +1,122 @@
+// ═══════════════════════════════════════════════════════
+// AETHEL SOFTWARE — Precision Engineering Atelier
+// Tools Layer: Mixins
+// ═══════════════════════════════════════════════════════
+
+// ── Responsive Breakpoints ──
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == sm {
+    @media (min-width: $breakpoint-sm) { @content; }
+  } @else if $breakpoint == md {
+    @media (min-width: $breakpoint-md) { @content; }
+  } @else if $breakpoint == lg {
+    @media (min-width: $breakpoint-lg) { @content; }
+  } @else if $breakpoint == xl {
+    @media (min-width: $breakpoint-xl) { @content; }
+  } @else if $breakpoint == 2xl {
+    @media (min-width: $breakpoint-2xl) { @content; }
+  }
+}
+
+// ── Truncate Text ──
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+// ── Visually Hidden (Accessibility) ──
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+// ── Transition Helper ──
+@mixin transition($properties: all, $duration: $duration-normal, $easing: $ease-default) {
+  transition: $properties $duration $easing;
+}
+
+// ── Glassmorphism ──
+@mixin glass {
+  background-color: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid $color-border-subtle;
+}
+
+@mixin glass-dense {
+  background-color: rgba(9, 13, 22, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+// ── Glow Effects ──
+@mixin glow-cyan {
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.35);
+}
+
+@mixin glow-cyan-subtle {
+  box-shadow: 0 0 24px -4px rgba(0, 229, 255, 0.15);
+}
+
+@mixin glow-gold {
+  box-shadow: 0 0 16px rgba(226, 201, 116, 0.3);
+}
+
+@mixin glow-gold-subtle {
+  box-shadow: 0 0 24px -4px rgba(226, 201, 116, 0.12);
+}
+
+// ── Focus Ring ──
+@mixin focus-ring {
+  outline: none;
+  box-shadow: 0 0 0 2px $color-canvas-void, 0 0 0 4px $color-primary-container;
+}
+
+// ── Hairline Border ──
+@mixin hairline {
+  border: 1px solid $color-border-subtle;
+}
+
+@mixin hairline-gold {
+  border: 1px solid $color-border-gold;
+}
+
+// ── Tabular Numerals ──
+@mixin tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+// ── Grid Architectural ──
+@mixin grid-architectural {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $gutter-sm;
+  max-width: $content-max-width;
+  margin: 0 auto;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(8, 1fr);
+    gap: $gutter;
+  }
+
+  @include respond-to(xl) {
+    grid-template-columns: repeat(12, 1fr);
+    gap: $gutter-lg;
+  }
+}

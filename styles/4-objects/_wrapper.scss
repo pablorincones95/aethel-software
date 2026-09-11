@@ -1,0 +1,23 @@
+// ═══════════════════════════════════════════════════════
+// Objects Layer: Wrapper
+// ═══════════════════════════════════════════════════════
+
+.wrapper {
+  padding-top: var(--ae-space-3xl);
+  padding-bottom: var(--ae-space-3xl);
+
+  @media (min-width: 1280px) {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  &--sm {
+    padding-top: var(--ae-space-xl);
+    padding-bottom: var(--ae-space-xl);
+  }
+
+  &--lg {
+    padding-top: 96px;
+    padding-bottom: 96px;
+  }
+}

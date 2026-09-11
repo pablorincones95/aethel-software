@@ -1,0 +1,14 @@
+// ═══════════════════════════════════════════════════════
+// AETHEL SOFTWARE — Precision Engineering Atelier
+// Tools Layer: Functions
+// ═══════════════════════════════════════════════════════
+
+// ── Spacing Calculator ──
+@function space($multiplier) {
+  @return $space-unit * $multiplier;
+}
+
+// ── Opacity Helper ──
+@function with-opacity($color, $opacity) {
+  @return rgba($color, $opacity);
+}
