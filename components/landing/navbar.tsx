@@ -13,7 +13,11 @@ export function Navbar() {
     <nav className="navbar">
       <div className="navbar__inner">
         <Link href="/" className="navbar__logo">
-          <div className="navbar__logo-mark">A</div>
+          <img
+            alt="Aethel Software Logo"
+            src="/aethel-logo.svg"
+            className="h-8 w-auto object-contain"
+          />
           <span>Aethel</span>
         </Link>
 
