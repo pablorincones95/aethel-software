@@ -9,12 +9,7 @@ export async function middleware(request: NextRequest) {
 
   // Skip Supabase auth if credentials are not configured
   if (!supabaseUrl || !supabaseKey) {
-    // Protect admin routes without Supabase — redirect to home
-    if (request.nextUrl.pathname.startsWith("/admin")) {
-      const url = request.nextUrl.clone()
-      url.pathname = "/"
-      return NextResponse.redirect(url)
-    }
+    // Allow admin routes without Supabase for preview
     return supabaseResponse
   }
 

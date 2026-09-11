@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
+import { Toaster } from "sonner"
+import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css"
-import "@/styles/global.scss"
 
 export const metadata: Metadata = {
   title: "Aethel Software — Precision Engineering Atelier",
@@ -30,9 +31,17 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className="min-h-screen bg-canvas-void text-on-surface antialiased">
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className="min-h-screen bg-background text-foreground antialiased">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <Toaster position="bottom-right" />
+        </ThemeProvider>
       </body>
     </html>
   )

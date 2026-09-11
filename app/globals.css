@@ -2,8 +2,9 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════
-   AETHEL SOFTWARE — Tailwind CSS v4 Config (Admin Panel Only)
-   Landing page styles are in styles/global.scss (SCSS Modules)
+   AETHEL SOFTWARE — Tailwind CSS v4 Config
+   Admin: standard shadcn/ui dark theme
+   Landing: uses aethel-* custom variables via SCSS
    ═══════════════════════════════════════════════════════════════ */
 
 @custom-variant dark (&:is(.dark *));
@@ -13,104 +14,176 @@
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'Hanken Grotesk', sans-serif;
 
-  /* ── Surface Colors ── */
-  --color-canvas-void: #030712;
-  --color-surface-abyssal: #090D16;
-  --color-surface-architectural: #111827;
-  --color-surface: #0e131f;
-  --color-surface-dim: #0e131f;
-  --color-surface-bright: #343946;
-  --color-surface-variant: #2f3542;
-  --color-surface-container-lowest: #080e1a;
-  --color-surface-container-low: #161c28;
-  --color-surface-container: #1a202c;
-  --color-surface-container-high: #242a36;
-  --color-surface-container-highest: #2f3542;
-
-  /* ── Primary (Electric Cyan) ── */
-  --color-primary: #c3f5ff;
-  --color-primary-container: #00e5ff;
-  --color-on-primary: #00363d;
-  --color-on-primary-container: #00626e;
-  --color-inverse-primary: #006875;
-  --color-primary-fixed: #9cf0ff;
-  --color-primary-fixed-dim: #00daf3;
-
-  /* ── Secondary (Champagne Gold) ── */
-  --color-secondary: #dec571;
-  --color-secondary-container: #5d4c00;
-  --color-on-secondary: #3b2f00;
-  --color-on-secondary-container: #d6be6a;
-
-  /* ── Tertiary ── */
-  --color-tertiary: #cdf3ff;
-  --color-tertiary-container: #60e1ff;
-  --color-on-tertiary: #003640;
-  --color-on-tertiary-container: #006273;
-
-  /* ── Error ── */
-  --color-error: #ffb4ab;
-  --color-error-container: #93000a;
-  --color-on-error: #690005;
-  --color-on-error-container: #ffdad6;
-
-  /* ── Text & Surface ── */
-  --color-text-ice: #F8FAFC;
-  --color-text-muted: #94A3B8;
-  --color-on-surface: #dde2f3;
-  --color-on-surface-variant: #bac9cc;
-  --color-on-background: #dde2f3;
-  --color-inverse-surface: #dde2f3;
-  --color-inverse-on-surface: #2b303d;
-
-  /* ── Borders ── */
-  --color-border-subtle: rgba(255, 255, 255, 0.08);
-  --color-border-active: rgba(0, 229, 255, 0.45);
-  --color-border-gold: rgba(226, 201, 116, 0.4);
-  --color-outline: #849396;
-  --color-outline-variant: #3b494c;
-  --color-surface-tint: #00daf3;
-
-  /* ── Semantic (shadcn/ui) ── */
-  --color-background: var(--surface);
-  --color-foreground: var(--color-on-surface);
-  --color-card: var(--color-surface-architectural);
-  --color-card-foreground: var(--color-on-surface);
-  --color-popover: var(--color-surface-container);
-  --color-popover-foreground: var(--color-on-surface);
-  --color-muted: var(--color-surface-container-high);
-  --color-muted-foreground: var(--color-text-muted);
-  --color-accent: var(--color-surface-container-high);
-  --color-accent-foreground: var(--color-on-surface);
-  --color-destructive: var(--color-error);
-  --color-border: var(--color-border-subtle);
-  --color-input: var(--color-surface-abyssal);
-  --color-ring: var(--color-primary-container);
+  /* ── shadcn/ui Semantic Tokens ── */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 
   /* ── Radius ── */
-  --radius-sm: 0.125rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-2xl: 1rem;
-  --radius-3xl: 1.5rem;
-  --radius-4xl: 2rem;
-  --radius: 0.25rem;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 
-  /* ── Chart Colors ── */
-  --color-chart-1: #00e5ff;
-  --color-chart-2: #dec571;
-  --color-chart-3: #60e1ff;
-  --color-chart-4: #9cf0ff;
-  --color-chart-5: #d6be6a;
+  /* ── Aethel Custom Colors (Landing Page) ── */
+  --color-aethel-canvas-void: #030712;
+  --color-aethel-surface-abyssal: #090D16;
+  --color-aethel-surface-architectural: #111827;
+  --color-aethel-surface: #0e131f;
+  --color-aethel-surface-dim: #0e131f;
+  --color-aethel-surface-bright: #343946;
+  --color-aethel-surface-variant: #2f3542;
+  --color-aethel-surface-container-lowest: #080e1a;
+  --color-aethel-surface-container-low: #161c28;
+  --color-aethel-surface-container: #1a202c;
+  --color-aethel-surface-container-high: #242a36;
+  --color-aethel-surface-container-highest: #2f3542;
+  --color-aethel-primary: #c3f5ff;
+  --color-aethel-primary-container: #00e5ff;
+  --color-aethel-on-primary: #00363d;
+  --color-aethel-on-primary-container: #00626e;
+  --color-aethel-inverse-primary: #006875;
+  --color-aethel-primary-fixed: #9cf0ff;
+  --color-aethel-primary-fixed-dim: #00daf3;
+  --color-aethel-secondary: #dec571;
+  --color-aethel-secondary-container: #5d4c00;
+  --color-aethel-on-secondary: #3b2f00;
+  --color-aethel-on-secondary-container: #d6be6a;
+  --color-aethel-tertiary: #cdf3ff;
+  --color-aethel-tertiary-container: #60e1ff;
+  --color-aethel-on-tertiary: #003640;
+  --color-aethel-on-tertiary-container: #006273;
+  --color-aethel-error: #ffb4ab;
+  --color-aethel-error-container: #93000a;
+  --color-aethel-on-error: #690005;
+  --color-aethel-on-error-container: #ffdad6;
+  --color-aethel-text-ice: #F8FAFC;
+  --color-aethel-text-muted: #94A3B8;
+  --color-aethel-on-surface: #dde2f3;
+  --color-aethel-on-surface-variant: #bac9cc;
+  --color-aethel-on-background: #dde2f3;
+  --color-aethel-inverse-surface: #dde2f3;
+  --color-aethel-inverse-on-surface: #2b303d;
+  --color-aethel-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-aethel-border-active: rgba(0, 229, 255, 0.45);
+  --color-aethel-border-gold: rgba(226, 201, 116, 0.4);
+  --color-aethel-outline: #849396;
+  --color-aethel-outline-variant: #3b494c;
+  --color-aethel-surface-tint: #00daf3;
+  --color-aethel-chart-1: #00e5ff;
+  --color-aethel-chart-2: #dec571;
+  --color-aethel-chart-3: #60e1ff;
+  --color-aethel-chart-4: #9cf0ff;
+  --color-aethel-chart-5: #d6be6a;
+}
 
-  /* ── Sidebar ── */
-  --color-sidebar: var(--color-surface-container-low);
-  --color-sidebar-foreground: var(--color-on-surface);
-  --color-sidebar-primary: var(--color-primary-container);
-  --color-sidebar-primary-foreground: var(--color-on-primary);
-  --color-sidebar-accent: var(--color-surface-container-high);
-  --color-sidebar-accent-foreground: var(--color-on-surface);
-  --color-sidebar-border: var(--color-border-subtle);
-  --color-sidebar-ring: var(--color-primary-container);
+/* ── shadcn/ui Standard Dark Theme ── */
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
 }
