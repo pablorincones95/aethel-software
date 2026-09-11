@@ -1,5 +1,3 @@
-import Image from "next/image"
-
 const footerLinks = {
   platform: [
     "Servicios de Ingeniería",
@@ -35,11 +33,9 @@ export function Footer() {
           {/* Brand Column */}
           <div className="footer__brand">
             <div className="flex items-center gap-2 mb-4">
-              <Image
+              <img
                 alt="Aethel Software Logo"
-                src="https://lh3.googleusercontent.com/aida/AEtjO1W3eocXKIKrP8oarkuAjpvN-2c1WTDT5Wz8PjJp4IZNd4Ra_eTkxhVbvpJW_ybEJGFsUf-kbGlaWo17TU9Mw3XIWx-_OGIuwqecKYLQx3nyKPVhT7rtbxwsfylCcAZ-Bavn32vmUmk8h731nXY-AFAJ3XikN16gq8xASpKRTDvxJLBk63BoJP9RoN385fJuRzy3Shx1bz0AGRxmztloblQufTo9qwTgbGjekLtptSq1g3-gQau0XS6okw"
-                width={24}
-                height={24}
+                src="/aethel-logo.svg"
                 className="h-6 w-auto object-contain"
               />
               <span className="font-[family-name:var(--font-display)] text-sm font-semibold tracking-wider uppercase text-[#F8FAFC]">

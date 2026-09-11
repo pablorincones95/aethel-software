@@ -1,4 +1,3 @@
-import Image from "next/image"
 import {
   ArrowForward,
   Schema,
@@ -76,13 +75,10 @@ export function Hero() {
             </div>
 
             <div className="hero__monogram">
-              <Image
+              <img
                 alt="Aethel Architecture Core Node Emblem"
-                src="https://lh3.googleusercontent.com/aida/AEtjO1W3eocXKIKrP8oarkuAjpvN-2c1WTDT5Wz8PjJp4IZNd4Ra_eTkxhVbvpJW_ybEJGFsUf-kbGlaWo17TU9Mw3XIWx-_OGIuwqecKYLQx3nyKPVhT7rtbxwsfylCcAZ-Bavn32vmUmk8h731nXY-AFAJ3XikN16gq8xASpKRTDvxJLBk63BoJP9RoN385fJuRzy3Shx1bz0AGRxmztloblQufTo9qwTgbGjekLtptSq1g3-gQau0XS6okw"
-                width={96}
-                height={96}
+                src="/aethel-logo.svg"
                 className="h-24 w-auto object-contain opacity-90 drop-shadow-[0_0_20px_rgba(0,229,255,0.35)]"
-                priority
               />
               <div className="hero__monogram-overlay" />
             </div>
