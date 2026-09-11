@@ -1,97 +1,164 @@
 // ═══════════════════════════════════════════════════════
 // Landing Layer: Process Section
+// Horizontal timeline with 4 phases + connector hairline
 // ═══════════════════════════════════════════════════════
 
 @use '../0-config/scss-variables' as *;
 
 .process {
-  padding: var(--ae-space-3xl) 0;
+  width: 100%;
+  padding: var(--ae-space-xl) 0;
+  background-color: var(--ae-canvas-void);
 
-  &__inner {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 var(--ae-margin-mobile);
+  @media (min-width: $breakpoint-lg) {
+    padding: 7rem 0;
+  }
+}
 
-    @media (min-width: $breakpoint-xl) {
-      padding: 0 var(--ae-margin-desktop);
-    }
+.process__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--ae-margin-mobile);
+
+  @media (min-width: $breakpoint-xl) {
+    padding: 0 var(--ae-margin-desktop);
+  }
+}
+
+// ── Header ──
+.process__header {
+  margin-bottom: var(--ae-space-xl);
+  max-width: 640px;
+}
+
+.process__label {
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  font-weight: $font-weight-medium;
+  line-height: 18px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ae-secondary);
+  display: block;
+  margin-bottom: var(--ae-space-xs);
+}
+
+.process__title {
+  font-family: var(--ae-font-display);
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: $font-weight-semibold;
+  line-height: 40px;
+  letter-spacing: -0.01em;
+  color: var(--ae-text-ice);
+  margin: 0 0 var(--ae-space-xs) 0;
+}
+
+.process__subtitle {
+  font-family: var(--ae-font-body);
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--ae-text-muted);
+  margin: 0;
+}
+
+// ── Timeline Grid ──
+.process__timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ae-space-base);
+
+  @media (min-width: $breakpoint-md) {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  &__header {
-    margin-bottom: var(--ae-space-3xl);
-    max-width: 600px;
+  @media (min-width: $breakpoint-lg) {
+    grid-template-columns: repeat(4, 1fr);
   }
+}
 
-  &__label {
-    font-family: var(--ae-font-display);
-    font-size: 11px;
-    font-weight: $font-weight-semibold;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ae-secondary);
-    margin-bottom: var(--ae-space-sm);
+// ── Connector Hairline (Desktop) ──
+.process__connector {
+  display: none;
+  position: absolute;
+  top: 28px;
+  left: 64px;
+  right: 64px;
+  height: 2px;
+  background-color: var(--ae-surface-container-high);
+
+  @media (min-width: $breakpoint-lg) {
     display: block;
   }
+}
 
-  &__title {
-    font-family: var(--ae-font-display);
-    font-size: clamp(24px, 4vw, 32px);
-    font-weight: $font-weight-semibold;
-    line-height: 1.25;
-    color: var(--ae-text-ice);
-    margin-bottom: var(--ae-space-sm);
-  }
+// ── Phase Card ──
+.process__phase {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--ae-space-base);
+  border-radius: var(--ae-radius-xl);
+  background-color: var(--ae-surface-abyssal);
+  box-shadow: 0 4px 6px rgb(0 0 0 / 30%);
+}
 
-  &__subtitle {
-    font-size: 16px;
-    line-height: 26px;
-    color: var(--ae-text-muted);
-  }
+.process__phase-number {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: var(--ae-space-sm);
+  border-radius: var(--ae-radius-default);
+  background-color: var(--ae-surface-container);
+  font-family: var(--ae-font-display);
+  font-size: 16px;
+  font-weight: $font-weight-semibold;
+  line-height: 24px;
+  color: var(--ae-primary-container);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 20%);
+}
 
-  &__phases {
-    display: flex;
-    flex-direction: column;
-    gap: var(--ae-space-xl);
+.process__phase-number--gold {
+  color: var(--ae-secondary);
+}
 
-    @media (min-width: $breakpoint-md) {
-      flex-direction: row;
-      gap: var(--ae-gutter);
-    }
-  }
+.process__phase-label {
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  font-weight: $font-weight-medium;
+  line-height: 18px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ae-secondary);
+  margin-bottom: 4px;
+}
 
-  &__phase {
-    flex: 1;
-    position: relative;
-    padding: var(--ae-space-xl);
-    border-radius: var(--ae-radius-lg);
-    border: 1px solid var(--ae-border-subtle);
-    background-color: rgba(17, 24, 39, 0.4);
-  }
+.process__phase-title {
+  font-family: var(--ae-font-display);
+  font-size: 16px;
+  font-weight: $font-weight-semibold;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  color: var(--ae-text-ice);
+  margin: 0 0 var(--ae-space-xs) 0;
+}
 
-  &__phase-number {
-    font-family: var(--ae-font-display);
-    font-size: clamp(24px, 4vw, 32px);
-    font-weight: $font-weight-bold;
-    color: var(--ae-primary-container);
-    opacity: 0.3;
-    font-variant-numeric: tabular-nums;
-    margin-bottom: var(--ae-space-base);
-    line-height: 1;
-  }
+.process__phase-desc {
+  font-family: var(--ae-font-body);
+  font-size: 12px;
+  color: var(--ae-text-muted);
+  margin: 0 0 var(--ae-space-base) 0;
+  line-height: 1.6;
+}
 
-  &__phase-title {
-    font-family: var(--ae-font-display);
-    font-size: 16px;
-    font-weight: $font-weight-semibold;
-    line-height: 24px;
-    letter-spacing: 0.04em;
-    color: var(--ae-text-ice);
-    margin-bottom: var(--ae-space-sm);
-  }
-
-  &__phase-desc {
-    font-size: 12px;
-    line-height: 18px;
-    color: var(--ae-on-surface-variant);
-  }
+.process__phase-deliverable {
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.04em;
+  color: var(--ae-on-surface-variant);
 }

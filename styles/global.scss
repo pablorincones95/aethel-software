@@ -33,11 +33,12 @@
 
 // ── 6. Landing (Section-specific styles) ──
 @use '6-landing/hero';
+@use '6-landing/social-proof';
 @use '6-landing/services';
 @use '6-landing/tech-stack';
 @use '6-landing/process';
-@use '6-landing/portfolio';
-@use '6-landing/value-proposition';
+@use '6-landing/case-studies';
+@use '6-landing/philosophy';
 @use '6-landing/contact';
 
 // ── 7. Utilities (Helper classes) ──

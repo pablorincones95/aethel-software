@@ -55,9 +55,9 @@
   --ae-on-surface-variant: #bac9cc;
 
   // ── Borders ──
-  --ae-border-subtle: rgba(255, 255, 255, 0.08);
-  --ae-border-active: rgba(0, 229, 255, 0.45);
-  --ae-border-gold: rgba(226, 201, 116, 0.4);
+  --ae-border-subtle: rgb(255 255 255 / 8%);
+  --ae-border-active: rgb(0 229 255 / 45%);
+  --ae-border-gold: rgb(226 201 116 / 40%);
   --ae-outline: #849396;
 
   // ── Spacing (4px grid) ──

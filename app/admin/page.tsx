@@ -3,6 +3,25 @@ import { createClient } from "@/lib/supabase/server"
 import { LayoutDashboard, FolderKanban, FileText, Users } from "lucide-react"
 
 export default async function AdminDashboard() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!supabaseUrl || !supabaseKey) {
+    return (
+      <div className="space-y-8">
+        <div>
+          <h1 className="flex items-center gap-3 text-headline-lg text-text-ice">
+            <LayoutDashboard className="h-6 w-6 text-primary-container" />
+            Dashboard
+          </h1>
+          <p className="mt-1 text-body-md text-text-muted">
+            Supabase not configured. Set environment variables to enable admin.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   const supabase = await createClient()
 
   const [

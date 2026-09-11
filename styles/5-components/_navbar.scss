@@ -10,9 +10,9 @@
   left: 0;
   right: 0;
   z-index: 50;
-  background-color: rgba(17, 24, 39, 0.7);
+  background-color: rgb(17 24 39 / 70%);
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--ae-border-subtle);
 
   &__inner {

@@ -1,0 +1,160 @@
+// ═══════════════════════════════════════════════════════
+// Landing Layer: Philosophy Section
+// 2-column: manifesto quote + 4 pillars
+// ═══════════════════════════════════════════════════════
+
+@use '../0-config/scss-variables' as *;
+
+.philosophy {
+  width: 100%;
+  padding: var(--ae-space-xl) 0;
+  background-color: var(--ae-canvas-void);
+
+  @media (min-width: $breakpoint-lg) {
+    padding: 7rem 0;
+  }
+}
+
+.philosophy__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--ae-margin-mobile);
+
+  @media (min-width: $breakpoint-xl) {
+    padding: 0 var(--ae-margin-desktop);
+  }
+}
+
+.philosophy__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ae-space-xl);
+  align-items: center;
+
+  @media (min-width: $breakpoint-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+// ── Left: Manifesto ──
+.philosophy__manifesto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ae-space-base);
+}
+
+.philosophy__label {
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  font-weight: $font-weight-medium;
+  line-height: 18px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ae-secondary);
+}
+
+.philosophy__title {
+  font-family: var(--ae-font-display);
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: $font-weight-semibold;
+  line-height: 40px;
+  letter-spacing: -0.01em;
+  color: var(--ae-text-ice);
+  margin: 0;
+}
+
+.philosophy__text {
+  font-family: var(--ae-font-body);
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--ae-text-muted);
+  margin: 0;
+}
+
+.philosophy__quote {
+  padding: var(--ae-space-base);
+  border-radius: var(--ae-radius-xl);
+  background-color: var(--ae-surface-abyssal);
+  box-shadow: 0 4px 6px rgb(0 0 0 / 30%);
+}
+
+.philosophy__quote-text {
+  font-family: var(--ae-font-body);
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--ae-text-ice);
+  font-style: italic;
+  margin: 0 0 var(--ae-space-xs) 0;
+}
+
+.philosophy__quote-author {
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.04em;
+  color: var(--ae-secondary);
+}
+
+// ── Right: Pillars ──
+.philosophy__pillars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ae-space-sm);
+}
+
+.philosophy__pillar {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ae-space-base);
+  padding: var(--ae-space-base);
+  border-radius: var(--ae-radius-xl);
+  background-color: var(--ae-surface-abyssal);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 20%);
+  transition: all 200ms ease;
+
+  &:hover {
+    background-color: var(--ae-surface-container-low);
+  }
+}
+
+.philosophy__pillar-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--ae-radius-default);
+  background-color: var(--ae-surface-container);
+}
+
+.philosophy__pillar-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.philosophy__pillar-icon--cyan {
+  color: var(--ae-primary-container);
+}
+
+.philosophy__pillar-icon--gold {
+  color: var(--ae-secondary);
+}
+
+.philosophy__pillar-title {
+  font-family: var(--ae-font-display);
+  font-size: 16px;
+  font-weight: $font-weight-semibold;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  color: var(--ae-text-ice);
+  margin: 0 0 2px;
+}
+
+.philosophy__pillar-desc {
+  font-family: var(--ae-font-body);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--ae-text-muted);
+  margin: 0;
+}

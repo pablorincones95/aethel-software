@@ -1,132 +1,340 @@
 // ═══════════════════════════════════════════════════════
-// Landing Layer: Contact Section
+// Landing Layer: Contact / Conversion Section
+// 2-column: info channels + form with budget radios
 // ═══════════════════════════════════════════════════════
 
 @use '../0-config/scss-variables' as *;
 
 .contact {
-  padding: var(--ae-space-3xl) 0;
+  width: 100%;
+  padding: var(--ae-space-xl) 0;
+  background-color: var(--ae-surface-abyssal);
 
-  &__inner {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 var(--ae-margin-mobile);
-
-    @media (min-width: $breakpoint-xl) {
-      padding: 0 var(--ae-margin-desktop);
-    }
+  @media (min-width: $breakpoint-lg) {
+    padding: 7rem 0;
   }
+}
 
-  &__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--ae-space-3xl);
+.contact__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--ae-margin-mobile);
 
-    @media (min-width: $breakpoint-md) {
-      grid-template-columns: 1fr 1fr;
-    }
+  @media (min-width: $breakpoint-xl) {
+    padding: 0 var(--ae-margin-desktop);
   }
+}
 
-  &__info {
-    max-width: 480px;
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ae-space-xl);
+
+  @media (min-width: $breakpoint-lg) {
+    grid-template-columns: 5fr 7fr;
   }
+}
 
-  &__label {
-    font-family: var(--ae-font-display);
-    font-size: 11px;
-    font-weight: $font-weight-semibold;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ae-primary-container);
-    margin-bottom: var(--ae-space-sm);
-    display: block;
+// ── Left: Info ──
+.contact__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ae-space-base);
+}
+
+.contact__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ae-space-xs);
+  width: fit-content;
+  padding: var(--ae-space-sm) var(--ae-space-base);
+  border-radius: var(--ae-radius-default);
+  background-color: var(--ae-surface-container);
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  font-weight: $font-weight-medium;
+  line-height: 18px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ae-primary-container);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
+}
+
+.contact__title {
+  font-family: var(--ae-font-display);
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: $font-weight-semibold;
+  line-height: 40px;
+  letter-spacing: -0.01em;
+  color: var(--ae-text-ice);
+  margin: 0;
+}
+
+.contact__subtitle {
+  font-family: var(--ae-font-body);
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--ae-text-muted);
+  margin: 0;
+}
+
+// ── Contact Channels ──
+.contact__channels {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ae-space-sm);
+}
+
+.contact__channel {
+  display: flex;
+  align-items: center;
+  gap: var(--ae-space-sm);
+  padding: var(--ae-space-sm);
+  border-radius: var(--ae-radius-default);
+  background-color: var(--ae-surface-container-lowest);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
+}
+
+.contact__channel-icon {
+  flex-shrink: 0;
+}
+
+.contact__channel-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.contact__channel-icon--cyan {
+  color: var(--ae-primary-container);
+}
+
+.contact__channel-icon--gold {
+  color: var(--ae-secondary);
+}
+
+.contact__channel-label {
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  font-weight: $font-weight-medium;
+  line-height: 18px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ae-text-muted);
+}
+
+.contact__channel-value {
+  font-family: var(--ae-font-display);
+  font-size: 14px;
+  font-weight: $font-weight-medium;
+  line-height: 22px;
+  color: var(--ae-text-ice);
+}
+
+.contact__channel-value--cyan {
+  color: var(--ae-primary);
+}
+
+.contact__nda {
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.04em;
+  color: var(--ae-text-muted);
+}
+
+// ── Right: Form ──
+.contact__form-wrapper {
+  border-radius: var(--ae-radius-xl);
+  background-color: var(--ae-canvas-void);
+  padding: var(--ae-space-lg);
+  box-shadow: 0 20px 25px rgb(0 0 0 / 40%);
+}
+
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ae-space-base);
+}
+
+.contact__form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ae-space-base);
+
+  @media (min-width: $breakpoint-sm) {
+    grid-template-columns: repeat(2, 1fr);
   }
+}
 
-  &__title {
-    font-family: var(--ae-font-display);
-    font-size: clamp(24px, 4vw, 32px);
-    font-weight: $font-weight-semibold;
-    line-height: 1.25;
-    color: var(--ae-text-ice);
-    margin-bottom: var(--ae-space-sm);
-  }
+.contact__field-label {
+  display: block;
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  font-weight: $font-weight-medium;
+  line-height: 18px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ae-on-surface-variant);
+  margin-bottom: 4px;
+}
 
-  &__subtitle {
-    font-size: 16px;
-    line-height: 26px;
+.contact__field-input {
+  width: 100%;
+  background-color: var(--ae-surface-abyssal);
+  border: 1px solid var(--ae-border-subtle);
+  border-radius: var(--ae-radius-default);
+  padding: var(--ae-space-sm) var(--ae-space-base);
+  font-family: var(--ae-font-body);
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--ae-text-ice);
+  box-shadow: inset 0 2px 4px rgb(0 0 0 / 20%);
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+
+  &::placeholder {
     color: var(--ae-text-muted);
-    margin-bottom: var(--ae-space-xl);
+    opacity: 0.5;
   }
 
-  &__detail {
-    display: flex;
-    align-items: center;
-    gap: var(--ae-space-sm);
-    margin-bottom: var(--ae-space-base);
+  &:focus {
+    outline: none;
+    border-color: var(--ae-primary-container);
+    box-shadow: 0 0 0 1px var(--ae-primary-container);
+  }
+}
+
+.contact__field-select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.contact__field-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+// ── Budget Radios ──
+.contact__budget-label {
+  display: block;
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  font-weight: $font-weight-medium;
+  line-height: 18px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ae-on-surface-variant);
+  margin-bottom: var(--ae-space-xs);
+}
+
+.contact__budget-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--ae-space-xs);
+
+  @media (min-width: $breakpoint-sm) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.contact__budget-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ae-space-xs);
+  border-radius: var(--ae-radius-default);
+  background-color: var(--ae-surface-abyssal);
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.04em;
+  color: var(--ae-on-surface-variant);
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
+  transition: all 200ms ease;
+  text-align: center;
+
+  &:hover {
+    background-color: var(--ae-surface-container);
   }
 
-  &__detail-icon {
-    color: var(--ae-primary-container);
-    flex-shrink: 0;
+  input[type="radio"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
-  &__detail-text {
-    font-size: 14px;
-    color: var(--ae-on-surface-variant);
-  }
-
-  &__form {
-    background-color: rgba(17, 24, 39, 0.7);
-    backdrop-filter: blur(16px);
-    border: 1px solid var(--ae-border-subtle);
-    border-radius: var(--ae-radius-lg);
-    padding: var(--ae-space-xl);
-  }
-
-  &__form-group {
-    margin-bottom: var(--ae-space-base);
-  }
-
-  &__form-label {
-    display: block;
-    font-family: var(--ae-font-display);
-    font-size: 11px;
+  input[type="radio"]:checked + &,
+  &:has(input[type="radio"]:checked) {
+    background-color: var(--ae-primary-container);
+    color: var(--ae-canvas-void);
     font-weight: $font-weight-semibold;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ae-text-muted);
-    margin-bottom: var(--ae-space-sm);
   }
+}
 
-  &__form-input {
-    width: 100%;
-    background-color: var(--ae-surface-abyssal);
-    border: 1px solid var(--ae-border-subtle);
-    border-radius: var(--ae-radius-default);
-    padding: var(--ae-space-sm) var(--ae-space-base);
-    font-size: 14px;
-    color: var(--ae-text-ice);
-    transition: border-color 200ms ease, box-shadow 200ms ease;
+.contact__budget-option--active {
+  background-color: var(--ae-primary-container);
+  color: var(--ae-canvas-void);
+  font-weight: $font-weight-semibold;
+}
 
-    &::placeholder {
-      color: var(--ae-text-muted);
-      opacity: 0.5;
-    }
+// ── Submit Button ──
+.contact__submit {
+  width: 100%;
+  padding: var(--ae-space-sm);
+  border: none;
+  border-radius: var(--ae-radius-default);
+  background-color: var(--ae-primary-container);
+  font-family: var(--ae-font-display);
+  font-size: 14px;
+  font-weight: $font-weight-semibold;
+  color: var(--ae-canvas-void);
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgb(0 0 0 / 30%);
+  transition: all 200ms ease;
 
-    &:focus {
-      outline: none;
-      border-color: var(--ae-primary-container);
-      box-shadow: 0 0 0 1px var(--ae-primary-container);
-    }
+  &:hover {
+    background-color: var(--ae-primary-fixed);
+    box-shadow: 0 0 24px rgb(0 229 255 / 40%);
   }
+}
 
-  &__form-textarea {
-    min-height: 120px;
-    resize: vertical;
-  }
+// ── Feedback ──
+.contact__feedback {
+  display: none;
+  padding: var(--ae-space-sm);
+  border-radius: var(--ae-radius-default);
+  background-color: var(--ae-surface-container-high);
+  text-align: center;
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--ae-secondary);
+}
 
-  &__form-submit {
-    width: 100%;
-    margin-top: var(--ae-space-base);
-  }
+.contact__feedback--visible {
+  display: block;
+}
+
+// ── Security Badge ──
+.contact__security {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ae-space-xs);
+  text-align: center;
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.04em;
+  color: var(--ae-text-muted);
+}
+
+.contact__security svg {
+  width: 16px;
+  height: 16px;
+  color: var(--ae-secondary);
 }

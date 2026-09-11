@@ -52,34 +52,34 @@
 
 // ── Glassmorphism ──
 @mixin glass {
-  background-color: rgba(17, 24, 39, 0.7);
+  background-color: rgb(17 24 39 / 70%);
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   border: 1px solid $color-border-subtle;
 }
 
 @mixin glass-dense {
-  background-color: rgba(9, 13, 22, 0.96);
+  background-color: rgb(9 13 22 / 96%);
   backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgb(255 255 255 / 15%);
 }
 
 // ── Glow Effects ──
 @mixin glow-cyan {
-  box-shadow: 0 0 16px rgba(0, 229, 255, 0.35);
+  box-shadow: 0 0 16px rgb(0 229 255 / 35%);
 }
 
 @mixin glow-cyan-subtle {
-  box-shadow: 0 0 24px -4px rgba(0, 229, 255, 0.15);
+  box-shadow: 0 0 24px -4px rgb(0 229 255 / 15%);
 }
 
 @mixin glow-gold {
-  box-shadow: 0 0 16px rgba(226, 201, 116, 0.3);
+  box-shadow: 0 0 16px rgb(226 201 116 / 30%);
 }
 
 @mixin glow-gold-subtle {
-  box-shadow: 0 0 24px -4px rgba(226, 201, 116, 0.12);
+  box-shadow: 0 0 24px -4px rgb(226 201 116 / 12%);
 }
 
 // ── Focus Ring ──

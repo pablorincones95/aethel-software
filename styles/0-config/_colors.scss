@@ -58,9 +58,9 @@ $color-inverse-surface: #dde2f3;
 $color-inverse-on-surface: #2b303d;
 
 // ── Borders ──
-$color-border-subtle: rgba(255, 255, 255, 0.08);
-$color-border-active: rgba(0, 229, 255, 0.45);
-$color-border-gold: rgba(226, 201, 116, 0.4);
+$color-border-subtle: rgb(255 255 255 / 8%);
+$color-border-active: rgb(0 229 255 / 45%);
+$color-border-gold: rgb(226 201 116 / 40%);
 $color-outline: #849396;
 $color-outline-variant: #3b494c;
 $color-surface-tint: #00daf3;

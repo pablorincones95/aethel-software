@@ -1,0 +1,190 @@
+// ═══════════════════════════════════════════════════════
+// Landing Layer: Case Studies Section
+// 3-column cards with images, challenge/solution, metrics
+// ═══════════════════════════════════════════════════════
+
+@use '../0-config/scss-variables' as *;
+
+.case-studies {
+  width: 100%;
+  padding: var(--ae-space-xl) 0;
+  background-color: var(--ae-surface-abyssal);
+
+  @media (min-width: $breakpoint-lg) {
+    padding: 7rem 0;
+  }
+}
+
+.case-studies__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--ae-margin-mobile);
+
+  @media (min-width: $breakpoint-xl) {
+    padding: 0 var(--ae-margin-desktop);
+  }
+}
+
+// ── Header ──
+.case-studies__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ae-space-sm);
+  margin-bottom: var(--ae-space-xl);
+
+  @media (min-width: $breakpoint-md) {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}
+
+.case-studies__header-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ae-space-xs);
+}
+
+.case-studies__label {
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  font-weight: $font-weight-medium;
+  line-height: 18px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ae-primary-container);
+}
+
+.case-studies__title {
+  font-family: var(--ae-font-display);
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: $font-weight-semibold;
+  line-height: 40px;
+  letter-spacing: -0.01em;
+  color: var(--ae-text-ice);
+  margin: 0;
+}
+
+.case-studies__subtitle {
+  font-family: var(--ae-font-body);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--ae-text-muted);
+  margin: 0;
+}
+
+// ── Grid ──
+.case-studies__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ae-space-lg);
+
+  @media (min-width: $breakpoint-lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+// ── Card ──
+.case-studies__card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--ae-radius-xl);
+  background-color: var(--ae-surface-container-lowest);
+  box-shadow: 0 10px 15px rgb(0 0 0 / 40%);
+}
+
+.case-studies__card-image {
+  position: relative;
+  height: 224px;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--ae-surface-container);
+}
+
+.case-studies__card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.case-studies__card-tag {
+  position: absolute;
+  top: var(--ae-space-sm);
+  left: var(--ae-space-sm);
+  padding: 4px var(--ae-space-xs);
+  border-radius: var(--ae-radius-default);
+  background-color: rgb(9 13 22 / 90%);
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  font-weight: $font-weight-medium;
+  line-height: 18px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.case-studies__card-tag--gold {
+  color: var(--ae-secondary);
+}
+
+.case-studies__card-tag--cyan {
+  color: var(--ae-primary-container);
+}
+
+.case-studies__card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  padding: var(--ae-space-lg);
+}
+
+.case-studies__card-title {
+  font-family: var(--ae-font-display);
+  font-size: 16px;
+  font-weight: $font-weight-semibold;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  color: var(--ae-text-ice);
+  margin: 0 0 var(--ae-space-sm) 0;
+}
+
+.case-studies__card-challenge,
+.case-studies__card-solution {
+  margin-bottom: var(--ae-space-xs);
+  font-family: var(--ae-font-body);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--ae-text-muted);
+}
+
+.case-studies__card-challenge strong,
+.case-studies__card-solution strong {
+  font-family: var(--ae-font-display);
+  font-weight: $font-weight-semibold;
+}
+
+.case-studies__card-challenge strong {
+  color: var(--ae-error);
+}
+
+.case-studies__card-solution strong {
+  color: var(--ae-primary-container);
+}
+
+.case-studies__card-metrics {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--ae-space-base);
+  margin-top: var(--ae-space-lg);
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.04em;
+  color: var(--ae-primary-container);
+}
+
+.case-studies__card-metrics-secondary {
+  color: var(--ae-text-muted);
+}

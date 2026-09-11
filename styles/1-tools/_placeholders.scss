@@ -9,20 +9,20 @@
 }
 
 %elevation-1 {
-  background-color: rgba(17, 24, 39, 0.7);
+  background-color: rgb(17 24 39 / 70%);
   backdrop-filter: blur(16px);
   border: 1px solid $color-border-subtle;
 }
 
 %elevation-2 {
-  background-color: rgba(17, 24, 39, 0.9);
+  background-color: rgb(17 24 39 / 90%);
   border: 1px solid $color-border-subtle;
 }
 
 %elevation-3 {
-  background-color: rgba(9, 13, 22, 0.96);
+  background-color: rgb(9 13 22 / 96%);
   backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgb(255 255 255 / 15%);
 }
 
 // ── Label Caps Base ──
