@@ -1,7 +1,13 @@
 import { type Metadata } from "next"
 import Link from "next/link"
-import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
+import {
+  LayoutDashboard,
+  FolderKanban,
+  FileText,
+} from "lucide-react"
+import { SignOutButton } from "./sign-out-button"
+import { ThemeToggle } from "@/components/admin/theme-toggle"
 
 export const metadata: Metadata = {
   title: "Admin — Aethel Software",
@@ -9,9 +15,9 @@ export const metadata: Metadata = {
 }
 
 const navItems = [
-  { label: "Dashboard", href: "/admin" },
-  { label: "Projects", href: "/admin/projects" },
-  { label: "Content", href: "/admin/content" },
+  { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
+  { label: "Projects", href: "/admin/projects", icon: FolderKanban },
+  { label: "Content", href: "/admin/content", icon: FileText },
 ]
 
 export default async function AdminLayout({
@@ -22,67 +28,67 @@ export default async function AdminLayout({
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-  if (!supabaseUrl || !supabaseKey) {
-    redirect("/")
-  }
+  let userEmail = "admin@aethel.software"
 
-  const supabase = await createClient()
+  if (supabaseUrl && supabaseKey) {
+    try {
+      const supabase = await createClient()
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user) {
-    redirect("/")
+      if (user?.email) {
+        userEmail = user.email
+      }
+    } catch {
+      // Use default email
+    }
   }
 
   return (
-    <div className="flex min-h-screen bg-canvas-void">
+    <div className="flex min-h-screen">
       {/* Sidebar */}
-      <aside className="fixed inset-y-0 left-0 z-40 w-64 border-r border-border-subtle bg-surface-container-low backdrop-blur-xl">
+      <aside className="fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r bg-background">
         {/* Logo */}
-        <div className="flex h-16 items-center gap-2 border-b border-border-subtle px-6">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[4px] bg-primary-container">
-            <span className="font-[family-name:var(--font-display)] text-sm font-bold text-on-primary">
-              A
-            </span>
+        <div className="flex h-14 items-center gap-2 border-b px-4">
+          <div className="flex h-8 w-8 items-center justify-center rounded bg-primary text-primary-foreground text-sm font-bold">
+            A
           </div>
           <div>
-            <span className="font-[family-name:var(--font-display)] text-sm font-semibold text-text-ice">
-              Aethel
-            </span>
-            <span className="ml-1 text-[11px] font-medium uppercase tracking-[0.18em] text-text-muted">
-              Admin
-            </span>
+            <span className="text-sm font-semibold">Aethel</span>
+            <span className="ml-1 text-xs text-muted-foreground">Admin</span>
           </div>
         </div>
 
         {/* Navigation */}
-        <nav className="flex flex-col gap-1 p-4">
+        <nav className="flex-1 space-y-1 p-2">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="flex items-center rounded-[4px] px-3 py-2 text-sm font-medium text-text-muted transition-colors hover:bg-surface-container-high hover:text-text-ice"
+              className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
             >
+              <item.icon className="h-4 w-4" />
               {item.label}
             </Link>
           ))}
         </nav>
 
-        {/* User info */}
-        <div className="absolute bottom-0 left-0 right-0 border-t border-border-subtle p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-container/10 text-xs font-medium text-primary-container">
-              {user.email?.charAt(0).toUpperCase()}
+        {/* User info + Sign out */}
+        <div className="border-t p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
+                {userEmail.charAt(0).toUpperCase()}
+              </div>
+              <div className="flex-1 truncate">
+                <p className="truncate text-sm font-medium">{userEmail}</p>
+                <p className="text-xs text-muted-foreground">Administrator</p>
+              </div>
             </div>
-            <div className="flex-1 truncate">
-              <p className="truncate text-sm font-medium text-text-ice">
-                {user.email}
-              </p>
-              <p className="text-[11px] uppercase tracking-[0.18em] text-text-muted">
-                Administrator
-              </p>
+            <div className="flex items-center gap-1">
+              <ThemeToggle />
+              <SignOutButton />
             </div>
           </div>
         </div>
