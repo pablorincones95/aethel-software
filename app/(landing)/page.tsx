@@ -3,6 +3,7 @@ import { Hero } from "@/components/landing/hero"
 import { SocialProof } from "@/components/landing/social-proof"
 import { Services } from "@/components/landing/services"
 import { DesignSeo } from "@/components/landing/design-seo"
+import { AiServices } from "@/components/landing/ai-services"
 import { TechStack } from "@/components/landing/tech-stack"
 import { Process } from "@/components/landing/process"
 import { CaseStudies } from "@/components/landing/case-studies"
@@ -19,6 +20,7 @@ export default function Home() {
         <SocialProof />
         <Services />
         <DesignSeo />
+        <AiServices />
         <TechStack />
         <Process />
         <CaseStudies />

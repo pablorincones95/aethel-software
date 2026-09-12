@@ -2,32 +2,32 @@ import { Web, Devices, CloudSync, Hub } from "./icons"
 
 const services = [
   {
-    number: "01 // SAAS & WEB",
+    number: "01 // WEB & SAAS",
     icon: Web,
-    title: "Desarrollo Web & SaaS Enterprise",
-    desc: "Plataformas reactivas ultrarrápidas con Next.js, React, Node.js y NestJS. Arquitecturas modulares serverless, SSR y micro-frontends de alta disponibilidad.",
-    tags: ["Next.js", "NestJS", "Turborepo"],
+    title: "Desarrollo Web & SaaS",
+    desc: "Plataformas y aplicaciones web con Next.js, React, Angular y Node.js: arquitecturas modulares, serverless y preparadas para escalar.",
+    tags: ["Next.js", "React", "Angular", "Node.js"],
   },
   {
     number: "02 // MOBILE",
     icon: Devices,
-    title: "Desarrollo Mobile Avanzado",
-    desc: "Apps multiplataforma fluidas a 120 FPS, sincronización offline-first y puentes nativos en C++/Rust integrados en React Native para rendimiento extremo.",
-    tags: ["React Native", "WatermelonDB", "JSI/C++"],
+    title: "Aplicaciones Móviles",
+    desc: "Apps multiplataforma fluidas en React Native con Expo, sincronización offline y experiencia de usuario pulida en iOS y Android.",
+    tags: ["React Native", "Expo", "TypeScript"],
   },
   {
-    number: "03 // INFRAESTRUCTURA",
+    number: "03 // CLOUD & DEVOPS",
     icon: CloudSync,
-    title: "Arquitectura Cloud & DevOps",
-    desc: "Infraestructura elástica multi-región en AWS, orquestación Kubernetes (EKS), Docker y pipelines CI/CD automatizados con políticas de despliegue blue/green.",
-    tags: ["AWS EKS", "Terraform", "ArgoCD"],
+    title: "Infraestructura & Despliegue",
+    desc: "Despliegues automatizados en Vercel, AWS y Railway, con pipelines CI/CD, contenedores Docker y entornos preparados para producción.",
+    tags: ["Vercel", "AWS", "Railway", "Docker"],
   },
   {
-    number: "04 // INTEGRACIONES",
+    number: "04 // APIs & SISTEMAS",
     icon: Hub,
-    title: "APIs & Concurrencia Crítica",
-    desc: "Microservicios distribuidos mediante gRPC y GraphQL federado, pasarelas de cobro con idempotencia matemática y streaming de eventos masivo con Apache Kafka.",
-    tags: ["Kafka", "gRPC", "Postgres ACID"],
+    title: "APIs y Sistemas Distribuidos",
+    desc: "APIs, microservicios y bases de datos con Node.js y PostgreSQL.",
+    tags: ["Node.js", "PostgreSQL"],
   },
 ]
 
@@ -38,15 +38,15 @@ export function Services() {
         <div className="services__header">
           <div className="services__header-text">
             <span className="services__label">
-              Capacidades de Misión Crítica
+              Ingeniería a Medida
             </span>
             <h2 className="services__title">
               Servicios Especializados de Ingeniería
             </h2>
           </div>
           <p className="services__subtitle">
-            Diseño riguroso y construcción de soluciones a gran escala para
-            ecosistemas donde el downtime y la latencia son inaceptables.
+            Diseño y construcción de soluciones a medida para productos
+            digitales exigentes, desde la idea hasta la operación en producción.
           </p>
         </div>
 

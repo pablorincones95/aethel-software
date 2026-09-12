@@ -115,7 +115,7 @@ El esquema vive en `supabase/schema.sql` e incluye:
 ├── app/
 │   ├── (landing)/             # Route group de la landing (su propio layout con SCSS)
 │   │   ├── layout.tsx         # Importa styles/global.scss
-│   │   └── page.tsx           # Composicion de las 9 secciones
+│   │   └── page.tsx           # Composición de las 10 secciones
 │   ├── admin/                 # Panel de administración (shadcn/ui)
 │   │   ├── actions/           # Server Actions (projects, content, auth)
 │   │   └── page.tsx           # Dashboard
@@ -145,17 +145,36 @@ El esquema vive en `supabase/schema.sql` e incluye:
 
 ## Secciones del Landing
 
-Las 9 secciones se componen en `app/(landing)/page.tsx`:
+Las 10 secciones se componen en `app/(landing)/page.tsx`:
 
-1. **Hero** — Propuesta de valor + consola de telemetría animada
-2. **Social Proof** — SLA, certificaciones y métricas de confianza
-3. **Services** — 4 servicios de ingeniería (`#arquitecturas`)
+1. **Hero** — Propuesta de valor + consola/sistema con estado decorativo honesto (sin métricas inventadas)
+2. **Social Proof** — Type-Safe, SOC 2 (en proceso), cobertura full-service y metodología
+3. **Services** — 4 servicios de ingeniería con stack real (`#arquitecturas`)
 4. **Design & SEO** — Diseño UX/UI + SEO técnico (`#diseño-crecimiento`)
-5. **Tech Stack** — Herramientas y runtimes (`#stack`)
-6. **Process** — Metodología en 4 fases (`#metodologia`)
-7. **Case Studies** — Casos de éxito (`#casos`)
-8. **Philosophy** — Manifiesto y pilares
-9. **Contact** — Canales + formulario con evaluación técnica (`#contacto-evaluacion`)
+5. **IA** — IA como herramienta interna de ingeniería, con revisión humana (`#ia`)
+6. **Tech Stack** — 10 tecnologías reales (sin "certificados") (`#stack`)
+7. **Process** — Metodología en 4 fases con entregables concretos (`#metodologia`)
+8. **Case Studies** — Casos de éxito (`#casos`)
+9. **Philosophy** — Manifiesto y pilares
+10. **Contact** — Canales + formulario con evaluación técnica (`#contacto-evaluacion`)
+
+Todos los textos del landing describen **servicios, stack y procesos reales** de Aethel — se evita inventar métricas, certificaciones o tecnologías.
+
+---
+
+## Security — Incidente 09/2026
+
+En septiembre de 2026 se detectó **código malicioso en `postcss.config.mjs`** (campaña `9-0006-13`): ~37 KB de JavaScript ofuscado inyectado después del config legítimo, con conexiones activas hacia el C2 `193.247.144.38` durante `next dev`/`build`.
+
+**Estado: saneado y verificado.**
+
+- Origen: commit `1fd3e68` (11/09/2026). El archivo original se restauró desde `8273e3d`.
+- Se eliminaron los procesos `node -e` rogue y se purgó `.next/` y `node_modules/.cache`.
+- Verificación: `rg` sin marcas (`9-0006`, `_0x2d013d`), sin crontab/LaunchAgents maliciosos, claves SSH intactas, sin conexiones salientes al C2 tras el saneamiento.
+- `pnpm lint` volvió a **0 errores** (el error `no-assign-module-variable` era causado por el payload).
+- Commits: `e841a6b` (remoción del payload).
+
+> **Recomendación:** al trabajar con este repo, verificar `postcss.config.mjs` y otros archivos de configuración se mantienen con contenido esperado, y ejecutar `pnpm lint` para detectar anomalías.
 
 ---
 

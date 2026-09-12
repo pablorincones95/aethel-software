@@ -1,14 +1,14 @@
 const techItems = [
-  { number: "01", name: "TypeScript", desc: "Strict Core Typing" },
-  { number: "02", name: "React / Next.js", desc: "SSR Architecture" },
-  { number: "03", name: "Node & NestJS", desc: "Enterprise Backend" },
-  { number: "04", name: "React Native", desc: "120 FPS Mobile" },
-  { number: "05", name: "AWS Cloud", desc: "Multi-Region Infra" },
-  { number: "06", name: "Kubernetes / EKS", desc: "Orchestration Mesh" },
-  { number: "07", name: "PostgreSQL", desc: "ACID Partitioning" },
-  { number: "08", name: "Redis In-Memory", desc: "Sub-Millisecond Cache" },
-  { number: "09", name: "Apache Kafka", desc: "Event Streaming" },
-  { number: "10", name: "gRPC & GraphQL", desc: "Protocol Buffers" },
+  { number: "01", name: "TypeScript", desc: "Lenguaje Núcleo" },
+  { number: "02", name: "React & Next.js", desc: "Web & SSR" },
+  { number: "03", name: "Angular", desc: "Web Empresarial" },
+  { number: "04", name: "Node.js & NestJS", desc: "Backend Modular" },
+  { number: "05", name: "React Native & Expo", desc: "Mobile Multiplataforma" },
+  { number: "06", name: "PostgreSQL", desc: "Base de Datos" },
+  { number: "07", name: "Vercel", desc: "Despliegue Frontend" },
+  { number: "08", name: "AWS", desc: "Infraestructura Cloud" },
+  { number: "09", name: "Railway", desc: "Hosting & PaaS" },
+  { number: "10", name: "Docker", desc: "Contenedores" },
 ]
 
 export function TechStack() {
@@ -18,14 +18,14 @@ export function TechStack() {
         <div className="tech-stack__header">
           <div className="tech-stack__header-text">
             <span className="tech-stack__label">
-              Stack Tecnológico Maestro
+              Stack Tecnológico
             </span>
             <h3 className="tech-stack__title">
-              Herramientas & Runtimes Certificados
+              Las tecnologías que vibramos
             </h3>
           </div>
           <span className="tech-stack__tagline">
-            ZERO-ABSTRACTION DEBT // HIGH REPRODUCIBILITY
+            TECNOLOGÍAS PROBADAS EN PRODUCCIÓN
           </span>
         </div>
 

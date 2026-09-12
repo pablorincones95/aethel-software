@@ -58,13 +58,13 @@ export function ContactForm() {
             Servicio de Interés Principal
           </label>
           <select name="service" className="contact__field-input contact__field-select">
-            <option>SaaS Enterprise / Web Platform</option>
-            <option>Mobile App High-FPS (React Native)</option>
-            <option>Cloud Infrastructure & EKS Migration</option>
-            <option>APIs de Alta Concurrencia & Streaming Kafka</option>
-            <option>Auditoría de Arquitectura & Refactoring</option>
-            <option>Diseño UX/UI & Design Systems</option>
+            <option>Desarrollo Web & SaaS</option>
+            <option>Aplicaciones Móviles</option>
+            <option>Infraestructura & Despliegue</option>
+            <option>APIs y Sistemas Distribuidos</option>
+            <option>Diseño UX/UI</option>
             <option>SEO Técnico & Optimización Web</option>
+            <option>Proyecto Integral (Full-Service)</option>
           </select>
         </div>
       </div>
@@ -129,7 +129,7 @@ export function ContactForm() {
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
           <path d="m9 12 2 2 4-4" />
         </svg>
-        <span>Datos resguardados bajo estándar bancario AES-256</span>
+        <span>Datos protegidos y tratados con confidencialidad</span>
       </div>
     </form>
   )

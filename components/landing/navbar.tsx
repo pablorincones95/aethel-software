@@ -3,7 +3,8 @@ import Link from "next/link"
 const navLinks = [
   { label: "SERVICIOS", href: "#arquitecturas" },
   { label: "DISEÑO & SEO", href: "#diseño-crecimiento" },
-  { label: "SOLUCIONES", href: "#casos" },
+  { label: "IA", href: "#ia" },
+  { label: "CASOS", href: "#casos" },
   { label: "STACK", href: "#stack" },
   { label: "METODOLOGÍA", href: "#metodologia" },
   { label: "CONTACTO", href: "#contacto-evaluacion" },

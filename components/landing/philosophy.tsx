@@ -16,8 +16,8 @@ const pillars = [
   {
     icon: EnhancedEncryption,
     iconColor: "philosophy__pillar-icon--cyan",
-    title: "Ciberseguridad Bancaria",
-    desc: "Auditorías estáticas periódicas, rotación de credenciales automatizada vía Vault y observabilidad SIEM con detección anómala.",
+    title: "Seguridad Aplicada",
+    desc: "Seguridad integrada en cada entrega: credenciales y datos protegidos, dependencias auditadas y revisiones constantes durante el desarrollo.",
   },
   {
     icon: Engineering,

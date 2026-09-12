@@ -17,21 +17,22 @@ export function Hero() {
             <div className="hero__badge">
               <span className="hero__badge-ping" />
               <span className="hero__badge-text">
-                Boutique Engineering Atelier // High-Throughput Systems
+                Boutique Engineering Atelier // Software e IA de Alto Impacto
               </span>
             </div>
 
             <h1 className="hero__title">
-              Ingeniería de Software de Precisión para{" "}
+              Soluciones Digitales con IA para{" "}
               <span className="hero__title-gradient">
                 Escalar tu Negocio
               </span>
             </h1>
 
             <p className="hero__subtitle">
-              Diseñamos sistemas resilientes a medida, arquitectura cloud de
-              misión crítica y experiencias digitales de ultra-bajo tiempo de
-              respuesta para compañías líderes e infraestructuras globales.
+              Diseñamos y desarrollamos plataformas web, móviles y cloud
+              potenciadas con inteligencia artificial, experiencia de usuario y
+              posicionamiento — un enfoque completo, sin plantillas ni fábricas
+              de código.
             </p>
 
             <div className="hero__ctas">
@@ -48,11 +49,11 @@ export function Hero() {
             <div className="hero__telemetry">
               <div className="hero__telemetry-item">
                 <span className="hero__telemetry-dot hero__telemetry-dot--gold" />
-                <span>ZERO-DOWNTIME COMMITMENT</span>
+                <span>METODOLOGÍA RÍGIDA</span>
               </div>
               <div className="hero__telemetry-item">
                 <span className="hero__telemetry-dot hero__telemetry-dot--cyan" />
-                <span>MEDIAN LATENCY: &lt;12ms</span>
+                <span>IA EN PRODUCCIÓN</span>
               </div>
             </div>
           </div>
@@ -70,7 +71,7 @@ export function Hero() {
               </div>
               <div className="hero__console-badge">
                 <Lock />
-                <span>SOC2 TIER III</span>
+                <span>SOC 2 · EN PROCESO</span>
               </div>
             </div>
 
@@ -85,39 +86,37 @@ export function Hero() {
 
             <div className="hero__metrics">
               <div className="hero__metric-card">
-                <div className="hero__metric-label">THROUGHPUT PEAK</div>
+                <div className="hero__metric-label">SYSTEM STATUS</div>
                 <div className="hero__metric-value">
-                  184,200{" "}
-                  <span className="hero__metric-unit">TPS</span>
+                  OPERATIONAL
                 </div>
                 <div className="hero__metric-status hero__metric-status--gold">
-                  Mesh Consensus OK
+                  Pipeline Verde
                 </div>
               </div>
               <div className="hero__metric-card">
-                <div className="hero__metric-label">GLOBAL P99 RTT</div>
+                <div className="hero__metric-label">RUNTIME MONITOR</div>
                 <div className="hero__metric-value hero__metric-value--white">
-                  11.8{" "}
-                  <span className="hero__metric-unit">MS</span>
+                  NOMINAL
                 </div>
                 <div className="hero__metric-status hero__metric-status--cyan">
-                  Edge Multi-Region
+                  Alerts: 0
                 </div>
               </div>
             </div>
 
             <div className="hero__terminal">
               <div className="hero__terminal-row">
-                <span>[INIT] Autonomous Consensus Stream</span>
+                <span>[INIT] Delivery Pipeline</span>
                 <span className="hero__terminal-ready">READY</span>
               </div>
               <div className="hero__terminal-line">
                 <span className="hero__terminal-prompt">&gt;</span>{" "}
-                EKS Multi-Az Sharding: verified zero dropped packets
+                CI/CD: deployment nominal
               </div>
               <div className="hero__terminal-muted">
                 <span className="hero__terminal-prompt">&gt;</span>{" "}
-                Zero-Trust handshake: TLS 1.3 / Rust Micro-Kernel active
+                Monitoring: 0 alerts / active
               </div>
             </div>
           </div>

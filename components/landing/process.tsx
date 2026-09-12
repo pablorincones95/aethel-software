@@ -2,30 +2,30 @@ const phases = [
   {
     number: "01",
     label: "Fase Inicial",
-    title: "Discovery & C4 Architecture",
-    desc: "Modelado de dominios (DDD), especificaciones técnicas exhaustivas, diagramas de arquitectura C4 y benchmarks de latencia antes de escribir una sola línea.",
-    deliverable: "Entregable: Technical RFC & Threat Model",
+    title: "Kickoff & Definición",
+    desc: "Entendemos tu negocio, objetivos y restricciones. Definimos alcance, requerimientos y una hoja de ruta realista con prioridades claras antes de escribir código.",
+    deliverable: "Entregable: Plan de proyecto & Roadmap de alcance",
   },
   {
     number: "02",
     label: "Fase Diseño",
-    title: "UX/UI & Design Systems",
-    desc: "Sistemas de diseño atómicos con tokens sincronizados directamente a código TypeScript. Prototipos interactivos de alta fidelidad validados por stakeholders.",
-    deliverable: "Entregable: Figma Tokens & Component Library",
+    title: "Diseño & Prototipo",
+    desc: "Diseñamos la experiencia y definimos las decisiones técnicas junto a tu equipo. Prototipos para validar antes de construir, integrando el diseño que ya tengas.",
+    deliverable: "Entregable: Prototipo interactivo & Arquitectura técnica",
   },
   {
     number: "03",
     label: "Fase Ejecución",
-    title: "Iterative Sprints & QA",
-    desc: "Ciclos bisemanales con cobertura de pruebas unitarias, de integración y end-to-end mayor al 90%. Revisión de código de 4 ojos y análisis estático SonarQube.",
-    deliverable: "Entregable: Staging Deploy & CI/CD Reports",
+    title: "Desarrollo & Calidad",
+    desc: "Desarrollo por iteraciones cortas con revisión de código y pruebas continuas. Despliegues en entorno de staging para que veas el progreso en todo momento.",
+    deliverable: "Entregable: Versión funcional en staging & demos periódicas",
   },
   {
     number: "04",
-    label: "Fase Despliegue",
-    title: "Enterprise Deployment",
-    desc: "Lanzamiento Blue/Green o Canary con telemetría Prometheus/Grafana 24/7, tracing distribuido OpenTelemetry y soporte post-lanzamiento de ingenieros core.",
-    deliverable: "Entregable: Production Telemetry & SLA 99.999%",
+    label: "Fase Entrega",
+    title: "Producción & Soporte",
+    desc: "Despliegue a producción, monitorización y documentación para tu equipo. Acompañamiento post-lanzamiento para seguir mejorando.",
+    deliverable: "Entregable: Estrategia en producción & Soporte post-lanzamiento",
   },
 ]
 
@@ -39,9 +39,9 @@ export function Process() {
             Protocolo y Metodología Aethel en 4 Fases
           </h2>
           <p className="process__subtitle">
-            Un proceso sistemático de precisión militar que reduce drásticamente
-            la incertidumbre técnica y asegura despliegues continuos sin
-            fricciones.
+            Un proceso claro y colaborativo, pensado para empresas reales: sin
+            incertidumbre, con etapas definidas y entregables concretos en cada
+            fase.
           </p>
         </div>
 
