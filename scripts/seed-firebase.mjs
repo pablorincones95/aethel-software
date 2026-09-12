@@ -17,7 +17,13 @@ if (existsSync(envPath)) {
       const eqIdx = trimmed.indexOf("=")
       if (eqIdx !== -1) {
         const key = trimmed.slice(0, eqIdx).trim()
-        const val = trimmed.slice(eqIdx + 1).trim()
+        let val = trimmed.slice(eqIdx + 1).trim()
+        if (
+          (val.startsWith('"') && val.endsWith('"')) ||
+          (val.startsWith("'") && val.endsWith("'"))
+        ) {
+          val = val.slice(1, -1)
+        }
         if (!process.env[key]) {
           process.env[key] = val
         }
@@ -266,7 +272,14 @@ async function seed() {
 
   if (clientEmail && privateKey) {
     console.log("🔑 Authenticating with Firebase Admin Service Account...")
+    if (
+      (privateKey.startsWith('"') && privateKey.endsWith('"')) ||
+      (privateKey.startsWith("'") && privateKey.endsWith("'"))
+    ) {
+      privateKey = privateKey.slice(1, -1)
+    }
     privateKey = privateKey.replace(/\\n/g, "\n")
+
     const { initializeApp, cert } = await import("firebase-admin/app")
     const { getFirestore } = await import("firebase-admin/firestore")
     const app = initializeApp({ credential: cert({ projectId, clientEmail, privateKey }) })
@@ -315,6 +328,5 @@ async function seed() {
 
 seed().catch((err) => {
   console.error("❌ Seed failed:", err.message || err)
-  console.log("\n💡 Nota: Si ves 'permission-denied', ve a Firebase Console -> Firestore Database -> Reglas (Rules) y publica temporalmente las reglas de firestore.rules para permitir la inicialización, o descarga tu clave privada en Configuración del proyecto -> Cuentas de servicio.")
   process.exit(1)
 })
