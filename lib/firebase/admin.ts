@@ -9,13 +9,9 @@ interface AdminServices {
 }
 
 declare global {
-  // eslint-disable-next-line no-var
   var _firebaseAdminApp: App | undefined
-  // eslint-disable-next-line no-var
   var _firebaseAdminDb: Firestore | undefined
-  // eslint-disable-next-line no-var
   var _firebaseAdminAuth: Auth | undefined
-  // eslint-disable-next-line no-var
   var _firebaseAdminCredKey: string | undefined
 }
 

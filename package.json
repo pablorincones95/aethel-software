@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "eslint .",
     "lint:css": "stylelint \"**/*.scss\"",
     "lint:css:fix": "stylelint \"**/*.scss\" --fix",
     "lint:all": "pnpm lint && pnpm lint:css",
