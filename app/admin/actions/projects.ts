@@ -2,34 +2,41 @@
 
 import { revalidatePath } from "next/cache"
 import { getAdminServices } from "@/lib/firebase/admin"
+import { verifyAdminSession } from "@/app/admin/actions/auth"
 import { z } from "zod"
 
 const projectSchema = z.object({
-  title: z.string().min(1, "El título es requerido"),
-  description: z.string().optional(),
-  challenge: z.string().optional(),
-  solution: z.string().optional(),
-  tag: z.string().optional(),
+  title: z.string().trim().min(1, "El título es requerido").max(120, "El título no puede exceder 120 caracteres"),
+  description: z.string().trim().max(1000, "La descripción no puede exceder 1000 caracteres").optional(),
+  challenge: z.string().trim().max(1000, "El desafío no puede exceder 1000 caracteres").optional(),
+  solution: z.string().trim().max(1000, "La solución no puede exceder 1000 caracteres").optional(),
+  tag: z.string().trim().max(60, "El tag no puede exceder 60 caracteres").optional(),
   tag_color: z.enum(["cyan", "gold"]).default("cyan"),
-  metric_primary: z.string().optional(),
-  metric_secondary: z.string().optional(),
+  metric_primary: z.string().trim().max(50, "La métrica no puede exceder 50 caracteres").optional(),
+  metric_secondary: z.string().trim().max(50, "La métrica no puede exceder 50 caracteres").optional(),
   technologies: z.string().transform((val) =>
     val
       .split(",")
-      .map((t) => t.trim())
+      .map((t) => t.trim().slice(0, 50))
       .filter(Boolean)
+      .slice(0, 20)
   ),
-  url: z.string().url().optional().or(z.literal("")),
-  image_url: z.string().url().optional().or(z.literal("")),
+  url: z.string().url().max(500).optional().or(z.literal("")),
+  image_url: z.string().url().max(1000).optional().or(z.literal("")),
   is_featured: z.boolean(),
-  sort_order: z.number().min(0),
+  sort_order: z.number().min(0).max(9999),
 })
 
 export async function createProject(formData: FormData) {
-  const { db } = getAdminServices()
+  // 1. Enforce admin authentication
+  const session = await verifyAdminSession()
+  if (!session.authenticated) {
+    return { success: false, error: session.error || "Acceso no autorizado." }
+  }
 
+  const { db } = getAdminServices()
   if (!db) {
-    return { success: false, error: "Firebase no está configurado en .env.local" }
+    return { success: false, error: "Firebase no está configurado en el servidor." }
   }
 
   const rawData = {
@@ -69,6 +76,7 @@ export async function createProject(formData: FormData) {
       image_url: validated.data.image_url || null,
       is_featured: validated.data.is_featured,
       sort_order: validated.data.sort_order,
+      created_by: session.email || "admin",
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     })
@@ -83,10 +91,19 @@ export async function createProject(formData: FormData) {
 }
 
 export async function updateProject(id: string, formData: FormData) {
-  const { db } = getAdminServices()
+  // 1. Enforce admin authentication
+  const session = await verifyAdminSession()
+  if (!session.authenticated) {
+    return { success: false, error: session.error || "Acceso no autorizado." }
+  }
 
+  if (!id || typeof id !== "string") {
+    return { success: false, error: "ID de proyecto inválido." }
+  }
+
+  const { db } = getAdminServices()
   if (!db) {
-    return { success: false, error: "Firebase no está configurado en .env.local" }
+    return { success: false, error: "Firebase no está configurado en el servidor." }
   }
 
   const rawData = {
@@ -126,6 +143,7 @@ export async function updateProject(id: string, formData: FormData) {
       image_url: validated.data.image_url || null,
       is_featured: validated.data.is_featured,
       sort_order: validated.data.sort_order,
+      updated_by: session.email || "admin",
       updated_at: new Date().toISOString(),
     })
 
@@ -139,10 +157,19 @@ export async function updateProject(id: string, formData: FormData) {
 }
 
 export async function deleteProject(id: string) {
-  const { db } = getAdminServices()
+  // 1. Enforce admin authentication
+  const session = await verifyAdminSession()
+  if (!session.authenticated) {
+    return { success: false, error: session.error || "Acceso no autorizado." }
+  }
 
+  if (!id || typeof id !== "string") {
+    return { success: false, error: "ID de proyecto inválido." }
+  }
+
+  const { db } = getAdminServices()
   if (!db) {
-    return { success: false, error: "Firebase no está configurado en .env.local" }
+    return { success: false, error: "Firebase no está configurado en el servidor." }
   }
 
   try {
@@ -156,3 +183,4 @@ export async function deleteProject(id: string) {
     return { success: false, error: message }
   }
 }
+

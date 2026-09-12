@@ -13,6 +13,10 @@ import { Footer } from "@/components/landing/footer"
 import { getAdminServices } from "@/lib/firebase/admin"
 import type { Project, SiteContent } from "@/lib/types"
 
+// Incremental Static Regeneration (ISR): Cache rendered HTML for 5 minutes,
+// immediately invalidated on-demand via revalidatePath("/") upon admin updates.
+export const revalidate = 300
+
 export default async function Home() {
   let projects: Project[] = []
   const contentMap: Record<string, Record<string, unknown>> = {}
