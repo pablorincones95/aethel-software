@@ -1,23 +1,23 @@
 const footerLinks = {
-  platform: [
+  Plataforma: [
     "Servicios de Ingeniería",
-    "Arquitectura Cloud & DevOps",
+    "Diseño UX/UI & Producto",
     "Desarrollo Web & SaaS",
-    "Innovación & I+D",
+    "SEO Técnico & Growth",
   ],
-  architecture: [
+  Arquitectura: [
     "Metodología de Entrega",
     "Seguridad & Auditoría",
     "DevOps & Infraestructura",
     "Operaciones & Soporte",
   ],
-  governance: [
+  Gobernanza: [
     "Términos de Servicio",
     "Política de Privacidad",
     "Acuerdos de Niveles (SLA)",
     "Cumplimiento & Certificaciones",
   ],
-  connect: [
+  Conectar: [
     "Blog de Ingeniería",
     "Documentación Técnica",
     "Portal de Empleo",
@@ -77,7 +77,7 @@ export function Footer() {
 
         <div className="footer__bottom">
           <span className="footer__copyright">
-            ©2025 Aethel Software AG. Precision Architectural Engineering.
+            ©2026 Aethel Software AG. Precision Architectural Engineering.
           </span>
           <div className="flex gap-6">
             <span className="font-[family-name:var(--font-display)] text-[12px] font-medium leading-[18px] tracking-[0.04em] text-[#94A3B8]">

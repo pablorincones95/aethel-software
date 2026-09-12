@@ -31,7 +31,7 @@ const phases = [
 
 export function Process() {
   return (
-    <section className="process">
+    <section className="process" id="metodologia">
       <div className="process__inner">
         <div className="process__header">
           <span className="process__label">Gobernanza de Entrega</span>
