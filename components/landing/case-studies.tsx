@@ -86,13 +86,14 @@ export function CaseStudies({ projects }: CaseStudiesProps) {
         </div>
 
         <div className="case-studies__grid">
-          {displayItems.map((item) => (
+          {displayItems.map((item, idx) => (
             <div key={item.title} className="case-studies__card">
               <div className="case-studies__card-image">
                 <Image
                   src={item.image}
                   alt={item.title}
                   fill
+                  priority={idx === 0}
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 33vw"
                 />

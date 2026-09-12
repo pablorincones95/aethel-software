@@ -43,6 +43,7 @@ export default function LoginPage() {
               alt="Aethel Logo"
               width={36}
               height={36}
+              style={{ width: "auto", height: "auto" }}
               className="opacity-95"
             />
           </div>
