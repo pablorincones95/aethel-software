@@ -13,7 +13,7 @@ const techItems = [
 
 export function TechStack() {
   return (
-    <section className="tech-stack">
+    <section className="tech-stack" id="stack">
       <div className="tech-stack__inner">
         <div className="tech-stack__header">
           <div className="tech-stack__header-text">
