@@ -1,7 +1,6 @@
 // ═══════════════════════════════════════════════════════
 // AETHEL SOFTWARE — Precision Engineering Atelier
 // Config Layer: SCSS Variables (media queries only)
-//
 // These SCSS variables CANNOT be CSS custom properties
 // because they're used in @media queries.
 // All other tokens use CSS custom properties (var(--ae-*)).

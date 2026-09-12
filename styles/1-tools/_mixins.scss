@@ -40,7 +40,7 @@
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border-width: 0;
 }
@@ -54,13 +54,11 @@
 @mixin glass {
   background-color: rgb(17 24 39 / 70%);
   backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
   border: 1px solid $color-border-subtle;
 }
 
 @mixin glass-dense {
   background-color: rgb(9 13 22 / 96%);
-  backdrop-filter: blur(24px);
   backdrop-filter: blur(24px);
   border: 1px solid rgb(255 255 255 / 15%);
 }
