@@ -1,10 +1,9 @@
 /**
  * Aethel Software — Firebase Firestore Seed Script
- * Run with: node scripts/seed-firebase.mjs
+ * Supports both Firebase Admin (service account) and Firebase Web SDK (API key)
+ * Run with: pnpm seed:firebase
  */
 
-import { initializeApp, cert } from "firebase-admin/app"
-import { getFirestore } from "firebase-admin/firestore"
 import { readFileSync, existsSync } from "fs"
 import { resolve } from "path"
 
@@ -31,26 +30,12 @@ const projectId =
   process.env.FIREBASE_PROJECT_ID || process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
 const clientEmail = process.env.FIREBASE_CLIENT_EMAIL
 let privateKey = process.env.FIREBASE_PRIVATE_KEY
+const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY
 
 if (!projectId) {
   console.error("❌ Error: NEXT_PUBLIC_FIREBASE_PROJECT_ID is not configured in .env.local")
   process.exit(1)
 }
-
-if (privateKey) {
-  privateKey = privateKey.replace(/\\n/g, "\n")
-}
-
-let app
-if (clientEmail && privateKey) {
-  app = initializeApp({
-    credential: cert({ projectId, clientEmail, privateKey }),
-  })
-} else {
-  app = initializeApp({ projectId })
-}
-
-const db = getFirestore(app)
 
 const projects = [
   {
@@ -279,34 +264,49 @@ const sections = {
 async function seed() {
   console.log("🚀 Starting Firestore seed...")
 
-  // 1. Seed site_content
-  console.log("📝 Seeding site_content...")
-  for (const [key, content] of Object.entries(sections)) {
-    await db.collection("site_content").doc(key).set(
-      {
-        section_key: key,
-        content,
-        updated_at: new Date().toISOString(),
-      },
-      { merge: true }
-    )
-    console.log(`  ✓ Section [${key}] saved`)
-  }
+  if (clientEmail && privateKey) {
+    console.log("🔑 Authenticating with Firebase Admin Service Account...")
+    privateKey = privateKey.replace(/\\n/g, "\n")
+    const { initializeApp, cert } = await import("firebase-admin/app")
+    const { getFirestore } = await import("firebase-admin/firestore")
+    const app = initializeApp({ credential: cert({ projectId, clientEmail, privateKey }) })
+    const db = getFirestore(app)
 
-  // 2. Seed projects
-  console.log("💼 Seeding projects...")
-  const projectsSnapshot = await db.collection("projects").get()
-  if (projectsSnapshot.empty) {
-    for (const project of projects) {
-      const docRef = await db.collection("projects").add({
-        ...project,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      })
-      console.log(`  ✓ Project created with ID: ${docRef.id}`)
+    for (const [key, content] of Object.entries(sections)) {
+      await db.collection("site_content").doc(key).set({ section_key: key, content, updated_at: new Date().toISOString() }, { merge: true })
+      console.log(`  ✓ Section [${key}] saved`)
     }
-  } else {
-    console.log("  ℹ Projects collection already has documents. Skipping projects seed.")
+
+    const snap = await db.collection("projects").get()
+    if (snap.empty) {
+      for (const p of projects) {
+        const ref = await db.collection("projects").add({ ...p, created_at: new Date().toISOString(), updated_at: new Date().toISOString() })
+        console.log(`  ✓ Project created with ID: ${ref.id}`)
+      }
+    } else {
+      console.log("  ℹ Projects collection already populated.")
+    }
+  } else if (apiKey) {
+    console.log("🌐 Authenticating with Firebase Web Client SDK...")
+    const { initializeApp } = await import("firebase/app")
+    const { getFirestore, doc, setDoc, collection, getDocs, addDoc } = await import("firebase/firestore")
+    const app = initializeApp({ apiKey, projectId })
+    const db = getFirestore(app)
+
+    for (const [key, content] of Object.entries(sections)) {
+      await setDoc(doc(db, "site_content", key), { section_key: key, content, updated_at: new Date().toISOString() }, { merge: true })
+      console.log(`  ✓ Section [${key}] saved`)
+    }
+
+    const snap = await getDocs(collection(db, "projects"))
+    if (snap.empty) {
+      for (const p of projects) {
+        const ref = await addDoc(collection(db, "projects"), { ...p, created_at: new Date().toISOString(), updated_at: new Date().toISOString() })
+        console.log(`  ✓ Project created with ID: ${ref.id}`)
+      }
+    } else {
+      console.log("  ℹ Projects collection already populated.")
+    }
   }
 
   console.log("✅ Firestore seed complete!")
@@ -314,6 +314,7 @@ async function seed() {
 }
 
 seed().catch((err) => {
-  console.error("❌ Seed failed:", err)
+  console.error("❌ Seed failed:", err.message || err)
+  console.log("\n💡 Nota: Si ves 'permission-denied', ve a Firebase Console -> Firestore Database -> Reglas (Rules) y publica temporalmente las reglas de firestore.rules para permitir la inicialización, o descarga tu clave privada en Configuración del proyecto -> Cuentas de servicio.")
   process.exit(1)
 })

@@ -17,7 +17,9 @@ export function getAdminServices(): {
   const clientEmail = process.env.FIREBASE_CLIENT_EMAIL
   let privateKey = process.env.FIREBASE_PRIVATE_KEY
 
-  if (!projectId) {
+  // If Service Account credentials are not set, return null gracefully
+  // so the application and Next.js build never fail with ADC credential errors
+  if (!projectId || !clientEmail || !privateKey) {
     return { app: null, db: null, auth: null }
   }
 
@@ -29,7 +31,7 @@ export function getAdminServices(): {
     const existingApps = getApps()
     if (existingApps.length > 0) {
       adminApp = existingApps[0]!
-    } else if (clientEmail && privateKey) {
+    } else {
       adminApp = initializeApp({
         credential: cert({
           projectId,
@@ -37,8 +39,6 @@ export function getAdminServices(): {
           privateKey,
         }),
       })
-    } else {
-      adminApp = initializeApp({ projectId })
     }
 
     adminDb = getFirestore(adminApp)
