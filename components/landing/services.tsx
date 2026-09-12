@@ -1,6 +1,6 @@
 import { Web, Devices, CloudSync, Hub } from "./icons"
 
-const services = [
+const defaultServices = [
   {
     number: "01 // WEB & SAAS",
     icon: Web,
@@ -31,27 +31,47 @@ const services = [
   },
 ]
 
-export function Services() {
+const iconsList = [Web, Devices, CloudSync, Hub]
+
+interface ServicesProps {
+  content?: Record<string, unknown>
+}
+
+export function Services({ content }: ServicesProps) {
+  const label = (content?.label as string) || "Ingeniería a Medida"
+  const title = (content?.title as string) || "Servicios Especializados de Ingeniería"
+  const subtitle =
+    (content?.subtitle as string) ||
+    "Diseño y construcción de soluciones a medida para productos digitales exigentes, desde la idea hasta la operación en producción."
+
+  const items =
+    Array.isArray(content?.items) && content.items.length > 0
+      ? (content.items as Record<string, unknown>[]).map((item, index) => ({
+          number: (item.number as string) || `0${index + 1} // SERVICIO`,
+          icon: iconsList[index % iconsList.length] || Web,
+          title: (item.title as string) || "",
+          desc: (item.desc as string) || "",
+          tags: Array.isArray(item.tags)
+            ? (item.tags as string[])
+            : typeof item.tags === "string"
+            ? (item.tags as string).split(",").map((t) => t.trim())
+            : [],
+        }))
+      : defaultServices
+
   return (
     <section className="services" id="arquitecturas">
       <div className="services__inner">
         <div className="services__header">
           <div className="services__header-text">
-            <span className="services__label">
-              Ingeniería a Medida
-            </span>
-            <h2 className="services__title">
-              Servicios Especializados de Ingeniería
-            </h2>
+            <span className="services__label">{label}</span>
+            <h2 className="services__title">{title}</h2>
           </div>
-          <p className="services__subtitle">
-            Diseño y construcción de soluciones a medida para productos
-            digitales exigentes, desde la idea hasta la operación en producción.
-          </p>
+          <p className="services__subtitle">{subtitle}</p>
         </div>
 
         <div className="services__grid">
-          {services.map((service) => (
+          {items.map((service) => (
             <div key={service.number} className="services__card">
               <div>
                 <div className="services__card-header">

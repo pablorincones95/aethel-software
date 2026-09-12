@@ -1,24 +1,29 @@
 import { Mail, Forum, CalendarMonth } from "./icons"
 import { ContactForm } from "./contact-form"
 
-export function Contact() {
+interface ContactProps {
+  content?: Record<string, unknown>
+}
+
+export function Contact({ content }: ContactProps) {
+  const label = (content?.label as string) || "Engineering Consultation"
+  const title = (content?.title as string) || "Iniciemos tu Próxima Evolución Digital"
+  const subtitle =
+    (content?.subtitle as string) ||
+    "Analicemos tu arquitectura actual, detectemos cuellos de botella y diseñemos una hoja de ruta técnica escalable para tus objetivos de negocio."
+  const securityNotice =
+    (content?.security_notice as string) ||
+    "* Acuerdos de confidencialidad (NDA mutuo) ejecutables de inmediato previo al intercambio de especificaciones técnicas."
+
   return (
     <section className="contact" id="contacto-evaluacion">
       <div className="contact__inner">
         <div className="contact__grid">
           {/* Left: Info & Channels */}
           <div className="contact__info">
-            <div className="contact__label">
-              Engineering Consultation
-            </div>
-            <h2 className="contact__title">
-              Iniciemos tu Próxima Evolución Digital
-            </h2>
-            <p className="contact__subtitle">
-              Analicemos tu arquitectura actual, detectemos cuellos de botella y
-              diseñemos una hoja de ruta técnica escalable para tus objetivos de
-              negocio.
-            </p>
+            <div className="contact__label">{label}</div>
+            <h2 className="contact__title">{title}</h2>
+            <p className="contact__subtitle">{subtitle}</p>
 
             <div className="contact__channels">
               <div className="contact__channel">
@@ -62,10 +67,7 @@ export function Contact() {
               </div>
             </div>
 
-            <p className="contact__nda">
-              * Acuerdos de confidencialidad (NDA mutuo) ejecutables de inmediato
-              previo al intercambio de especificaciones técnicas.
-            </p>
+            <p className="contact__nda">{securityNotice}</p>
           </div>
 
           {/* Right: Form */}

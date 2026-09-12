@@ -1,6 +1,6 @@
 import { Sparkles, Verified, Engineering } from "./icons"
 
-const aiServices = [
+const defaultAiServices = [
   {
     number: "07 // INGENIERÍA AUMENTADA",
     icon: Sparkles,
@@ -27,37 +27,58 @@ const aiServices = [
   },
 ]
 
-export function AiServices() {
+const icons = [Sparkles, Verified, Engineering]
+
+interface AiServicesProps {
+  content?: Record<string, unknown>
+}
+
+export function AiServices({ content }: AiServicesProps) {
+  const label = (content?.label as string) || "Ingeniería con IA"
+  const title = (content?.title as string) || "IA Integrada en Nuestro Proceso de Desarrollo"
+  const subtitle =
+    (content?.subtitle as string) ||
+    "Usamos inteligencia artificial como herramienta interna de ingeniería para construir más rápido y con más calidad — siempre con revisión humana."
+
+  const items =
+    Array.isArray(content?.cards) && content.cards.length > 0
+      ? (content.cards as Record<string, unknown>[]).map((card, index) => ({
+          number: (card.number as string) || `0${index + 7} // IA`,
+          icon: icons[index % icons.length] || Sparkles,
+          title: (card.title as string) || "",
+          desc: (card.desc as string) || "",
+          tags: Array.isArray(card.tags)
+            ? (card.tags as string[])
+            : typeof card.tags === "string"
+            ? (card.tags as string).split(",").map((t) => t.trim())
+            : [],
+          accent:
+            index % 2 === 0
+              ? "ai-services__card-icon--cyan"
+              : "ai-services__card-icon--gold",
+        }))
+      : defaultAiServices
+
   return (
     <section className="ai-services" id="ia">
       <div className="ai-services__inner">
         <div className="ai-services__header">
           <div className="ai-services__header-text">
-            <span className="ai-services__label">
-              Ingeniería con IA
-            </span>
-            <h2 className="ai-services__title">
-              IA Integrada en Nuestro Proceso de Desarrollo
-            </h2>
+            <span className="ai-services__label">{label}</span>
+            <h2 className="ai-services__title">{title}</h2>
           </div>
-          <p className="ai-services__subtitle">
-            Usamos inteligencia artificial como herramienta interna de
-            ingeniería para construir más rápido y con más calidad — siempre
-            con revisión humana.
-          </p>
+          <p className="ai-services__subtitle">{subtitle}</p>
         </div>
 
         <div className="ai-services__grid">
-          {aiServices.map((service) => (
-            <div key={service.number} className="ai-services__card">
+          {items.map((service) => (
+            <div key={service.title} className="ai-services__card">
               <div>
                 <div className="ai-services__card-header">
                   <span className="ai-services__card-number">
                     {service.number}
                   </span>
-                  <div
-                    className={`ai-services__card-icon ${service.accent}`}
-                  >
+                  <div className={`ai-services__card-icon ${service.accent}`}>
                     <service.icon />
                   </div>
                 </div>

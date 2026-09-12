@@ -1,6 +1,6 @@
 import { Shield, SyncProblem, EnhancedEncryption, Engineering } from "./icons"
 
-const pillars = [
+const defaultPillars = [
   {
     icon: Shield,
     iconColor: "philosophy__pillar-icon--cyan",
@@ -27,17 +27,41 @@ const pillars = [
   },
 ]
 
-export function Philosophy() {
+const icons = [Shield, SyncProblem, EnhancedEncryption, Engineering]
+
+interface PhilosophyProps {
+  content?: Record<string, unknown>
+}
+
+export function Philosophy({ content }: PhilosophyProps) {
+  const label = (content?.label as string) || "El Enfoque Atelier"
+  const title =
+    (content?.title as string) || "Ingeniería sin Concesiones. Sin Capas Burocráticas."
+  const quote =
+    (content?.quote as string) ||
+    "La elegancia en el software no es decoración visual; es la ausencia total de deuda técnica oculta, la velocidad de ejecución determinista y la resiliencia absoluta bajo máxima presión operativa."
+
+  const pillars =
+    Array.isArray(content?.pillars) && content.pillars.length > 0
+      ? (content.pillars as Record<string, unknown>[]).map((pillar, index) => ({
+          icon: icons[index % icons.length] || Shield,
+          iconColor:
+            index % 2 === 0
+              ? "philosophy__pillar-icon--cyan"
+              : "philosophy__pillar-icon--gold",
+          title: (pillar.title as string) || "",
+          desc: (pillar.desc as string) || "",
+        }))
+      : defaultPillars
+
   return (
     <section className="philosophy">
       <div className="philosophy__inner">
         <div className="philosophy__grid">
           {/* Left: Manifesto */}
           <div className="philosophy__manifesto">
-            <span className="philosophy__label">El Enfoque Atelier</span>
-            <h2 className="philosophy__title">
-              Ingeniería sin Concesiones. Sin Capas Burocráticas.
-            </h2>
+            <span className="philosophy__label">{label}</span>
+            <h2 className="philosophy__title">{title}</h2>
             <p className="philosophy__text">
               Rechazamos las fórmulas de las consultoras genéricas masivas. En
               Aethel operamos como un atelier de software de alta gama: equipos
@@ -45,14 +69,9 @@ export function Philosophy() {
               arquitectos de soluciones de primer nivel.
             </p>
             <div className="philosophy__quote">
-              <p className="philosophy__quote-text">
-                &ldquo;La elegancia en el software no es decoración visual; es
-                la ausencia total de deuda técnica oculta, la velocidad de
-                ejecución determinista y la resiliencia absoluta bajo máxima
-                presión operativa.&rdquo;
-              </p>
+              <p className="philosophy__quote-text">&ldquo;{quote}&rdquo;</p>
               <span className="philosophy__quote-author">
-                — Aethel Engineering Principles / Manifesto 2025
+                — Aethel Engineering Principles / Manifesto
               </span>
             </div>
           </div>
@@ -61,9 +80,7 @@ export function Philosophy() {
           <div className="philosophy__pillars">
             {pillars.map((pillar) => (
               <div key={pillar.title} className="philosophy__pillar">
-                <div
-                  className={`philosophy__pillar-icon ${pillar.iconColor}`}
-                >
+                <div className={`philosophy__pillar-icon ${pillar.iconColor}`}>
                   <pillar.icon />
                 </div>
                 <div>

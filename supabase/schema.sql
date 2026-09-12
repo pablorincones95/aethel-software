@@ -9,12 +9,18 @@ create extension if not exists "uuid-ossp";
 
 -- ─────────────────────────────────────────────
 -- Table: projects
--- Portfolio projects displayed on the landing page
+-- Portfolio projects and case studies for the landing page
 -- ─────────────────────────────────────────────
-create table public.projects (
+create table if not exists public.projects (
   id uuid default uuid_generate_v4() primary key,
   title text not null,
   description text,
+  challenge text,
+  solution text,
+  tag text,
+  tag_color text default 'cyan', -- 'cyan' or 'gold'
+  metric_primary text,
+  metric_secondary text,
   technologies text[] default '{}',
   url text,
   image_url text,
@@ -24,13 +30,21 @@ create table public.projects (
   updated_at timestamptz default now()
 );
 
-comment on table public.projects is 'Portfolio projects for the public landing page';
+comment on table public.projects is 'Portfolio projects and case studies for the landing page';
+
+-- Add columns if they were not present in previous schema version
+alter table public.projects add column if not exists challenge text;
+alter table public.projects add column if not exists solution text;
+alter table public.projects add column if not exists tag text;
+alter table public.projects add column if not exists tag_color text default 'cyan';
+alter table public.projects add column if not exists metric_primary text;
+alter table public.projects add column if not exists metric_secondary text;
 
 -- ─────────────────────────────────────────────
 -- Table: site_content
 -- CMS for editable landing page text sections
 -- ─────────────────────────────────────────────
-create table public.site_content (
+create table if not exists public.site_content (
   id uuid default uuid_generate_v4() primary key,
   section_key text unique not null,
   content jsonb not null default '{}',
@@ -40,11 +54,32 @@ create table public.site_content (
 comment on table public.site_content is 'Editable content sections for the landing page (CMS)';
 
 -- ─────────────────────────────────────────────
+-- Table: contact_leads
+-- Dedicated storage for inquiries received from the landing page
+-- ─────────────────────────────────────────────
+create table if not exists public.contact_leads (
+  id uuid default uuid_generate_v4() primary key,
+  name text not null,
+  email text not null,
+  organization text not null,
+  service text,
+  budget text,
+  details text,
+  status text not null default 'new' check (status in ('new', 'contacted', 'closed')),
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+comment on table public.contact_leads is 'Inquiries submitted through the contact form';
+
+-- ─────────────────────────────────────────────
 -- Indexes
 -- ─────────────────────────────────────────────
-create index idx_projects_sort_order on public.projects (sort_order);
-create index idx_projects_featured on public.projects (is_featured) where is_featured = true;
-create index idx_site_content_section_key on public.site_content (section_key);
+create index if not exists idx_projects_sort_order on public.projects (sort_order);
+create index if not exists idx_projects_featured on public.projects (is_featured) where is_featured = true;
+create index if not exists idx_site_content_section_key on public.site_content (section_key);
+create index if not exists idx_contact_leads_status on public.contact_leads (status);
+create index if not exists idx_contact_leads_created_at on public.contact_leads (created_at desc);
 
 -- ─────────────────────────────────────────────
 -- Updated_at trigger function
@@ -60,12 +95,19 @@ begin
 end;
 $$;
 
+drop trigger if exists set_updated_at_projects on public.projects;
 create trigger set_updated_at_projects
   before update on public.projects
   for each row execute function public.handle_updated_at();
 
+drop trigger if exists set_updated_at_site_content on public.site_content;
 create trigger set_updated_at_site_content
   before update on public.site_content
+  for each row execute function public.handle_updated_at();
+
+drop trigger if exists set_updated_at_contact_leads on public.contact_leads;
+create trigger set_updated_at_contact_leads
+  before update on public.contact_leads
   for each row execute function public.handle_updated_at();
 
 -- ─────────────────────────────────────────────
@@ -73,15 +115,16 @@ create trigger set_updated_at_site_content
 -- ─────────────────────────────────────────────
 alter table public.projects enable row level security;
 alter table public.site_content enable row level security;
+alter table public.contact_leads enable row level security;
 
 -- ── Policies: projects ──
--- Public read access (landing page)
+drop policy if exists "Public read access on projects" on public.projects;
 create policy "Public read access on projects"
   on public.projects
   for select
   using (true);
 
--- Authenticated full access (admin CRUD)
+drop policy if exists "Admin full access on projects" on public.projects;
 create policy "Admin full access on projects"
   on public.projects
   for all
@@ -89,56 +132,243 @@ create policy "Admin full access on projects"
   with check (auth.role() = 'authenticated');
 
 -- ── Policies: site_content ──
--- Public read access (landing page)
+drop policy if exists "Public read access on site_content" on public.site_content;
 create policy "Public read access on site_content"
   on public.site_content
   for select
   using (true);
 
--- Authenticated full access (admin CMS)
+drop policy if exists "Admin full access on site_content" on public.site_content;
 create policy "Admin full access on site_content"
   on public.site_content
   for all
   using (auth.role() = 'authenticated')
   with check (auth.role() = 'authenticated');
 
+-- ── Policies: contact_leads ──
+drop policy if exists "Allow public insertion of leads" on public.contact_leads;
+create policy "Allow public insertion of leads"
+  on public.contact_leads
+  for insert
+  with check (true);
+
+drop policy if exists "Admin full access on contact_leads" on public.contact_leads;
+create policy "Admin full access on contact_leads"
+  on public.contact_leads
+  for all
+  using (auth.role() = 'authenticated')
+  with check (auth.role() = 'authenticated');
+
+-- ─────────────────────────────────────────────
+-- Seed: Initial portfolio projects (Case Studies)
+-- ─────────────────────────────────────────────
+insert into public.projects (title, tag, tag_color, challenge, solution, metric_primary, metric_secondary, image_url, sort_order, is_featured)
+values
+  (
+    'Pasarela Transfronteriza Ultra Concurrente',
+    'Fintech & Core Bancario',
+    'gold',
+    'Caídas recurrentes en picos de 40k transacciones por minuto con sistemas bancarios legados.',
+    'Reescritura a microservicios distribuidos con particionado Postgres, caché Redis distribuida y motor de idempotencia en AWS EKS.',
+    '>150,000 TPS Estables',
+    '0% Downtime',
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuDOgWf5DSJxrw6Ee-uXzFgUd0dKgX-6whMjrJz9gG4Gw1nhfsl17HTqcn1Zjjqhn72UcdMQA_GZrOBE1esVs-LMXIjqKNMRtXQbE7EPzX_O6F4PFlfr5A0kD2-ujeJU_zqpupVMkomUUvYED-4UpALULWERxqrLmw8M8uKt-OxDRBTYcS1ytu5eJCFHtyW-S7uBcJSf69RjzVlKFLFiv7kIAReUnjgwaQrxUxhU2ZtQNZZrCJFUFA12',
+    1,
+    true
+  ),
+  (
+    'ERP Cloud & Telemetría IoT en Tiempo Real',
+    'Logística Global',
+    'cyan',
+    'Latencias superiores a 3.5s en sincronización de flotas marítimas transoceánicas.',
+    'Arquitectura de streaming bidireccional sobre WebSockets y Apache Kafka con compresión binaria Protobuf en el edge.',
+    '18ms RTT Global',
+    '1.2M Dispositivos',
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuA5tj_MA4lSqrDPcAqcDNkDrHqeRbkzVasNKvBr7q9DoHgnduvf5tFVxOLs_UCb6_cTilpvf_RPiT46m3qbIib5CvHIFbNYvnm0wEsiUWKfodN4aLE0BFmpgsxyOgO5hUgcVqnFeTeYvVHVfaXyx5vYrJR4osukXBzz-M045nkOto59Z9pbEVIFLid9fgFfKs6JcawVhQl-tdaBT0qwUcI3ADdc2KMggtXvRIAM-ciWKbc39eFnnq1o',
+    2,
+    true
+  ),
+  (
+    'Emergency Response Suite Multiplataforma',
+    'Healthcare & Mobile',
+    'gold',
+    'Pérdida de conectividad celular en unidades de emergencia causaba pérdida de datos médicos críticos.',
+    'Aplicación React Native Offline-First con WatermelonDB, sincronización delta con resolución CRDT y cifrado biométrico AES-256.',
+    '100% Cero Pérdida de Datos',
+    'HIPAA Compliant',
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuCK4S6BXZMlIMqBs4qePzD_WjdQe93QrsrFGBTfWTXtcnMykU5EXG-dA5luYIYmR400DObsBjCNO7HsiEXWZjH3M9MUtAO3xhbJ03oFLVEVHG5abp3LKQdY-sgOcfsBpKetEC4ORHfUzmwFYmRDS3PHB-yvP4xtcSF54gDnQQrjl_4aZSfjpqrwsBDNmbpQsL0tVtnLilN8DSb2xFsjHOK_sKMSdTyrVwMtNzS6I9gc4h9-rYy9zfga',
+    3,
+    true
+  )
+on conflict do nothing;
+
 -- ─────────────────────────────────────────────
 -- Seed: Initial site_content sections
 -- ─────────────────────────────────────────────
 insert into public.site_content (section_key, content) values
   ('hero', '{
-    "title": "Precision Engineering for Digital Systems",
-    "subtitle": "We architect and build high-performance software platforms with the rigor of mission-critical systems.",
-    "metrics": [
-      {"label": "Projects Delivered", "value": "47+"},
-      {"label": "Uptime SLA", "value": "99.97%"},
-      {"label": "Avg. Response Time", "value": "<120ms"}
-    ]
+    "badge_text": "Boutique Engineering Atelier // Software e IA de Alto Impacto",
+    "title": "Soluciones Digitales con IA para",
+    "title_gradient": "Escalar tu Negocio",
+    "subtitle": "Diseñamos y desarrollamos plataformas web, móviles y cloud potenciadas con inteligencia artificial, experiencia de usuario y posicionamiento — un enfoque completo, sin plantillas ni fábricas de código.",
+    "cta_primary_text": "Agendar Consulta Técnica",
+    "cta_secondary_text": "Explorar Arquitecturas",
+    "runtime_version": "aethel-core-runtime // v4.19",
+    "security_badge": "SOC 2 · EN PROCESO",
+    "status_label": "OPERATIONAL",
+    "status_detail": "Pipeline Verde",
+    "runtime_label": "NOMINAL",
+    "runtime_detail": "Alerts: 0"
   }'),
   ('services', '{
-    "title": "Specialized Engineering Services",
-    "subtitle": "Full-spectrum software architecture and development for enterprise-grade applications.",
+    "label": "Ingeniería a Medida",
+    "title": "Servicios Especializados de Ingeniería",
+    "subtitle": "Diseño y construcción de soluciones a medida para productos digitales exigentes, desde la idea hasta la operación en producción.",
     "items": [
-      {"title": "Web & SaaS", "description": "Full-stack applications with Next.js, React, and cloud-native backends.", "icon": "monitor"},
-      {"title": "Mobile Engineering", "description": "Cross-platform mobile applications using React Native and Angular.", "icon": "smartphone"},
-      {"title": "Cloud & DevOps", "description": "Infrastructure as code, CI/CD pipelines, and cloud architecture on AWS/GCP.", "icon": "cloud"},
-      {"title": "API & Integration", "description": "RESTful and GraphQL APIs, microservices, and third-party system integration.", "icon": "link"}
+      {
+        "number": "01 // WEB & SAAS",
+        "title": "Desarrollo Web & SaaS",
+        "desc": "Plataformas y aplicaciones web con Next.js, React, Angular y Node.js: arquitecturas modulares, serverless y preparadas para escalar.",
+        "tags": ["Next.js", "React", "Angular", "Node.js"]
+      },
+      {
+        "number": "02 // MOBILE",
+        "title": "Aplicaciones Móviles",
+        "desc": "Apps multiplataforma fluidas en React Native con Expo, sincronización offline y experiencia de usuario pulida en iOS y Android.",
+        "tags": ["React Native", "Expo", "TypeScript"]
+      },
+      {
+        "number": "03 // CLOUD & DEVOPS",
+        "title": "Infraestructura & Despliegue",
+        "desc": "Despliegues automatizados en Vercel, AWS y Railway, con pipelines CI/CD, contenedores Docker y entornos preparados para producción.",
+        "tags": ["Vercel", "AWS", "Railway", "Docker"]
+      },
+      {
+        "number": "04 // APIs & SISTEMAS",
+        "title": "APIs y Sistemas Distribuidos",
+        "desc": "APIs, microservicios y bases de datos con Node.js y PostgreSQL.",
+        "tags": ["Node.js", "PostgreSQL"]
+      }
+    ]
+  }'),
+  ('design_seo', '{
+    "label": "Diseño & Crecimiento",
+    "title": "Experiencia de Usuario & Posicionamiento Técnico",
+    "subtitle": "Un buen software necesita verse impecable y ser encontrado fácilmente. Integramos diseño de producto y SEO técnico desde la primera línea de código.",
+    "cards": [
+      {
+        "title": "UX/UI & Design Systems",
+        "desc": "Diseñamos interfaces intuitivas, accesibles y estéticamente refinadas. Construimos sistemas de diseño escalables con Figma y componentes reutilizables.",
+        "tags": ["Figma", "Design Systems", "Accesibilidad", "Micro-interacciones"]
+      },
+      {
+        "title": "SEO Técnico & Crecimiento Orgánico",
+        "desc": "Optimizamos arquitectura web, Core Web Vitals, metadatos estructurados y rendimiento para maximizar visibilidad en motores de búsqueda.",
+        "tags": ["Core Web Vitals", "Schema.org", "SSR / SSG", "Rendimiento"]
+      }
+    ]
+  }'),
+  ('ai_services', '{
+    "label": "Inteligencia Artificial Aplicada",
+    "title": "Ingeniería de IA Integrada en tu Producto",
+    "subtitle": "Llevamos modelos de lenguaje, agentes autónomos y procesamiento inteligente a tus flujos operativos reales, con latencia controlada y arquitecturas en producción.",
+    "cards": [
+      {
+        "number": "01 // AGENTES & AUTOMATIZACIÓN",
+        "title": "Agentes Autónomos & RAG Empresarial",
+        "desc": "Pipelines de Retrieval-Augmented Generation con bases vectoriales, embeddings contextuales y agentes que ejecutan tareas complejas de negocio.",
+        "metric": "<80ms Latencia Vectorial",
+        "tags": ["RAG", "Vector DBs", "LangChain", "OpenAI / Claude"]
+      },
+      {
+        "number": "02 // FINE-TUNING & MODELOS",
+        "title": "Modelos Especializados & Fine-Tuning",
+        "desc": "Ajuste fino de LLMs de código abierto para casos de uso específicos con datos privados, reduciendo costos de inferencia y garantizando soberanía de datos.",
+        "metric": "100% On-Premise / VPC",
+        "tags": ["Llama 3", "vLLM", "Hugging Face", "LoRA"]
+      },
+      {
+        "number": "03 // VISIÓN & NLP",
+        "title": "Visión por Computador & Análisis Textual",
+        "desc": "Extracción automática de datos de documentos complejos, clasificación multimodal y procesamiento masivo de datos no estructurados.",
+        "metric": "99.4% Precisión en Extracción",
+        "tags": ["OCR Avanzado", "Multimodal", "PyTorch", "FastAPI"]
+      }
+    ]
+  }'),
+  ('tech_stack', '{
+    "label": "Stack Tecnológico",
+    "title": "Herramientas Seleccionadas con Criterio de Ingeniería",
+    "subtitle": "Elegimos tecnologías probadas en producción para garantizar rendimiento, mantenibilidad y escalabilidad a largo plazo.",
+    "items": [
+      { "number": "01", "name": "Next.js & React", "desc": "Framework web moderno con App Router y Server Components" },
+      { "number": "02", "name": "TypeScript", "desc": "Tipado estricto para bases de código robustas y libres de errores" },
+      { "number": "03", "name": "React Native", "desc": "Aplicaciones móviles nativas con rendimiento de primer nivel" },
+      { "number": "04", "name": "Node.js & Python", "desc": "Backends de alto rendimiento, microservicios y pipelines de IA" },
+      { "number": "05", "name": "PostgreSQL & Supabase", "desc": "Bases de datos relacionales sólidas con RLS y tiempo real" },
+      { "number": "06", "name": "Docker & Kubernetes", "desc": "Contenedores y orquestación para despliegues reproducibles" },
+      { "number": "07", "name": "AWS & Vercel", "desc": "Infraestructura cloud elástica y despliegues edge globales" },
+      { "number": "08", "name": "Tailwind CSS & SCSS", "desc": "Estilizado modular, rápido y con sistemas de diseño estrictos" },
+      { "number": "09", "name": "Git & CI/CD", "desc": "Integración y entrega continua con pipelines automatizados" },
+      { "number": "10", "name": "LLMs & Vector DBs", "desc": "Integración de modelos fundacionales y búsqueda semántica" }
     ]
   }'),
   ('process', '{
-    "title": "Engineering Process",
-    "subtitle": "A disciplined methodology refined through years of mission-critical delivery.",
+    "label": "Metodología",
+    "title": "Cómo Trabajamos: De la Idea a Producción",
+    "subtitle": "Un proceso estructurado que minimiza riesgos, acelera entregas y garantiza que cada línea de código responda a un objetivo de negocio.",
     "phases": [
-      {"number": "01", "title": "Discovery & Analysis", "description": "Deep-dive into requirements, system constraints, and architectural boundaries."},
-      {"number": "02", "title": "Architecture & Design", "description": "Technical specifications, system diagrams, and technology stack selection."},
-      {"number": "03", "title": "Iterative Build", "description": "Sprint-based development with continuous integration and automated testing."},
-      {"number": "04", "title": "Deploy & Monitor", "description": "Production deployment, performance monitoring, and operational readiness."}
+      {
+        "number": "01",
+        "title": "Diagnóstico & Arquitectura",
+        "desc": "Analizamos tus requerimientos, definimos la arquitectura del sistema, seleccionamos el stack óptimo y establecemos los hitos clave del proyecto."
+      },
+      {
+        "number": "02",
+        "title": "Diseño & Prototipado",
+        "desc": "Diseñamos las interfaces clave, validamos la experiencia de usuario y definimos el sistema de diseño antes de escribir una sola línea de código."
+      },
+      {
+        "number": "03",
+        "title": "Desarrollo Iterativo",
+        "desc": "Construimos en sprints cortos con demos frecuentes. Código limpio, tipado estricto, pruebas automatizadas y revisiones constantes."
+      },
+      {
+        "number": "04",
+        "title": "Despliegue & Operación",
+        "desc": "Configuramos infraestructura de producción, pipelines CI/CD, monitoreo continuo y documentación completa para transferencia técnica."
+      }
+    ]
+  }'),
+  ('philosophy', '{
+    "label": "Nuestra Filosofía",
+    "title": "Principios que Guían Nuestro Trabajo",
+    "quote": "No construimos software para cumplir un checklist. Construimos herramientas que transforman cómo operan las empresas.",
+    "pillars": [
+      {
+        "number": "01",
+        "title": "Rigor sobre Velocidad Imprudente",
+        "desc": "Avanzar rápido sin bases sólidas solo genera deuda técnica. Diseñamos sistemas que crecen con tu empresa sin necesidad de reescribirlos."
+      },
+      {
+        "number": "02",
+        "title": "Transparencia Técnica Total",
+        "desc": "Sin jerga innecesaria ni cajas negras. Sabes exactamente qué se está construyendo, por qué se eligió cada tecnología y cómo evoluciona el proyecto."
+      },
+      {
+        "number": "03",
+        "title": "Enfoque de Negocio",
+        "desc": "La mejor arquitectura es la que genera valor tangible. Cada decisión técnica está alineada con tus objetivos de ingresos, retención y eficiencia."
+      }
     ]
   }'),
   ('contact', '{
-    "title": "Start a Conversation",
-    "subtitle": "Ready to architect your next system? Let us discuss your technical requirements.",
-    "email": "engineering@aethel.software",
-    "response_time": "24h"
+    "label": "Contacto Directo",
+    "title": "Hablemos de tu Próximo Proyecto",
+    "subtitle": "Completa el formulario y un arquitecto senior analizará tus requerimientos técnicos para responder en menos de 4 horas hábiles.",
+    "security_notice": "Datos protegidos y tratados con confidencialidad",
+    "response_time": "<4 horas hábiles"
   }')
-on conflict (section_key) do nothing;
+on conflict (section_key) do update set
+  content = excluded.content,
+  updated_at = now();

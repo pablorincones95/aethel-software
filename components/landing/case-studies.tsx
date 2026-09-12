@@ -1,6 +1,7 @@
 import Image from "next/image"
+import type { Project } from "@/lib/types"
 
-const cases = [
+const defaultCases = [
   {
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuDOgWf5DSJxrw6Ee-uXzFgUd0dKgX-6whMjrJz9gG4Gw1nhfsl17HTqcn1Zjjqhn72UcdMQA_GZrOBE1esVs-LMXIjqKNMRtXQbE7EPzX_O6F4PFlfr5A0kD2-ujeJU_zqpupVMkomUUvYED-4UpALULWERxqrLmw8M8uKt-OxDRBTYcS1ytu5eJCFHtyW-S7uBcJSf69RjzVlKFLFiv7kIAReUnjgwaQrxUxhU2ZtQNZZrCJFUFA12",
@@ -42,7 +43,31 @@ const cases = [
   },
 ]
 
-export function CaseStudies() {
+interface CaseStudiesProps {
+  projects?: Project[]
+}
+
+export function CaseStudies({ projects }: CaseStudiesProps) {
+  const displayItems =
+    projects && projects.length > 0
+      ? projects.filter((p) => p.is_featured).map((p, index) => ({
+          title: p.title,
+          tag: p.tag || "Ingeniería de Producción",
+          tagColor:
+            p.tag_color === "gold"
+              ? "case-studies__card-tag--gold"
+              : "case-studies__card-tag--cyan",
+          challenge: p.challenge || p.description || "Requerimientos de alta concurrencia y tolerancia a fallos.",
+          solution: p.solution || "Arquitectura distribuida y desarrollo a medida por Aethel Software.",
+          metric1: p.metric_primary || "Alta Disponibilidad",
+          metric2: p.metric_secondary || "100% Auditado",
+          image:
+            p.image_url ||
+            defaultCases[index % defaultCases.length]?.image ||
+            defaultCases[0].image,
+        }))
+      : defaultCases
+
   return (
     <section className="case-studies" id="casos">
       <div className="case-studies__inner">
@@ -61,7 +86,7 @@ export function CaseStudies() {
         </div>
 
         <div className="case-studies__grid">
-          {cases.map((item) => (
+          {displayItems.map((item) => (
             <div key={item.title} className="case-studies__card">
               <div className="case-studies__card-image">
                 <Image
@@ -71,9 +96,7 @@ export function CaseStudies() {
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 33vw"
                 />
-                <span
-                  className={`case-studies__card-tag ${item.tagColor}`}
-                >
+                <span className={`case-studies__card-tag ${item.tagColor}`}>
                   {item.tag}
                 </span>
               </div>

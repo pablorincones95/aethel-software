@@ -5,6 +5,7 @@ import {
   LayoutDashboard,
   FolderKanban,
   FileText,
+  Inbox,
 } from "lucide-react"
 import { SignOutButton } from "./sign-out-button"
 import { ThemeToggle } from "@/components/admin/theme-toggle"
@@ -16,8 +17,9 @@ export const metadata: Metadata = {
 
 const navItems = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
-  { label: "Projects", href: "/admin/projects", icon: FolderKanban },
-  { label: "Content", href: "/admin/content", icon: FileText },
+  { label: "Proyectos / Casos", href: "/admin/projects", icon: FolderKanban },
+  { label: "Contenidos (CMS)", href: "/admin/content", icon: FileText },
+  { label: "Leads & Contactos", href: "/admin/leads", icon: Inbox },
 ]
 
 export default async function AdminLayout({
@@ -46,7 +48,7 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-background">
       {/* Sidebar */}
       <aside className="fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r bg-background">
         {/* Logo */}
@@ -83,7 +85,7 @@ export default async function AdminLayout({
               </div>
               <div className="flex-1 truncate">
                 <p className="truncate text-sm font-medium">{userEmail}</p>
-                <p className="text-xs text-muted-foreground">Administrator</p>
+                <p className="text-xs text-muted-foreground">Administrador</p>
               </div>
             </div>
             <div className="flex items-center gap-1">

@@ -4,7 +4,24 @@ import {
   Lock,
 } from "./icons"
 
-export function Hero() {
+interface HeroProps {
+  content?: Record<string, unknown>
+}
+
+export function Hero({ content }: HeroProps) {
+  const badgeText =
+    (content?.badge_text as string) ||
+    "Boutique Engineering Atelier // Software e IA de Alto Impacto"
+  const title = (content?.title as string) || "Soluciones Digitales con IA para"
+  const titleGradient = (content?.title_gradient as string) || "Escalar tu Negocio"
+  const subtitle =
+    (content?.subtitle as string) ||
+    "Diseñamos y desarrollamos plataformas web, móviles y cloud potenciadas con inteligencia artificial, experiencia de usuario y posicionamiento — un enfoque completo, sin plantillas ni fábricas de código."
+  const ctaPrimary = (content?.cta_primary_text as string) || "Agendar Consulta Técnica"
+  const ctaSecondary = (content?.cta_secondary_text as string) || "Explorar Arquitecturas"
+  const runtimeVersion = (content?.runtime_version as string) || "aethel-core-runtime // v4.19"
+  const securityBadge = (content?.security_badge as string) || "SOC 2 · EN PROCESO"
+
   return (
     <section className="hero">
       <div className="hero__ambient-top" />
@@ -16,33 +33,24 @@ export function Hero() {
           <div className="hero__content">
             <div className="hero__badge">
               <span className="hero__badge-ping" />
-              <span className="hero__badge-text">
-                Boutique Engineering Atelier // Software e IA de Alto Impacto
-              </span>
+              <span className="hero__badge-text">{badgeText}</span>
             </div>
 
             <h1 className="hero__title">
-              Soluciones Digitales con IA para{" "}
-              <span className="hero__title-gradient">
-                Escalar tu Negocio
-              </span>
+              {title}{" "}
+              <span className="hero__title-gradient">{titleGradient}</span>
             </h1>
 
-            <p className="hero__subtitle">
-              Diseñamos y desarrollamos plataformas web, móviles y cloud
-              potenciadas con inteligencia artificial, experiencia de usuario y
-              posicionamiento — un enfoque completo, sin plantillas ni fábricas
-              de código.
-            </p>
+            <p className="hero__subtitle">{subtitle}</p>
 
             <div className="hero__ctas">
               <a href="#contacto-evaluacion" className="hero__cta-primary">
-                <span>Agendar Consulta Técnica</span>
+                <span>{ctaPrimary}</span>
                 <ArrowForward />
               </a>
               <a href="#arquitecturas" className="hero__cta-secondary">
                 <Schema />
-                <span>Explorar Arquitecturas</span>
+                <span>{ctaSecondary}</span>
               </a>
             </div>
 
@@ -65,13 +73,11 @@ export function Hero() {
                 <span className="hero__console-dot" />
                 <span className="hero__console-dot" />
                 <span className="hero__console-dot" />
-                <span className="hero__console-label">
-                  aethel-core-runtime // v4.19
-                </span>
+                <span className="hero__console-label">{runtimeVersion}</span>
               </div>
               <div className="hero__console-badge">
                 <Lock />
-                <span>SOC 2 · EN PROCESO</span>
+                <span>{securityBadge}</span>
               </div>
             </div>
 
@@ -87,9 +93,7 @@ export function Hero() {
             <div className="hero__metrics">
               <div className="hero__metric-card">
                 <div className="hero__metric-label">SYSTEM STATUS</div>
-                <div className="hero__metric-value">
-                  OPERATIONAL
-                </div>
+                <div className="hero__metric-value">OPERATIONAL</div>
                 <div className="hero__metric-status hero__metric-status--gold">
                   Pipeline Verde
                 </div>

@@ -1,4 +1,4 @@
-const phases = [
+const defaultPhases = [
   {
     number: "01",
     label: "Fase Inicial",
@@ -29,20 +29,38 @@ const phases = [
   },
 ]
 
-export function Process() {
+interface ProcessProps {
+  content?: Record<string, unknown>
+}
+
+export function Process({ content }: ProcessProps) {
+  const label = (content?.label as string) || "Gobernanza de Entrega"
+  const title = (content?.title as string) || "Protocolo y Metodología Aethel en 4 Fases"
+  const subtitle =
+    (content?.subtitle as string) ||
+    "Un proceso claro y colaborativo, pensado para empresas reales: sin incertidumbre, con etapas definidas y entregables concretos en cada fase."
+
+  const phases =
+    Array.isArray(content?.phases) && content.phases.length > 0
+      ? (content.phases as Record<string, unknown>[]).map((phase, index) => ({
+          number: (phase.number as string) || `0${index + 1}`,
+          label: (phase.label as string) || defaultPhases[index % defaultPhases.length]?.label || "Fase",
+          title: (phase.title as string) || "",
+          desc: (phase.desc as string) || "",
+          deliverable:
+            (phase.deliverable as string) ||
+            defaultPhases[index % defaultPhases.length]?.deliverable ||
+            "Entregable técnico garantizado",
+        }))
+      : defaultPhases
+
   return (
     <section className="process" id="metodologia">
       <div className="process__inner">
         <div className="process__header">
-          <span className="process__label">Gobernanza de Entrega</span>
-          <h2 className="process__title">
-            Protocolo y Metodología Aethel en 4 Fases
-          </h2>
-          <p className="process__subtitle">
-            Un proceso claro y colaborativo, pensado para empresas reales: sin
-            incertidumbre, con etapas definidas y entregables concretos en cada
-            fase.
-          </p>
+          <span className="process__label">{label}</span>
+          <h2 className="process__title">{title}</h2>
+          <p className="process__subtitle">{subtitle}</p>
         </div>
 
         <div className="process__timeline">

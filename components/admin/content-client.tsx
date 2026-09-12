@@ -13,10 +13,14 @@ interface ContentClientProps {
 }
 
 const sectionLabels: Record<string, string> = {
-  hero: "Hero",
-  services: "Services",
-  process: "Process",
-  contact: "Contact",
+  hero: "Hero Principal",
+  services: "Servicios",
+  design_seo: "Diseño & SEO",
+  ai_services: "IA Aplicada",
+  tech_stack: "Stack Tecnológico",
+  process: "Metodología",
+  philosophy: "Filosofía",
+  contact: "Contacto",
 }
 
 export function ContentClient({ sections }: ContentClientProps) {
@@ -30,21 +34,23 @@ export function ContentClient({ sections }: ContentClientProps) {
     return (
       <Card>
         <CardContent className="flex h-24 items-center justify-center text-muted-foreground">
-          No content sections found. Run the SQL seed script to initialize.
+          No hay secciones disponibles.
         </CardContent>
       </Card>
     )
   }
 
   return (
-    <Tabs defaultValue={sections[0]?.section_key}>
-      <TabsList>
-        {sections.map((section) => (
-          <TabsTrigger key={section.section_key} value={section.section_key}>
-            {sectionLabels[section.section_key] || section.section_key}
-          </TabsTrigger>
-        ))}
-      </TabsList>
+    <Tabs defaultValue={sections[0]?.section_key} className="space-y-4">
+      <div className="overflow-x-auto pb-1">
+        <TabsList className="inline-flex w-auto">
+          {sections.map((section) => (
+            <TabsTrigger key={section.section_key} value={section.section_key}>
+              {sectionLabels[section.section_key] || section.section_key}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </div>
 
       {sections.map((section) => (
         <TabsContent key={section.section_key} value={section.section_key}>

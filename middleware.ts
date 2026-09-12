@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
 
   // Skip Supabase auth if credentials are not configured
   if (!supabaseUrl || !supabaseKey) {
-    // Allow admin routes without Supabase for preview
+    // Allow admin routes without Supabase for local dev / preview
     return supabaseResponse
   }
 
@@ -39,11 +39,23 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
+  const pathname = request.nextUrl.pathname
+
+  // Allow /admin/login without authentication; if already logged in, redirect to /admin
+  if (pathname === "/admin/login") {
+    if (user) {
+      const url = request.nextUrl.clone()
+      url.pathname = "/admin"
+      return NextResponse.redirect(url)
+    }
+    return supabaseResponse
+  }
+
   // Protect admin routes
-  if (request.nextUrl.pathname.startsWith("/admin")) {
+  if (pathname.startsWith("/admin")) {
     if (!user) {
       const url = request.nextUrl.clone()
-      url.pathname = "/"
+      url.pathname = "/admin/login"
       return NextResponse.redirect(url)
     }
   }

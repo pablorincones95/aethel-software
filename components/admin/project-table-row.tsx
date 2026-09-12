@@ -23,7 +23,12 @@ interface ProjectTableRowProps {
 export function ProjectTableRow({ project }: ProjectTableRowProps) {
   return (
     <TableRow>
-      <TableCell className="font-medium">{project.title}</TableCell>
+      <TableCell className="font-medium">
+        <div>{project.title}</div>
+        {project.tag && (
+          <span className="text-xs text-muted-foreground">{project.tag}</span>
+        )}
+      </TableCell>
       <TableCell>
         <div className="flex flex-wrap gap-1">
           {project.technologies?.slice(0, 3).map((tech) => (
@@ -38,7 +43,7 @@ export function ProjectTableRow({ project }: ProjectTableRowProps) {
       </TableCell>
       <TableCell>
         <Badge variant={project.is_featured ? "default" : "outline"}>
-          {project.is_featured ? "Featured" : "Draft"}
+          {project.is_featured ? "Publicado" : "Borrador"}
         </Badge>
       </TableCell>
       <TableCell className="text-right">
@@ -46,7 +51,7 @@ export function ProjectTableRow({ project }: ProjectTableRowProps) {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon">
               <MoreHorizontal className="h-4 w-4" />
-              <span className="sr-only">Actions</span>
+              <span className="sr-only">Acciones</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -55,7 +60,7 @@ export function ProjectTableRow({ project }: ProjectTableRowProps) {
               trigger={
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                   <Pencil className="mr-2 h-4 w-4" />
-                  Edit
+                  Editar
                 </DropdownMenuItem>
               }
             />
@@ -67,7 +72,7 @@ export function ProjectTableRow({ project }: ProjectTableRowProps) {
                   className="text-destructive"
                 >
                   <Trash className="mr-2 h-4 w-4" />
-                  Delete
+                  Eliminar
                 </DropdownMenuItem>
               }
             />
