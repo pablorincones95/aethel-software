@@ -13,6 +13,18 @@ export function ContactForm() {
 
   return (
     <form className="contact__form" action={formAction}>
+      {/* Honeypot field for bot trapping — completely invisible to real users */}
+      <div style={{ display: "none", opacity: 0, position: "absolute", left: "-9999px" }} aria-hidden="true">
+        <label htmlFor="aethel_contact_hp">No llenar este campo</label>
+        <input
+          id="aethel_contact_hp"
+          type="text"
+          name="aethel_contact_hp"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       <div className="contact__form-row">
         <div>
           <label className="contact__field-label">
