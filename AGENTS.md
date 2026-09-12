@@ -64,6 +64,34 @@ lib/firebase/ → Firebase clients (browser + admin server)
 - Use `gap-*` instead of `space-x-*` / `space-y-*`
 - Utility classes available: `.elevation-1`, `.glass`, `.glow-cyan`, `.glow-gold`, `.text-label-caps`, `.tabular-nums`
 
+## Git Workflow & Quality Assurance Rules (MANDATORY)
+
+### 1. Branch Strategy
+- **`main`**: Production-ready branch. **Direct pushes to `main` are strictly forbidden.**
+- **`develop`**: Integration and active staging branch.
+- **Working Branches**: Every feature, fix, or task MUST be created in a separate branch:
+  - `feature/<name>` for new features (e.g., `feature/admin-analytics`)
+  - `fix/<issue>` for bug fixes (e.g., `fix/hydration-error`)
+  - `refactor/<name>` for code or architecture improvements
+  - `chore/<name>` for tooling, config, or documentation updates
+
+### 2. Mandatory Verification Before Push / PR
+NEVER commit or push code without verifying the following locally:
+1. **TypeScript Typecheck:** Run `./node_modules/.bin/tsc --noEmit` (or `pnpm typecheck`). Must pass with **0 errors**.
+2. **Runtime & Build Sanity:** Verify dev server / build compiles without exceptions or broken imports.
+3. **Console & Hydration Check:** Ensure no React hydration mismatches, missing props, or console errors are introduced.
+4. **End-to-End Verification:** Manually or automatically verify the updated feature (e.g., Firestore CRUD operations, auth flow, form submissions).
+5. **Zero Secrets in Git:** Verify that `.env.local`, Firebase private keys, or credentials are NEVER staged.
+
+### 3. Pull Request (PR) & Approval Protocol
+- Push working branches to GitHub and open a Pull Request (PR) targeting `develop` (or `main` for releases).
+- Follow Conventional Commits in PR titles and commit messages (`feat:`, `fix:`, `refactor:`, `chore:`, `docs:`).
+- Document in the PR description:
+  - Summary of changes
+  - Verification checklist completed
+  - Proof of functionality (logs, screenshots if UI changed)
+- Never merge unverified or failing code.
+
 ## Key Files Reference
 | File | Purpose |
 |------|---------|

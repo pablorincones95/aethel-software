@@ -1,45 +1,19 @@
-## ¿Qué hace este PR?
+## 📌 Descripción del Cambio
+<!-- Explica brevemente qué se implementó o corrigió -->
 
-<!-- Describe brevemente los cambios. Una línea es suficiente. -->
+## 🌿 Tipo de Cambio
+- [ ] `feat:` Nueva funcionalidad
+- [ ] `fix:` Corrección de bug
+- [ ] `refactor:` Refactorización o mejora de arquitectura
+- [ ] `chore:` Mantenimiento, dependencias o configuración
 
-## Tipo de cambio
+## ✅ Lista de Verificación de Calidad (MANDATORIO antes de mergear)
+- [ ] **TypeScript:** Compilación limpia sin errores (`pnpm typecheck` o `tsc --noEmit`).
+- [ ] **Build:** `pnpm build` ejecutado y exitoso.
+- [ ] **Pruebas de Funcionalidad:** Probado localmente (landing o panel `/admin`).
+- [ ] **Cero Errores de Consola:** Sin fallos de hidratación en React ni excepciones no controladas.
+- [ ] **Seguridad:** Cero secretos, tokens o credenciales expuestas en el código.
+- [ ] **Diseño:** Alineado al sistema de diseño *Precision Engineering Atelier* (`DESIGN.md`).
 
-- [ ] 🐛 Bug fix
-- [ ] ✨ Nueva feature
-- [ ] 🎨 Cambio de UI / diseño
-- [ ] ♻️ Refactor (sin cambio de comportamiento)
-- [ ] 🔒 Seguridad
-- [ ] 📝 Documentación
-- [ ] 🗄️ Base de datos / Schema
-
-## Checklist
-
-### Código
-- [ ] No hay `console.log` ni código de debug
-- [ ] Server Components por defecto; `"use client"` solo cuando es necesario
-- [ ] Named exports en todos los componentes
-- [ ] `cn()` usado para clases condicionales
-
-### Diseño (si aplica)
-- [ ] Usa tokens CSS (`var(--ae-*)`) — nunca colores Tailwind hardcodeados
-- [ ] Compatible dark-mode (el único modo soportado)
-- [ ] Fuentes correctas: Space Grotesk (display) / Hanken Grotesk (body)
-- [ ] shadcn/ui solo en `/admin`, componentes custom en `/components/landing`
-
-### Seguridad
-- [ ] Sin `service_role` key en client code
-- [ ] Sin secrets hardcodeados
-- [ ] Server Actions usan `supabase.auth.getUser()` para verificar auth
-- [ ] Rutas admin protegidas por middleware
-
-### Base de datos (si aplica)
-- [ ] Cambios en `supabase/schema.sql`
-- [ ] RLS policies actualizadas
-
-## Screenshots (si hay cambios de UI)
-
-<!-- Adjunta screenshots o grabaciones antes/después -->
-
-## Issue relacionado
-
-<!-- Closes #XXX -->
+## 📸 Evidencia y Pruebas Realizadas
+<!-- Agrega logs de éxito, capturas de pantalla o pasos de reproducción para validar el cambio -->
