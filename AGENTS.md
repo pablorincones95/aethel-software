@@ -12,16 +12,16 @@ Corporate website and admin panel for Aethel Software, built with the **Precisio
 - **Language:** TypeScript (strict mode)
 - **Styling:** Tailwind CSS v4 (CSS-first config — NO tailwind.config.ts)
 - **Components:** shadcn/ui (new-york style, Radix primitives)
-- **Database:** Supabase (PostgreSQL + Supabase Auth)
+- **Database & Auth:** Google Firebase (Cloud Firestore + Firebase Auth via `firebase` & `firebase-admin`)
 - **Package Manager:** pnpm
 
 ## Architecture
 ```
 / → Landing page (custom components, NO shadcn/ui)
-/admin → Admin panel (shadcn/ui, protected with Supabase Auth)
+/admin → Admin panel (shadcn/ui, protected with Firebase Auth)
 components/ui/ → shadcn/ui components (admin ONLY)
-components/landing/ → Custom landing components (to be designed later)
-lib/supabase/ → Supabase clients (browser + server)
+components/landing/ → Custom landing components
+lib/firebase/ → Firebase clients (browser + admin server)
 ```
 
 ## Design System: Precision Engineering Atelier
@@ -44,20 +44,19 @@ lib/supabase/ → Supabase clients (browser + server)
 
 ### File Naming
 - Pages: `page.tsx` | Layouts: `layout.tsx` | API Routes: `route.ts`
-- Components: kebab-case (`hero.tsx`, `projects-table.tsx`)
+- Components: kebab-case (`hero.tsx`, `project-form.tsx`)
 - Utilities: camelCase (`formatDate.ts`)
 
-### Supabase
-- Server client (`lib/supabase/server.ts`) for Server Components and Server Actions
-- Browser client (`lib/supabase/client.ts`) for Client Components only
-- Auth verified via `supabase.auth.getUser()` (NOT `getSession()`)
-- Middleware refreshes tokens automatically on every request
+### Firebase
+- Server Admin SDK (`lib/firebase/admin.ts`) for Server Components and Server Actions
+- Browser client (`lib/firebase/client.ts`) for Client Components
+- Auth session verified via secure HTTP-Only cookie `aethel_session`
+- Firestore collections: `projects`, `site_content`, `contact_leads`
 
 ### Security
-- Never expose `service_role` key or secrets in client code
-- RLS enabled on all tables — policies defined in `supabase/schema.sql`
-- Admin routes protected via middleware auth guard
-- Use `app_metadata` for authorization, NOT `user_metadata`
+- Never expose service account private keys in client code
+- Security rules defined in `firestore.rules`
+- Admin routes protected via middleware session guard
 
 ### Styling (shadcn/ui Components)
 - Use semantic tokens: `bg-primary-container`, `text-on-surface`, etc.
@@ -71,8 +70,9 @@ lib/supabase/ → Supabase clients (browser + server)
 | `app/globals.css` | All design tokens, typography, elevation, glassmorphism |
 | `components.json` | shadcn/ui configuration |
 | `lib/utils.ts` | `cn()` helper (clsx + tailwind-merge) |
-| `lib/supabase/client.ts` | Browser Supabase client |
-| `lib/supabase/server.ts` | Server Supabase client (cookies) |
-| `middleware.ts` | Auth token refresh + /admin guard |
-| `supabase/schema.sql` | Database DDL + RLS policies |
+| `lib/firebase/client.ts` | Browser Firebase client |
+| `lib/firebase/admin.ts` | Server Firebase Admin SDK |
+| `middleware.ts` | Session cookie verification + /admin guard |
+| `firestore.rules` | Cloud Firestore security rules |
+| `SETUP_GUIDE.md` | Complete Firebase & Resend setup guide |
 | `DESIGN.md` | Complete design system documentation |

@@ -1,6 +1,6 @@
 import { type Metadata } from "next"
 import Link from "next/link"
-import { createClient } from "@/lib/supabase/server"
+import { cookies } from "next/headers"
 import {
   LayoutDashboard,
   FolderKanban,
@@ -27,25 +27,8 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-  let userEmail = "admin@aethel.software"
-
-  if (supabaseUrl && supabaseKey) {
-    try {
-      const supabase = await createClient()
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-
-      if (user?.email) {
-        userEmail = user.email
-      }
-    } catch {
-      // Use default email
-    }
-  }
+  const cookieStore = await cookies()
+  const userEmail = cookieStore.get("aethel_user")?.value || "admin@aethel.software"
 
   return (
     <div className="flex min-h-screen bg-background">

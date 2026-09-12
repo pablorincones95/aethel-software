@@ -1,24 +1,25 @@
 import { Inbox } from "lucide-react"
-import { createClient } from "@/lib/supabase/server"
+import { getAdminServices } from "@/lib/firebase/admin"
 import { LeadsClient } from "@/components/admin/leads-client"
 import type { ContactLead } from "@/lib/types"
 
 export default async function AdminLeadsPage() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const { db } = getAdminServices()
 
   let leads: ContactLead[] = []
 
-  if (supabaseUrl && supabaseKey) {
+  if (db) {
     try {
-      const supabase = await createClient()
-      const { data } = await supabase
-        .from("contact_leads")
-        .select("*")
-        .order("created_at", { ascending: false })
+      const snap = await db
+        .collection("contact_leads")
+        .orderBy("created_at", "desc")
+        .get()
 
-      if (data) {
-        leads = data as ContactLead[]
+      if (!snap.empty) {
+        leads = snap.docs.map((doc) => ({
+          id: doc.id,
+          ...(doc.data() as Omit<ContactLead, "id">),
+        }))
       }
     } catch {
       // Fallback

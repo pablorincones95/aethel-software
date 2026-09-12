@@ -1,66 +1,38 @@
-import { createServerClient, parseCookieHeader } from "@supabase/ssr"
 import { NextResponse, type NextRequest } from "next/server"
 
 export async function middleware(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({ request })
-
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-  // Skip Supabase auth if credentials are not configured
-  if (!supabaseUrl || !supabaseKey) {
-    // Allow admin routes without Supabase for local dev / preview
-    return supabaseResponse
-  }
-
-  const supabase = createServerClient(supabaseUrl, supabaseKey, {
-    cookies: {
-      getAll() {
-        return parseCookieHeader(request.headers.get("Cookie") ?? "")
-      },
-      setAll(cookiesToSet, headers) {
-        cookiesToSet.forEach(({ name, value }) =>
-          request.cookies.set(name, value)
-        )
-        supabaseResponse = NextResponse.next({ request })
-        cookiesToSet.forEach(({ name, value, options }) =>
-          supabaseResponse.cookies.set(name, value, options)
-        )
-        if (headers) {
-          Object.entries(headers).forEach(([key, value]) =>
-            supabaseResponse.headers.set(key, value)
-          )
-        }
-      },
-    },
-  })
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
   const pathname = request.nextUrl.pathname
+  const hasSession = request.cookies.has("aethel_session")
+  const hasFirebase = Boolean(
+    process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID &&
+    (process.env.NEXT_PUBLIC_FIREBASE_API_KEY || process.env.FIREBASE_PRIVATE_KEY)
+  )
+
+  // If Firebase is not configured yet, allow route access in local development
+  if (!hasFirebase) {
+    return NextResponse.next()
+  }
 
   // Allow /admin/login without authentication; if already logged in, redirect to /admin
   if (pathname === "/admin/login") {
-    if (user) {
+    if (hasSession) {
       const url = request.nextUrl.clone()
       url.pathname = "/admin"
       return NextResponse.redirect(url)
     }
-    return supabaseResponse
+    return NextResponse.next()
   }
 
   // Protect admin routes
   if (pathname.startsWith("/admin")) {
-    if (!user) {
+    if (!hasSession) {
       const url = request.nextUrl.clone()
       url.pathname = "/admin/login"
       return NextResponse.redirect(url)
     }
   }
 
-  return supabaseResponse
+  return NextResponse.next()
 }
 
 export const config = {

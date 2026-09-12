@@ -1,7 +1,7 @@
 "use server"
 
+import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { createClient } from "@/lib/supabase/server"
 
 export async function signIn(formData: FormData) {
   const email = formData.get("email") as string
@@ -11,43 +11,73 @@ export async function signIn(formData: FormData) {
     return { success: false, error: "Ingresa el email y la contraseña." }
   }
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY
 
-  if (!supabaseUrl || !supabaseKey) {
+  if (!apiKey) {
     return {
       success: false,
-      error: "Supabase no está configurado en las variables de entorno (.env.local).",
+      error: "Firebase API Key no está configurada en .env.local (NEXT_PUBLIC_FIREBASE_API_KEY).",
     }
   }
 
   try {
-    const supabase = await createClient()
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
+    const res = await fetch(
+      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+          returnSecureToken: true,
+        }),
+      }
+    )
 
-    if (error) {
-      return { success: false, error: error.message }
+    const data = await res.json()
+
+    if (!res.ok || data.error) {
+      const msg = data.error?.message || "Credenciales incorrectas"
+      if (msg === "EMAIL_NOT_FOUND" || msg === "INVALID_PASSWORD" || msg === "INVALID_LOGIN_CREDENTIALS") {
+        return { success: false, error: "Email o contraseña incorrectos." }
+      }
+      if (msg === "USER_DISABLED") {
+        return { success: false, error: "Esta cuenta de administrador ha sido deshabilitada." }
+      }
+      return { success: false, error: `Error de autenticación: ${msg}` }
     }
 
+    // Set secure session cookies
+    const cookieStore = await cookies()
+    const expiresInSeconds = Number(data.expiresIn) || 3600
+
+    cookieStore.set("aethel_session", data.idToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: expiresInSeconds,
+      path: "/",
+    })
+
+    cookieStore.set("aethel_user", data.email, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: expiresInSeconds,
+      path: "/",
+    })
+
     return { success: true }
-  } catch {
-    return { success: false, error: "Error de autenticación inesperado." }
+  } catch (err) {
+    console.error("[Firebase Auth Error]:", err)
+    return { success: false, error: "Error de red al conectar con Firebase Auth." }
   }
 }
 
 export async function signOut() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-  if (!supabaseUrl || !supabaseKey) {
-    redirect("/admin/login")
-  }
-
-  const supabase = await createClient()
-  await supabase.auth.signOut()
+  const cookieStore = await cookies()
+  cookieStore.delete("aethel_session")
+  cookieStore.delete("aethel_user")
 
   redirect("/admin/login")
 }

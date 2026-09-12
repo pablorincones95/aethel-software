@@ -1,5 +1,5 @@
 import { FileText } from "lucide-react"
-import { createClient } from "@/lib/supabase/server"
+import { getAdminServices } from "@/lib/firebase/admin"
 import { ContentClient } from "@/components/admin/content-client"
 import type { SiteContent } from "@/lib/types"
 
@@ -214,25 +214,22 @@ const mockSections: SiteContent[] = [
 ]
 
 export default async function AdminContent() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const { db } = getAdminServices()
 
   let sections: SiteContent[] = mockSections
 
-  if (supabaseUrl && supabaseKey) {
+  if (db) {
     try {
-      const supabase = await createClient()
-      const { data } = await supabase
-        .from("site_content")
-        .select("*")
+      const snap = await db.collection("site_content").get()
 
-      if (data && data.length > 0) {
-        // Merge with mockSections so any missing sections remain accessible
-        const fetchedMap = new Map(data.map((item) => [item.section_key, item]))
+      if (!snap.empty) {
+        const fetchedMap = new Map(
+          snap.docs.map((doc) => [doc.id, { id: doc.id, ...(doc.data() as Omit<SiteContent, "id">) }])
+        )
         sections = mockSections.map((mock) => fetchedMap.get(mock.section_key) || mock)
       }
     } catch {
-      // Use mock data
+      // Use fallback
     }
   }
 

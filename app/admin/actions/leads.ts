@@ -1,50 +1,46 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { createClient } from "@/lib/supabase/server"
+import { getAdminServices } from "@/lib/firebase/admin"
 
 export async function updateLeadStatus(
   id: string,
   status: "new" | "contacted" | "closed"
 ) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const { db } = getAdminServices()
 
-  if (!supabaseUrl || !supabaseKey) {
-    return { success: false, error: "Supabase no está configurado en .env.local" }
+  if (!db) {
+    return { success: false, error: "Firebase no está configurado en .env.local" }
   }
 
-  const supabase = await createClient()
+  try {
+    await db.collection("contact_leads").doc(id).update({
+      status,
+      updated_at: new Date().toISOString(),
+    })
 
-  const { error } = await supabase
-    .from("contact_leads")
-    .update({ status })
-    .eq("id", id)
-
-  if (error) {
-    return { success: false, error: error.message }
+    revalidatePath("/admin/leads")
+    return { success: true }
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Error al actualizar estado del lead"
+    return { success: false, error: message }
   }
-
-  revalidatePath("/admin/leads")
-  return { success: true }
 }
 
 export async function deleteLead(id: string) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const { db } = getAdminServices()
 
-  if (!supabaseUrl || !supabaseKey) {
-    return { success: false, error: "Supabase no está configurado en .env.local" }
+  if (!db) {
+    return { success: false, error: "Firebase no está configurado en .env.local" }
   }
 
-  const supabase = await createClient()
+  try {
+    await db.collection("contact_leads").doc(id).delete()
 
-  const { error } = await supabase.from("contact_leads").delete().eq("id", id)
-
-  if (error) {
-    return { success: false, error: error.message }
+    revalidatePath("/admin/leads")
+    return { success: true }
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Error al eliminar lead"
+    return { success: false, error: message }
   }
-
-  revalidatePath("/admin/leads")
-  return { success: true }
 }

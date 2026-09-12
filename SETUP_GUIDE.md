@@ -1,89 +1,120 @@
-# Guía de Configuración: Supabase, Resend y Panel Admin
+# Guía de Configuración: Firebase, Resend y Panel Admin
 
-Esta guía te explica paso a paso cómo dejar tu base de datos, sistema de correos y panel de administración 100% operativos en menos de 5 minutos.
-
----
-
-## 1. Configuración de Supabase (Base de Datos & Auth)
-
-### Paso 1: Crear proyecto
-1. Ingresa a [supabase.com](https://supabase.com) e inicia sesión.
-2. Haz clic en **New Project**, asígnale nombre (ej. `aethel-software`), contraseña de base de datos y selecciona la región más cercana.
-
-### Paso 2: Ejecutar el Schema SQL
-1. En el menú lateral izquierdo de Supabase, ve a **SQL Editor**.
-2. Abre el archivo [`supabase/schema.sql`](./supabase/schema.sql) de este proyecto, copia todo su contenido y pégalo en el editor SQL.
-3. Haz clic en **Run** (o Ctrl/Cmd + Enter).
-   - Esto creará automáticamente las tablas: `projects`, `site_content`, `contact_leads`.
-   - Configurará los triggers de fecha, índices de rendimiento y las políticas de seguridad **Row Level Security (RLS)**.
-   - Insertará las semillas de contenido inicial para todas las secciones del sitio y los proyectos del portafolio.
-
-### Paso 3: Crear el Usuario Administrador
-1. En el menú lateral de Supabase, ve a **Authentication** → **Users**.
-2. Haz clic en **Add user** → **Create user**.
-3. Ingresa tu correo (ej. `admin@aethel.software` o tu email personal) y una contraseña segura.
-4. Marca la casilla **Auto Confirm User?** para que puedas entrar de inmediato sin confirmar por email.
-5. Haz clic en **Create user**.
-
-### Paso 4: Obtener tus Claves de API
-1. En el menú lateral de Supabase, ve a **Project Settings** (icono de engranaje) → **API**.
-2. Copia los siguientes valores:
-   - **Project URL**
-   - **Project API Keys** → `anon` `public`
+Esta guía te explica paso a paso cómo dejar tu base de datos **Google Cloud Firestore**, **Firebase Authentication**, sistema de correos y panel de administración 100% operativos en el plan gratuito permanente (Spark).
 
 ---
 
-## 2. Configuración de Resend (Notificaciones por Email)
+## 1. Configuración de Firebase (Firestore & Auth)
 
-### Paso 1: Obtener API Key
-1. Ingresa a [resend.com](https://resend.com) e inicia sesión (puedes entrar con GitHub o Google).
-2. En el menú lateral, ve a **API Keys** y haz clic en **Create API Key**.
-3. Asígnale un nombre (ej. `Aethel Production`) y permisos **Full access**.
-4. Copia la clave generada (empieza por `re_...`).
+### Paso 1: Crear proyecto en Firebase
+1. Ingresa a [console.firebase.google.com](https://console.firebase.google.com) e inicia sesión con tu cuenta de Google.
+2. Haz clic en **Crear un proyecto** (o *Add project*).
+3. Escribe un nombre (ej. `aethel-software`), desactiva Google Analytics (opcional) y haz clic en **Crear proyecto**.
 
-### Paso 2: Configurar remitente y destinatario
-- Durante el periodo de prueba gratuita, puedes usar el remitente de pruebas oficial de Resend:
-  `Aethel Software <onboarding@resend.dev>`
-- Resend enviará los correos al email de tu cuenta registrada en Resend.
-- *(Opcional más adelante)*: En la pestaña **Domains** puedes agregar tu propio dominio corporativo (`aethel.software`) y validar los registros DNS para enviar desde tu propio dominio.
+### Paso 2: Activar Cloud Firestore (Base de Datos)
+1. En el menú lateral izquierdo, ve a **Compilación** (o *Build*) → **Firestore Database**.
+2. Haz clic en **Crear base de datos**.
+3. Elige la ubicación más cercana (ej. `nam5 (us-central)` o `us-east1`).
+4. Selecciona **Modo de producción** y haz clic en **Habilitar**.
+5. Ve a la pestaña **Reglas** (*Rules*) en Firestore:
+   - Copia el contenido de [`firestore.rules`](./firestore.rules) de este repositorio.
+   - Pégalo en el editor de reglas y haz clic en **Publicar** (*Publish*).
+
+### Paso 3: Activar Firebase Authentication
+1. En el menú lateral, ve a **Compilación** → **Authentication**.
+2. Haz clic en **Comenzar** (*Get started*).
+3. En la pestaña **Sign-in method** (Proveedores), selecciona **Correo electrónico/contraseña** (*Email/Password*).
+4. Activa el primer interruptor (**Habilitar**) y haz clic en **Guardar**.
+5. Ve a la pestaña **Users** (Usuarios) y haz clic en **Agregar usuario** (*Add user*).
+   - Escribe el correo que usarás de administrador (ej. `admin@aethel.software` o tu email personal) y una contraseña.
+   - Haz clic en **Agregar usuario**.
+
+### Paso 4: Obtener las Claves Web (Firebase Client)
+1. En la consola de Firebase, haz clic en el icono de engranaje ⚙️ (arriba a la izquierda) → **Configuración del proyecto** (*Project settings*).
+2. En la pestaña **General**, baja hasta la sección **Tus apps** (*Your apps*).
+3. Haz clic en el icono Web **`</>`**.
+4. Ponle un apodo (ej. `Aethel Web`) y haz clic en **Registrar app**.
+5. Verás el objeto `firebaseConfig`:
+   - `apiKey` → `NEXT_PUBLIC_FIREBASE_API_KEY`
+   - `authDomain` → `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+   - `projectId` → `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+   - `storageBucket` → `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+   - `messagingSenderId` → `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+   - `appId` → `NEXT_PUBLIC_FIREBASE_APP_ID`
+
+### Paso 5: Obtener Claves del Servidor (Firebase Admin)
+1. En la misma pantalla de **Configuración del proyecto**, ve a la pestaña **Cuentas de servicio** (*Service accounts*).
+2. Haz clic en **Generar nueva clave privada** (*Generate new private key*).
+3. Se descargará un archivo JSON en tu computadora. Ábrelo y copia:
+   - `client_email` → `FIREBASE_CLIENT_EMAIL`
+   - `private_key` → `FIREBASE_PRIVATE_KEY`
+
+---
+
+## 2. Configuración de Resend (Emails de Notificación)
+
+1. Ingresa a [resend.com](https://resend.com) y crea tu cuenta gratuita.
+2. Ve a **API Keys** → **Create API Key**.
+3. Copia tu clave (inicia con `re_...`).
 
 ---
 
 ## 3. Configurar tu archivo `.env.local`
 
-Crea o abre el archivo `.env.local` en la raíz del proyecto y coloca:
+Crea o edita tu archivo `.env.local` en la raíz del proyecto:
 
 ```env
-# ── Supabase ──
-NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=tu-clave-anon-publica
+# ── Firebase Client ──
+NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSy...
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=tu-proyecto.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=tu-proyecto
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=tu-proyecto.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=1234567890
+NEXT_PUBLIC_FIREBASE_APP_ID=1:1234567890:web:abcdef
+
+# ── Firebase Admin SDK ──
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxxxx@tu-proyecto.iam.gserviceaccount.com
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQD...\n-----END PRIVATE KEY-----\n"
 
 # ── Resend ──
 RESEND_API_KEY=re_tu_clave_de_resend
-CONTACT_NOTIFICATION_EMAIL=tu-email-donde-quieres-recibir-los-leads@gmail.com
+CONTACT_NOTIFICATION_EMAIL=tu-email-donde-recibiras-los-leads@gmail.com
 RESEND_FROM_EMAIL=Aethel Software <onboarding@resend.dev>
 ```
 
 ---
 
-## 4. Iniciar y Probar el Sistema
+## 4. Inicializar Datos (Semillas de Firestore)
 
-Ejecuta el servidor de desarrollo:
+Una vez que tengas tu `.env.local` con las variables de Firebase, ejecuta el siguiente comando para cargar automáticamente todas las secciones y proyectos iniciales a tu base de datos Firestore:
+
+```bash
+pnpm seed:firebase
+```
+
+Verás una confirmación en consola:
+```
+🚀 Starting Firestore seed...
+📝 Seeding site_content...
+  ✓ Section [hero] saved
+  ✓ Section [services] saved
+  ...
+💼 Seeding projects...
+  ✓ Project created with ID: ...
+✅ Firestore seed complete!
+```
+
+---
+
+## 5. Iniciar y Probar el Panel
+
+Inicia el servidor:
 
 ```bash
 pnpm dev
 ```
 
-### Probar el Panel de Control:
-1. Entra a `http://localhost:3000/admin/login`
-2. Inicia sesión con el correo y contraseña que creaste en Supabase.
-3. ¡Listo! Accederás a la consola:
-   - **/admin**: Resumen de proyectos, CMS y leads recibidos.
-   - **/admin/projects**: Agrega, edita o elimina casos de estudio del portafolio.
-   - **/admin/content**: Edita los textos de cualquier sección (Hero, Servicios, Diseño & SEO, IA, Stack, Metodología, Filosofía, Contacto). Al guardar, se actualizan de inmediato en la landing page.
-   - **/admin/leads**: Administra las solicitudes técnicas recibidas desde la landing.
-
-### Probar el Formulario de Contacto:
-1. Ve a la página principal `http://localhost:3000/#contacto-evaluacion`
-2. Llena y envía el formulario de contacto.
-3. Se registrará al instante en la tabla `contact_leads` y recibirás la notificación formateada en tu correo a través de Resend.
+1. **Login de Admin**: Entra a `http://localhost:3000/admin/login` con las credenciales que creaste en Firebase Auth.
+2. **CMS**: En `/admin/content`, edita cualquier sección y verifica que la landing se actualice.
+3. **Proyectos**: En `/admin/projects`, agrega, edita o elimina casos de estudio.
+4. **Leads**: En `/admin/leads`, revisa las solicitudes de contacto enviadas desde la landing.

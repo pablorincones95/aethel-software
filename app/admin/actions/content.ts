@@ -1,30 +1,36 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { createClient } from "@/lib/supabase/server"
+import { getAdminServices } from "@/lib/firebase/admin"
 
 export async function updateContentSection(
   sectionKey: string,
   content: Record<string, unknown>
 ) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const { db } = getAdminServices()
 
-  if (!supabaseUrl || !supabaseKey) {
-    return { success: false, error: "Supabase no está configurado en .env.local" }
+  if (!db) {
+    return { success: false, error: "Firebase no está configurado en .env.local" }
   }
 
-  const supabase = await createClient()
+  try {
+    await db
+      .collection("site_content")
+      .doc(sectionKey)
+      .set(
+        {
+          section_key: sectionKey,
+          content,
+          updated_at: new Date().toISOString(),
+        },
+        { merge: true }
+      )
 
-  const { error } = await supabase
-    .from("site_content")
-    .upsert({ section_key: sectionKey, content }, { onConflict: "section_key" })
-
-  if (error) {
-    return { success: false, error: error.message }
+    revalidatePath("/admin/content")
+    revalidatePath("/")
+    return { success: true }
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Error al actualizar sección de contenido"
+    return { success: false, error: message }
   }
-
-  revalidatePath("/admin/content")
-  revalidatePath("/")
-  return { success: true }
 }

@@ -1,7 +1,7 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { createClient } from "@/lib/supabase/server"
+import { getAdminServices } from "@/lib/firebase/admin"
 import { z } from "zod"
 
 const projectSchema = z.object({
@@ -26,11 +26,10 @@ const projectSchema = z.object({
 })
 
 export async function createProject(formData: FormData) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const { db } = getAdminServices()
 
-  if (!supabaseUrl || !supabaseKey) {
-    return { success: false, error: "Supabase no está configurado en .env.local" }
+  if (!db) {
+    return { success: false, error: "Firebase no está configurado en .env.local" }
   }
 
   const rawData = {
@@ -55,68 +54,8 @@ export async function createProject(formData: FormData) {
     return { success: false, error: validated.error.errors[0].message }
   }
 
-  const supabase = await createClient()
-
-  const { error } = await supabase.from("projects").insert({
-    title: validated.data.title,
-    description: validated.data.description || null,
-    challenge: validated.data.challenge || null,
-    solution: validated.data.solution || null,
-    tag: validated.data.tag || null,
-    tag_color: validated.data.tag_color,
-    metric_primary: validated.data.metric_primary || null,
-    metric_secondary: validated.data.metric_secondary || null,
-    technologies: validated.data.technologies,
-    url: validated.data.url || null,
-    image_url: validated.data.image_url || null,
-    is_featured: validated.data.is_featured,
-    sort_order: validated.data.sort_order,
-  })
-
-  if (error) {
-    return { success: false, error: error.message }
-  }
-
-  revalidatePath("/admin/projects")
-  revalidatePath("/")
-  return { success: true }
-}
-
-export async function updateProject(id: string, formData: FormData) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-  if (!supabaseUrl || !supabaseKey) {
-    return { success: false, error: "Supabase no está configurado en .env.local" }
-  }
-
-  const rawData = {
-    title: formData.get("title") as string,
-    description: formData.get("description") as string,
-    challenge: formData.get("challenge") as string,
-    solution: formData.get("solution") as string,
-    tag: formData.get("tag") as string,
-    tag_color: (formData.get("tag_color") as string) || "cyan",
-    metric_primary: formData.get("metric_primary") as string,
-    metric_secondary: formData.get("metric_secondary") as string,
-    technologies: (formData.get("technologies") as string) || "",
-    url: formData.get("url") as string,
-    image_url: formData.get("image_url") as string,
-    is_featured: formData.get("is_featured") === "on" || formData.get("is_featured") === "true",
-    sort_order: Number(formData.get("sort_order") || 0),
-  }
-
-  const validated = projectSchema.safeParse(rawData)
-
-  if (!validated.success) {
-    return { success: false, error: validated.error.errors[0].message }
-  }
-
-  const supabase = await createClient()
-
-  const { error } = await supabase
-    .from("projects")
-    .update({
+  try {
+    await db.collection("projects").add({
       title: validated.data.title,
       description: validated.data.description || null,
       challenge: validated.data.challenge || null,
@@ -130,35 +69,90 @@ export async function updateProject(id: string, formData: FormData) {
       image_url: validated.data.image_url || null,
       is_featured: validated.data.is_featured,
       sort_order: validated.data.sort_order,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
     })
-    .eq("id", id)
 
-  if (error) {
-    return { success: false, error: error.message }
+    revalidatePath("/admin/projects")
+    revalidatePath("/")
+    return { success: true }
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Error al crear proyecto"
+    return { success: false, error: message }
+  }
+}
+
+export async function updateProject(id: string, formData: FormData) {
+  const { db } = getAdminServices()
+
+  if (!db) {
+    return { success: false, error: "Firebase no está configurado en .env.local" }
   }
 
-  revalidatePath("/admin/projects")
-  revalidatePath("/")
-  return { success: true }
+  const rawData = {
+    title: formData.get("title") as string,
+    description: formData.get("description") as string,
+    challenge: formData.get("challenge") as string,
+    solution: formData.get("solution") as string,
+    tag: formData.get("tag") as string,
+    tag_color: (formData.get("tag_color") as string) || "cyan",
+    metric_primary: formData.get("metric_primary") as string,
+    metric_secondary: formData.get("metric_secondary") as string,
+    technologies: (formData.get("technologies") as string) || "",
+    url: formData.get("url") as string,
+    image_url: formData.get("image_url") as string,
+    is_featured: formData.get("is_featured") === "on" || formData.get("is_featured") === "true",
+    sort_order: Number(formData.get("sort_order") || 0),
+  }
+
+  const validated = projectSchema.safeParse(rawData)
+
+  if (!validated.success) {
+    return { success: false, error: validated.error.errors[0].message }
+  }
+
+  try {
+    await db.collection("projects").doc(id).update({
+      title: validated.data.title,
+      description: validated.data.description || null,
+      challenge: validated.data.challenge || null,
+      solution: validated.data.solution || null,
+      tag: validated.data.tag || null,
+      tag_color: validated.data.tag_color,
+      metric_primary: validated.data.metric_primary || null,
+      metric_secondary: validated.data.metric_secondary || null,
+      technologies: validated.data.technologies,
+      url: validated.data.url || null,
+      image_url: validated.data.image_url || null,
+      is_featured: validated.data.is_featured,
+      sort_order: validated.data.sort_order,
+      updated_at: new Date().toISOString(),
+    })
+
+    revalidatePath("/admin/projects")
+    revalidatePath("/")
+    return { success: true }
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Error al actualizar proyecto"
+    return { success: false, error: message }
+  }
 }
 
 export async function deleteProject(id: string) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const { db } = getAdminServices()
 
-  if (!supabaseUrl || !supabaseKey) {
-    return { success: false, error: "Supabase no está configurado en .env.local" }
+  if (!db) {
+    return { success: false, error: "Firebase no está configurado en .env.local" }
   }
 
-  const supabase = await createClient()
+  try {
+    await db.collection("projects").doc(id).delete()
 
-  const { error } = await supabase.from("projects").delete().eq("id", id)
-
-  if (error) {
-    return { success: false, error: error.message }
+    revalidatePath("/admin/projects")
+    revalidatePath("/")
+    return { success: true }
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Error al eliminar proyecto"
+    return { success: false, error: message }
   }
-
-  revalidatePath("/admin/projects")
-  revalidatePath("/")
-  return { success: true }
 }

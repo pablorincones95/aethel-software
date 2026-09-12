@@ -1,35 +1,29 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { createClient } from "@/lib/supabase/server"
+import { getAdminServices } from "@/lib/firebase/admin"
 import { LayoutDashboard, FolderKanban, FileText, Inbox } from "lucide-react"
 import Link from "next/link"
 
 export default async function AdminDashboard() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const { db } = getAdminServices()
 
   let projectsCount = 3
   let contentCount = 8
   let leadsCount = 0
 
-  if (supabaseUrl && supabaseKey) {
+  if (db) {
     try {
-      const supabase = await createClient()
-      const [
-        { count: pCount },
-        { count: cCount },
-        { count: lCount },
-      ] = await Promise.all([
-        supabase.from("projects").select("*", { count: "exact", head: true }),
-        supabase.from("site_content").select("*", { count: "exact", head: true }),
-        supabase.from("contact_leads").select("*", { count: "exact", head: true }),
+      const [pSnap, cSnap, lSnap] = await Promise.all([
+        db.collection("projects").count().get(),
+        db.collection("site_content").count().get(),
+        db.collection("contact_leads").count().get(),
       ])
 
-      if (pCount !== null) projectsCount = pCount
-      if (cCount !== null) contentCount = cCount
-      if (lCount !== null) leadsCount = lCount
+      projectsCount = pSnap.data().count
+      contentCount = cSnap.data().count || 8
+      leadsCount = lSnap.data().count
     } catch {
-      // Use mock data
+      // Use fallback stats
     }
   }
 

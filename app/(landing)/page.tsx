@@ -10,36 +10,31 @@ import { CaseStudies } from "@/components/landing/case-studies"
 import { Philosophy } from "@/components/landing/philosophy"
 import { Contact } from "@/components/landing/contact"
 import { Footer } from "@/components/landing/footer"
-import { createClient } from "@/lib/supabase/server"
+import { getAdminServices } from "@/lib/firebase/admin"
 import type { Project, SiteContent } from "@/lib/types"
 
 export default async function Home() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
   let projects: Project[] = []
   const contentMap: Record<string, Record<string, unknown>> = {}
 
-  if (supabaseUrl && supabaseKey) {
+  const { db } = getAdminServices()
+
+  if (db) {
     try {
-      const supabase = await createClient()
-      const [{ data: projectsData }, { data: contentData }] = await Promise.all([
-        supabase
-          .from("projects")
-          .select("*")
-          .order("sort_order", { ascending: true }),
-        supabase.from("site_content").select("*"),
+      const [projectsSnap, contentSnap] = await Promise.all([
+        db.collection("projects").orderBy("sort_order", "asc").get(),
+        db.collection("site_content").get(),
       ])
 
-      if (projectsData) {
-        projects = projectsData as Project[]
-      }
+      projects = projectsSnap.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as Omit<Project, "id">),
+      }))
 
-      if (contentData) {
-        contentData.forEach((item: SiteContent) => {
-          contentMap[item.section_key] = item.content
-        })
-      }
+      contentSnap.docs.forEach((doc) => {
+        const data = doc.data() as SiteContent
+        contentMap[doc.id] = data.content
+      })
     } catch {
       // Graceful fallback to default landing content
     }

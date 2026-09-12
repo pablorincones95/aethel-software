@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Portfolio Projects: Public read, authenticated admin write
+    match /projects/{projectId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Site Content (CMS): Public read, authenticated admin write
+    match /site_content/{sectionKey} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Contact Leads: Anyone can submit an inquiry, only authenticated admin can view/manage
+    match /contact_leads/{leadId} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+  }
+}
