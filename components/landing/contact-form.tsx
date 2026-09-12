@@ -63,6 +63,8 @@ export function ContactForm() {
             <option>Cloud Infrastructure & EKS Migration</option>
             <option>APIs de Alta Concurrencia & Streaming Kafka</option>
             <option>Auditoría de Arquitectura & Refactoring</option>
+            <option>Diseño UX/UI & Design Systems</option>
+            <option>SEO Técnico & Optimización Web</option>
           </select>
         </div>
       </div>

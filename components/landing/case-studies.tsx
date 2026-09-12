@@ -44,7 +44,7 @@ const cases = [
 
 export function CaseStudies() {
   return (
-    <section className="case-studies">
+    <section className="case-studies" id="casos">
       <div className="case-studies__inner">
         <div className="case-studies__header">
           <div className="case-studies__header-text">
