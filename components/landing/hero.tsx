@@ -1,3 +1,4 @@
+import Image from "next/image"
 import {
   ArrowForward,
   Schema,
@@ -82,10 +83,13 @@ export function Hero({ content }: HeroProps) {
             </div>
 
             <div className="hero__monogram">
-              <img
-                alt="Aethel Architecture Core Node Emblem"
+              <Image
+                alt="Aethel Software — Emblema de Arquitectura e Ingeniería de Sistemas"
                 src="/aethel-logo.svg"
-                className="h-24 w-auto object-contain opacity-90 drop-shadow-[0_0_20px_rgba(0,229,255,0.35)]"
+                width={96}
+                height={96}
+                priority
+                className="h-24 w-24 object-contain opacity-90 drop-shadow-[0_0_20px_rgba(0,229,255,0.35)]"
               />
               <div className="hero__monogram-overlay" />
             </div>

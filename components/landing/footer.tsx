@@ -1,3 +1,5 @@
+import Image from "next/image"
+
 const footerLinks = {
   Plataforma: [
     "Servicios de Ingeniería",
@@ -33,10 +35,13 @@ export function Footer() {
           {/* Brand Column */}
           <div className="footer__brand">
             <div className="flex items-center gap-2 mb-4">
-              <img
-                alt="Aethel Software Logo"
+              <Image
+                alt="Aethel Software — Logotipo Oficial"
                 src="/aethel-logo.svg"
-                className="h-6 w-auto object-contain"
+                width={24}
+                height={24}
+                loading="lazy"
+                className="h-6 w-6 object-contain"
               />
               <span className="font-[family-name:var(--font-display)] text-sm font-semibold tracking-wider uppercase text-[#F8FAFC]">
                 Aethel Architecture
