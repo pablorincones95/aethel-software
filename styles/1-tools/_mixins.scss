@@ -52,15 +52,15 @@
 
 // ── Glassmorphism ──
 @mixin glass {
-  background-color: rgb(17 24 39 / 70%);
+  background-color: var(--ae-navbar-bg);
   backdrop-filter: blur(16px);
-  border: 1px solid $color-border-subtle;
+  border: 1px solid var(--ae-border-subtle);
 }
 
 @mixin glass-dense {
-  background-color: rgb(9 13 22 / 96%);
+  background-color: var(--ae-card-bg);
   backdrop-filter: blur(24px);
-  border: 1px solid rgb(255 255 255 / 15%);
+  border: 1px solid var(--ae-border-subtle);
 }
 
 // ── Glow Effects ──
@@ -83,16 +83,16 @@
 // ── Focus Ring ──
 @mixin focus-ring {
   outline: none;
-  box-shadow: 0 0 0 2px $color-canvas-void, 0 0 0 4px $color-primary-container;
+  box-shadow: 0 0 0 2px var(--ae-canvas-void), 0 0 0 4px var(--ae-primary-container);
 }
 
-// ── Hairline Border ──
+// ── Micro Hairlines ──
 @mixin hairline {
-  border: 1px solid $color-border-subtle;
+  border: 1px solid var(--ae-border-subtle);
 }
 
 @mixin hairline-gold {
-  border: 1px solid $color-border-gold;
+  border: 1px solid var(--ae-border-gold);
 }
 
 // ── Tabular Numerals ──

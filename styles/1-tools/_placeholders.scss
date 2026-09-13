@@ -5,24 +5,24 @@
 
 // ── Elevation Layers ──
 %elevation-0 {
-  background-color: $color-canvas-void;
+  background-color: var(--ae-canvas-void);
 }
 
 %elevation-1 {
-  background-color: rgb(17 24 39 / 70%);
+  background-color: var(--ae-navbar-bg);
   backdrop-filter: blur(16px);
-  border: 1px solid $color-border-subtle;
+  border: 1px solid var(--ae-border-subtle);
 }
 
 %elevation-2 {
-  background-color: rgb(17 24 39 / 90%);
-  border: 1px solid $color-border-subtle;
+  background-color: var(--ae-card-bg);
+  border: 1px solid var(--ae-border-subtle);
 }
 
 %elevation-3 {
-  background-color: rgb(9 13 22 / 96%);
+  background-color: var(--ae-surface-abyssal);
   backdrop-filter: blur(24px);
-  border: 1px solid rgb(255 255 255 / 15%);
+  border: 1px solid var(--ae-border-subtle);
 }
 
 // ── Label Caps Base ──
