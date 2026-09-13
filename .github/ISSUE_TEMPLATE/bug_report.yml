@@ -1,0 +1,54 @@
+name: 🐛 Bug Report
+description: Reporta un error o comportamiento inesperado
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por reportar un bug. Completa el formulario para ayudarnos a reproducirlo.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Descripción del bug
+      description: ¿Qué está pasando? ¿Qué esperabas que pasara?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Pasos para reproducir
+      placeholder: |
+        1. Ir a '...'
+        2. Hacer click en '...'
+        3. Ver el error
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área afectada
+      options:
+        - Landing page
+        - Admin panel
+        - Auth / Login
+        - Base de datos
+        - Estilos / CSS
+        - Build / Deploy
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Entorno
+      placeholder: "Browser: Chrome 120 / OS: macOS 14 / Next.js 16"
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto adicional (screenshots, logs, etc.)

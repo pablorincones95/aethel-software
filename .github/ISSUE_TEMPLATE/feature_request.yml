@@ -1,0 +1,38 @@
+name: ✨ Feature Request
+description: Propón una nueva funcionalidad
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: ¿Qué problema resuelve esta feature?
+      placeholder: "Como usuario/admin, quiero... para poder..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solución propuesta
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área
+      options:
+        - Landing page
+        - Admin panel
+        - Design System
+        - Base de datos
+        - Performance / SEO
+        - Seguridad
+        - DevOps / CI-CD
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas consideradas (opcional)

@@ -8,7 +8,7 @@ export default {
     'max-nesting-depth': [4, { ignoreAtRules: ['media', 'supports', 'include'] }],
 
     // ── Property Rules ──
-    'no-duplicate-properties': [true, { ignore: ['consecutive-duplicates-with-different-values'] }],
+    'declaration-block-no-duplicate-properties': [true, { ignore: ['consecutive-duplicates-with-different-values'] }],
     'shorthand-property-no-redundant-values': true,
     'declaration-block-no-redundant-longhand-properties': true,
 
@@ -23,7 +23,7 @@ export default {
 
     // ── SCSS Rules ──
     'scss/dollar-variable-pattern': /^[a-z][a-z0-9-]*$/,
-    'scss/no-global-function-name': true,
+    'scss/no-global-function-names': true,
     'scss/at-rule-no-unknown': [
       true,
       {
@@ -45,8 +45,6 @@ export default {
     ],
 
     // ── Formatting ──
-    'indentation': 2,
-    'string-quotes': 'single',
     'color-named': 'never',
   },
   ignoreFiles: [

@@ -1,18 +1,20 @@
 // ═══════════════════════════════════════════════════════
 // AETHEL SOFTWARE — Precision Engineering Atelier
 // Config Layer: CSS Custom Properties (Global Tokens)
-//
-// These are exposed as CSS variables in :root {},
-// making them available to ALL SCSS files via var().
-// SCSS variables ($var) remain local to each file.
+// Dual Theme Architecture:
+// - :root, .dark: Precision Engineering Atelier Dark
+// - .light: Precision Engineering Atelier Light
 // ═══════════════════════════════════════════════════════
 
-:root {
+// ── Dark Mode (Default) ──
+:root,
+.dark {
   // ── Canvas & Substrates ──
   --ae-canvas-void: #030712;
   --ae-surface-abyssal: #090D16;
   --ae-surface-architectural: #111827;
   --ae-surface: #0e131f;
+  --ae-surface-dim: #0e131f;
   --ae-surface-bright: #343946;
   --ae-surface-variant: #2f3542;
   --ae-surface-container-lowest: #080e1a;
@@ -29,18 +31,28 @@
   --ae-inverse-primary: #006875;
   --ae-primary-fixed: #9cf0ff;
   --ae-primary-fixed-dim: #00daf3;
+  --ae-on-primary-fixed: #001f24;
+  --ae-on-primary-fixed-variant: #004f58;
 
   // ── Secondary: Champagne Gold ──
   --ae-secondary: #dec571;
   --ae-secondary-container: #5d4c00;
   --ae-on-secondary: #3b2f00;
   --ae-on-secondary-container: #d6be6a;
+  --ae-secondary-fixed: #fbe189;
+  --ae-secondary-fixed-dim: #dec571;
+  --ae-on-secondary-fixed: #231b00;
+  --ae-on-secondary-fixed-variant: #554500;
 
   // ── Tertiary ──
   --ae-tertiary: #cdf3ff;
   --ae-tertiary-container: #60e1ff;
   --ae-on-tertiary: #003640;
   --ae-on-tertiary-container: #006273;
+  --ae-tertiary-fixed: #acedff;
+  --ae-tertiary-fixed-dim: #4cd7f6;
+  --ae-on-tertiary-fixed: #001f26;
+  --ae-on-tertiary-fixed-variant: #004e5c;
 
   // ── Error ──
   --ae-error: #ffb4ab;
@@ -48,18 +60,117 @@
   --ae-on-error: #690005;
   --ae-on-error-container: #ffdad6;
 
+  // ── Inverses & Tints ──
+  --ae-surface-tint: #00daf3;
+  --ae-inverse-surface: #dde2f3;
+  --ae-inverse-on-surface: #2b303d;
+
   // ── Text ──
   --ae-text-ice: #F8FAFC;
   --ae-text-muted: #94A3B8;
   --ae-on-surface: #dde2f3;
   --ae-on-surface-variant: #bac9cc;
+  --ae-on-background: #dde2f3;
 
-  // ── Borders ──
-  --ae-border-subtle: rgba(255, 255, 255, 0.08);
-  --ae-border-active: rgba(0, 229, 255, 0.45);
-  --ae-border-gold: rgba(226, 201, 116, 0.4);
+  // ── Borders & Outlines ──
+  --ae-border-subtle: rgb(255 255 255 / 8%);
+  --ae-border-active: rgb(0 229 255 / 45%);
+  --ae-border-gold: rgb(226 201 116 / 40%);
   --ae-outline: #849396;
+  --ae-outline-variant: #3b494c;
 
+  // ── Dynamic UI & Overlays ──
+  --ae-navbar-bg: rgb(17 24 39 / 70%);
+  --ae-badge-bg: rgb(36 42 54 / 80%);
+  --ae-card-bg: rgb(26 32 44 / 60%);
+  --ae-card-bg-hover: rgb(36 42 54 / 80%);
+  --ae-ambient-cyan: rgb(0 229 255 / 5%);
+  --ae-ambient-gold: rgb(222 197 113 / 5%);
+}
+
+// ── Light Mode (Precision Engineering Atelier Light) ──
+.light {
+  // ── Canvas & Substrates ──
+  --ae-canvas-void: #FAFAFF;
+  --ae-surface-abyssal: #F1F5F9;
+  --ae-surface-architectural: #FFF;
+  --ae-surface: #FAFAFF;
+  --ae-surface-dim: #F1F5F9;
+  --ae-surface-bright: #FFF;
+  --ae-surface-variant: #E2E8F0;
+  --ae-surface-container-lowest: #FFF;
+  --ae-surface-container-low: #F8FAFC;
+  --ae-surface-container: #F1F5F9;
+  --ae-surface-container-high: #E2E8F0;
+  --ae-surface-container-highest: #CBD5E1;
+
+  // ── Primary: Calibrated Electric Cyan (AAA Contrast) ──
+  --ae-primary: #0891B2;
+  --ae-primary-container: #0891B2;
+  --ae-on-primary: #FFF;
+  --ae-on-primary-container: #155E75;
+  --ae-inverse-primary: #c3f5ff;
+  --ae-primary-fixed: #0891B2;
+  --ae-primary-fixed-dim: #0e7490;
+  --ae-on-primary-fixed: #FFF;
+  --ae-on-primary-fixed-variant: #164E63;
+
+  // ── Secondary: Calibrated Champagne Gold (AAA Contrast) ──
+  --ae-secondary: #B45309;
+  --ae-secondary-container: #FEF3C7;
+  --ae-on-secondary: #FFF;
+  --ae-on-secondary-container: #78350F;
+  --ae-secondary-fixed: #B45309;
+  --ae-secondary-fixed-dim: #92400E;
+  --ae-on-secondary-fixed: #FFF;
+  --ae-on-secondary-fixed-variant: #451A03;
+
+  // ── Tertiary ──
+  --ae-tertiary: #0284C7;
+  --ae-tertiary-container: #E0F2FE;
+  --ae-on-tertiary: #FFF;
+  --ae-on-tertiary-container: #075985;
+  --ae-tertiary-fixed: #0284C7;
+  --ae-tertiary-fixed-dim: #0369A1;
+  --ae-on-tertiary-fixed: #FFF;
+  --ae-on-tertiary-fixed-variant: #0C4A6E;
+
+  // ── Error ──
+  --ae-error: #DC2626;
+  --ae-error-container: #FEE2E2;
+  --ae-on-error: #FFF;
+  --ae-on-error-container: #991B1B;
+
+  // ── Inverses & Tints ──
+  --ae-surface-tint: #0891B2;
+  --ae-inverse-surface: #0F172A;
+  --ae-inverse-on-surface: #F8FAFC;
+
+  // ── Text ──
+  --ae-text-ice: #0F172A;
+  --ae-text-muted: #64748B;
+  --ae-on-surface: #0F172A;
+  --ae-on-surface-variant: #475569;
+  --ae-on-background: #0F172A;
+
+  // ── Borders & Outlines ──
+  --ae-border-subtle: rgb(15 23 42 / 8%);
+  --ae-border-active: rgb(8 145 178 / 45%);
+  --ae-border-gold: rgb(180 83 9 / 35%);
+  --ae-outline: #E2E8F0;
+  --ae-outline-variant: #CBD5E1;
+
+  // ── Dynamic UI & Overlays ──
+  --ae-navbar-bg: rgb(255 255 255 / 85%);
+  --ae-badge-bg: rgb(241 245 249 / 90%);
+  --ae-card-bg: rgb(255 255 255 / 85%);
+  --ae-card-bg-hover: rgb(248 250 252 / 95%);
+  --ae-ambient-cyan: rgb(8 145 178 / 6%);
+  --ae-ambient-gold: rgb(180 83 9 / 5%);
+}
+
+// ── Invariable Structural Tokens ──
+:root {
   // ── Spacing (4px grid) ──
   --ae-space-xs: 4px;
   --ae-space-sm: 8px;

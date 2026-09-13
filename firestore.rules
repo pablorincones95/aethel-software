@@ -1,0 +1,26 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Portfolio Projects: Public read-only from client SDK. All mutations handled via Admin Server SDK.
+    match /projects/{projectId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Site Content (CMS): Public read-only from client SDK. All mutations handled via Admin Server SDK.
+    match /site_content/{sectionKey} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Contact Leads: Strict server-only access. Neither read nor write permitted via client SDK.
+    match /contact_leads/{leadId} {
+      allow read, write: if false;
+    }
+
+    // Default deny for all other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -40,7 +40,7 @@
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border-width: 0;
 }
@@ -52,49 +52,47 @@
 
 // ── Glassmorphism ──
 @mixin glass {
-  background-color: rgba(17, 24, 39, 0.7);
+  background-color: var(--ae-navbar-bg);
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid $color-border-subtle;
+  border: 1px solid var(--ae-border-subtle);
 }
 
 @mixin glass-dense {
-  background-color: rgba(9, 13, 22, 0.96);
+  background-color: var(--ae-card-bg);
   backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--ae-border-subtle);
 }
 
 // ── Glow Effects ──
 @mixin glow-cyan {
-  box-shadow: 0 0 16px rgba(0, 229, 255, 0.35);
+  box-shadow: 0 0 16px rgb(0 229 255 / 35%);
 }
 
 @mixin glow-cyan-subtle {
-  box-shadow: 0 0 24px -4px rgba(0, 229, 255, 0.15);
+  box-shadow: 0 0 24px -4px rgb(0 229 255 / 15%);
 }
 
 @mixin glow-gold {
-  box-shadow: 0 0 16px rgba(226, 201, 116, 0.3);
+  box-shadow: 0 0 16px rgb(226 201 116 / 30%);
 }
 
 @mixin glow-gold-subtle {
-  box-shadow: 0 0 24px -4px rgba(226, 201, 116, 0.12);
+  box-shadow: 0 0 24px -4px rgb(226 201 116 / 12%);
 }
 
 // ── Focus Ring ──
 @mixin focus-ring {
   outline: none;
-  box-shadow: 0 0 0 2px $color-canvas-void, 0 0 0 4px $color-primary-container;
+  box-shadow: 0 0 0 2px var(--ae-canvas-void), 0 0 0 4px var(--ae-primary-container);
 }
 
-// ── Hairline Border ──
+// ── Micro Hairlines ──
 @mixin hairline {
-  border: 1px solid $color-border-subtle;
+  border: 1px solid var(--ae-border-subtle);
 }
 
 @mixin hairline-gold {
-  border: 1px solid $color-border-gold;
+  border: 1px solid var(--ae-border-gold);
 }
 
 // ── Tabular Numerals ──

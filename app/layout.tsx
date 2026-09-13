@@ -1,6 +1,20 @@
 import type { Metadata } from "next"
+import { Space_Grotesk, Hanken_Grotesk } from "next/font/google"
+import { Toaster } from "sonner"
+import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css"
-import "@/styles/global.scss"
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+})
+
+const hankenGrotesk = Hanken_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: "Aethel Software — Precision Engineering Atelier",
@@ -30,9 +44,20 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className="min-h-screen bg-canvas-void text-on-surface antialiased">
-        {children}
+    <html lang="en" suppressHydrationWarning className={`dark ${spaceGrotesk.variable} ${hankenGrotesk.variable}`}>
+      <body
+        className="min-h-screen bg-background text-foreground antialiased font-sans"
+        suppressHydrationWarning
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          {children}
+          <Toaster position="bottom-right" />
+        </ThemeProvider>
       </body>
     </html>
   )

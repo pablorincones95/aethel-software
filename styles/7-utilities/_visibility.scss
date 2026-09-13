@@ -9,7 +9,7 @@
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border-width: 0;
 }
@@ -21,7 +21,7 @@
 .hide-mobile {
   display: none;
 
-  @media (min-width: 768px) {
+  @media (width >= 768px) {
     display: block;
   }
 }
@@ -29,7 +29,7 @@
 .hide-desktop {
   display: block;
 
-  @media (min-width: 768px) {
+  @media (width >= 768px) {
     display: none;
   }
 }

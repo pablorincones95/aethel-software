@@ -32,7 +32,7 @@
     height: 8px;
     background-color: var(--ae-secondary);
     transform: rotate(45deg);
-    box-shadow: 0 0 12px rgba(226, 201, 116, 0.3);
+    box-shadow: 0 0 12px rgb(226 201 116 / 30%);
   }
 
   &__node--sm {

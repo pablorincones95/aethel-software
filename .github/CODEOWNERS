@@ -1,0 +1,17 @@
+# CODEOWNERS — Aethel Software
+# Defines automatic reviewers per file/directory
+# Docs: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default: Pablo Rincones es owner de todo
+* @pablorincones95
+
+# Supabase schema — revisión obligatoria en cambios de BD
+/supabase/ @pablorincones95
+
+# Middleware y seguridad — revisión crítica
+/middleware.ts @pablorincones95
+
+# Archivos de configuración raíz — revisión obligatoria
+/*.config.* @pablorincones95
+/*.config.ts @pablorincones95
+/postcss.config.mjs @pablorincones95

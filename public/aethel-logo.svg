@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3E5AB" />
+      <stop offset="50%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA820A" />
+    </linearGradient>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06B6D4" />
+      <stop offset="100%" stop-color="#38BDF8" />
+    </linearGradient>
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#CBD5E1" stop-opacity="0.75" />
+    </linearGradient>
+    <filter id="subtleGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="#0F172A" />
+
+  <!-- Subtle Blueprint Tech Grid lines -->
+  <g stroke="#1E293B" stroke-width="1" opacity="0.4">
+    <line x1="100" y1="0" x2="100" y2="600" />
+    <line x1="250" y1="0" x2="250" y2="600" />
+    <line x1="400" y1="0" x2="400" y2="600" stroke-dasharray="4 4" stroke="#334155" />
+    <line x1="550" y1="0" x2="550" y2="600" />
+    <line x1="700" y1="0" x2="700" y2="600" />
+    <line x1="0" y1="150" x2="800" y2="150" />
+    <line x1="0" y1="260" x2="800" y2="260" stroke-dasharray="4 4" stroke="#334155" />
+    <line x1="0" y1="400" x2="800" y2="400" />
+  </g>
+
+  <!-- Isotype: Monogram 'A' Precision Geometry -->
+  <g transform="translate(400, 205)">
+    <!-- Cyan Apex Node Glow -->
+    <circle cx="0" cy="-90" r="14" fill="#06B6D4" opacity="0.25" filter="url(#subtleGlow)" />
+
+    <!-- Outer Chevron / Apex Frame -->
+    <path d="M 0 -95 L 68 35 L 46 35 L 0 -55 L -46 35 L -68 35 Z" fill="url(#metalGrad)" />
+
+    <!-- Inner Ascension Arrow (Noble Crest & Dynamic Growth) -->
+    <path d="M 0 -68 L 34 -2 L 18 -2 L 0 -38 L -18 -2 L -34 -2 Z" fill="url(#goldGrad)" />
+
+    <!-- Precision Digital Node Crossbar with Circuit Connection -->
+    <path d="M -54 22 L 54 22" stroke="url(#cyanGrad)" stroke-width="4.5" stroke-linecap="round" />
+
+    <!-- Central Cyan Core Logic Node -->
+    <circle cx="0" cy="22" r="5" fill="#06B6D4" filter="url(#subtleGlow)" />
+    <circle cx="0" cy="22" r="2.5" fill="#FFFFFF" />
+
+    <!-- Anchor Foot Accents (Architectural stability) -->
+    <rect x="-68" y="32" width="22" height="4.5" rx="1.5" fill="url(#goldGrad)" />
+    <rect x="46" y="32" width="22" height="4.5" rx="1.5" fill="url(#goldGrad)" />
+  </g>
+
+  <!-- Wordmark: AETHEL -->
+  <text x="400" y="390" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Montserrat', sans-serif" font-size="44" font-weight="700" letter-spacing="14" fill="#F8FAFC">AETHEL</text>
+
+  <!-- Descriptor: SOFTWARE with tracking and Cyan Accent -->
+  <text x="400" y="435" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif" font-size="14" font-weight="500" letter-spacing="18" fill="#06B6D4">SOFTWARE</text>
+
+  <!-- Fine Gold Accent Divider Dot / Line -->
+  <g transform="translate(400, 465)">
+    <line x1="-40" y1="0" x2="-8" y2="0" stroke="#D4AF37" stroke-width="1.5" opacity="0.6" />
+    <circle cx="0" cy="0" r="2" fill="#D4AF37" />
+    <line x1="8" y1="0" x2="40" y2="0" stroke="#D4AF37" stroke-width="1.5" opacity="0.6" />
+  </g>
+</svg>

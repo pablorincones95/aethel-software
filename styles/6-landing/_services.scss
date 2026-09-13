@@ -1,108 +1,187 @@
 // ═══════════════════════════════════════════════════════
 // Landing Layer: Services Section
+// Bento grid 4-column layout with tech tags
 // ═══════════════════════════════════════════════════════
 
 @use '../0-config/scss-variables' as *;
 
 .services {
-  padding: var(--ae-space-3xl) 0;
+  width: 100%;
+  padding: var(--ae-space-xl) 0;
+  background-color: var(--ae-canvas-void);
 
-  &__inner {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 var(--ae-margin-mobile);
+  @media (min-width: $breakpoint-lg) {
+    padding: 7rem 0;
+  }
+}
 
-    @media (min-width: $breakpoint-xl) {
-      padding: 0 var(--ae-margin-desktop);
-    }
+.services__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--ae-margin-mobile);
+
+  @media (min-width: $breakpoint-xl) {
+    padding: 0 var(--ae-margin-desktop);
+  }
+}
+
+// ── Header ──
+.services__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ae-space-sm);
+  padding-bottom: var(--ae-space-xl);
+
+  @media (min-width: $breakpoint-md) {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}
+
+.services__header-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ae-space-xs);
+}
+
+.services__label {
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  font-weight: $font-weight-medium;
+  line-height: 18px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ae-secondary);
+}
+
+.services__title {
+  font-family: var(--ae-font-display);
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: $font-weight-semibold;
+  line-height: 40px;
+  letter-spacing: -0.01em;
+  color: var(--ae-text-ice);
+  margin: 0;
+}
+
+.services__subtitle {
+  max-width: 28rem;
+  font-family: var(--ae-font-body);
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--ae-text-muted);
+  margin: 0;
+
+  @media (min-width: $breakpoint-md) {
+    margin-top: 0;
+  }
+}
+
+// ── Grid ──
+.services__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ae-space-lg);
+
+  @media (min-width: $breakpoint-md) {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  &__header {
-    margin-bottom: var(--ae-space-3xl);
-    max-width: 600px;
+  @media (min-width: $breakpoint-lg) {
+    grid-template-columns: repeat(4, 1fr);
   }
+}
 
-  &__label {
-    font-family: var(--ae-font-display);
-    font-size: 11px;
-    font-weight: $font-weight-semibold;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ae-secondary);
-    margin-bottom: var(--ae-space-sm);
-    display: block;
+// ── Card ──
+.services__card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--ae-space-lg);
+  border-radius: var(--ae-radius-xl);
+  background-color: var(--ae-surface-abyssal);
+  box-shadow: 0 4px 6px rgb(0 0 0 / 30%);
+  transition: all 200ms ease;
+
+  &:hover {
+    background-color: var(--ae-surface-container-low);
+    box-shadow: 0 10px 15px rgb(0 0 0 / 40%);
   }
+}
 
-  &__title {
-    font-family: var(--ae-font-display);
-    font-size: clamp(24px, 4vw, 32px);
-    font-weight: $font-weight-semibold;
-    line-height: 1.25;
-    color: var(--ae-text-ice);
-    margin-bottom: var(--ae-space-sm);
-  }
+.services__card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--ae-space-base);
+}
 
-  &__subtitle {
-    font-size: 16px;
-    line-height: 26px;
-    color: var(--ae-text-muted);
-  }
+.services__card-number {
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  font-weight: $font-weight-semibold;
+  line-height: 18px;
+  letter-spacing: 0.04em;
+  color: var(--ae-secondary);
+}
 
-  &__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--ae-gutter);
+.services__card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--ae-radius-default);
+  background-color: var(--ae-surface-container);
+  color: var(--ae-primary-container);
+  transition: transform 200ms ease;
+}
 
-    @media (min-width: $breakpoint-md) {
-      grid-template-columns: repeat(2, 1fr);
-    }
+.services__card:hover .services__card-icon {
+  transform: scale(1.1);
+}
 
-    @media (min-width: $breakpoint-xl) {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
+.services__card-icon svg {
+  width: 20px;
+  height: 20px;
+}
 
-  &__card {
-    background-color: rgba(17, 24, 39, 0.7);
-    backdrop-filter: blur(16px);
-    border: 1px solid var(--ae-border-subtle);
-    border-radius: var(--ae-radius-lg);
-    padding: var(--ae-space-xl);
-    transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+.services__card-title {
+  font-family: var(--ae-font-display);
+  font-size: 22px;
+  font-weight: $font-weight-medium;
+  line-height: 30px;
+  letter-spacing: 0.01em;
+  color: var(--ae-text-ice);
+  margin: 0 0 var(--ae-space-xs) 0;
+}
 
-    &:hover {
-      transform: translateY(-2px);
-      border-color: var(--ae-border-active);
-      box-shadow: 0 0 24px -4px rgba(0, 229, 255, 0.15);
-    }
-  }
+.services__card-desc {
+  font-family: var(--ae-font-body);
+  font-size: 12px;
+  color: var(--ae-text-muted);
+  margin: 0;
+  padding-top: var(--ae-space-xs);
+  line-height: 1.6;
+}
 
-  &__card-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    margin-bottom: var(--ae-space-base);
-    background-color: rgba(0, 229, 255, 0.08);
-    border: 1px solid var(--ae-border-active);
-    border-radius: var(--ae-radius-default);
-    color: var(--ae-primary-container);
-  }
+// ── Tech Tags ──
+.services__card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: var(--ae-space-lg);
+  padding-top: var(--ae-space-xs);
+}
 
-  &__card-title {
-    font-family: var(--ae-font-display);
-    font-size: 16px;
-    font-weight: $font-weight-semibold;
-    line-height: 24px;
-    letter-spacing: 0.04em;
-    color: var(--ae-text-ice);
-    margin-bottom: var(--ae-space-sm);
-  }
-
-  &__card-desc {
-    font-size: 12px;
-    line-height: 18px;
-    color: var(--ae-on-surface-variant);
-  }
+.services__tag {
+  padding: 2px var(--ae-space-xs);
+  border-radius: var(--ae-radius-default);
+  background-color: var(--ae-surface-container-lowest);
+  font-family: var(--ae-font-display);
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.04em;
+  color: var(--ae-on-surface-variant);
 }

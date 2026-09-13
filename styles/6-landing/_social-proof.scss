@@ -1,0 +1,83 @@
+// ═══════════════════════════════════════════════════════
+// Landing Layer: Social Proof / Trust Ticker
+// 4-column stats bar with glassmorphism cards
+// ═══════════════════════════════════════════════════════
+
+@use '../0-config/scss-variables' as *;
+
+.social-proof {
+  width: 100%;
+  padding: var(--ae-space-lg) 0;
+  background-color: var(--ae-surface-abyssal);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 20%);
+}
+
+.social-proof__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--ae-margin-mobile);
+
+  @media (min-width: $breakpoint-xl) {
+    padding: 0 var(--ae-margin-desktop);
+  }
+}
+
+.social-proof__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ae-space-base);
+
+  @media (min-width: $breakpoint-sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: $breakpoint-lg) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.social-proof__card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--ae-space-base);
+  border-radius: var(--ae-radius-default);
+  background-color: var(--ae-card-bg);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
+}
+
+.social-proof__card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--ae-space-xs);
+}
+
+.social-proof__card-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.social-proof__card-icon--cyan {
+  color: var(--ae-primary-container);
+}
+
+.social-proof__card-icon--gold {
+  color: var(--ae-secondary);
+}
+
+.social-proof__card-title {
+  font-family: var(--ae-font-display);
+  font-size: 16px;
+  font-weight: $font-weight-semibold;
+  line-height: 24px;
+  color: var(--ae-text-ice);
+}
+
+.social-proof__card-desc {
+  font-family: var(--ae-font-body);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--ae-text-muted);
+  margin: 0;
+}
