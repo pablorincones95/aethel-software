@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { ThemeToggle } from "./theme-toggle"
 
 const navLinks = [
   { label: "SERVICIOS", href: "#arquitecturas" },
@@ -31,11 +32,14 @@ export function Navbar() {
           ))}
         </div>
 
-        <a href="#contacto-evaluacion" className="navbar__cta">
-          <span className="inline-flex h-9 items-center justify-center rounded bg-[#00e5ff] px-4 text-sm font-semibold text-[#030712] transition-all hover:bg-[#9cf0ff] hover:shadow-[0_0_24px_rgba(0,229,255,0.4)]">
-            Agendar Evaluación
-          </span>
-        </a>
+        <div className="navbar__actions">
+          <ThemeToggle />
+          <a href="#contacto-evaluacion" className="navbar__cta">
+            <span className="inline-flex h-9 items-center justify-center rounded bg-[var(--ae-primary-container)] px-4 text-sm font-semibold text-[var(--ae-on-primary)] transition-all hover:opacity-90 hover:shadow-[0_0_24px_var(--ae-border-active)]">
+              Agendar Evaluación
+            </span>
+          </a>
+        </div>
       </div>
     </nav>
   )
