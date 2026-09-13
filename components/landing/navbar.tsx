@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { ThemeToggle } from "./theme-toggle"
 
 const navLinks = [
@@ -16,10 +17,13 @@ export function Navbar() {
     <nav className="navbar">
       <div className="navbar__inner">
         <Link href="/" className="navbar__logo">
-          <img
-            alt="Aethel Software Logo"
+          <Image
+            alt="Aethel Software — Estudio de Ingeniería y Arquitectura de Software"
             src="/aethel-logo.svg"
-            className="h-8 w-auto object-contain"
+            width={32}
+            height={32}
+            priority
+            className="h-8 w-8 object-contain"
           />
           <span>Aethel</span>
         </Link>

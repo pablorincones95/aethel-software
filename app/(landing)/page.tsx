@@ -10,6 +10,7 @@ import { CaseStudies } from "@/components/landing/case-studies"
 import { Philosophy } from "@/components/landing/philosophy"
 import { Contact } from "@/components/landing/contact"
 import { Footer } from "@/components/landing/footer"
+import { JsonLd } from "@/components/landing/json-ld"
 import { getAdminServices } from "@/lib/firebase/admin"
 import type { Project, SiteContent } from "@/lib/types"
 
@@ -46,6 +47,7 @@ export default async function Home() {
 
   return (
     <>
+      <JsonLd />
       <Navbar />
       <main>
         <Hero content={contentMap["hero"]} />
