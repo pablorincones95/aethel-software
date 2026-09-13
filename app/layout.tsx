@@ -44,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${spaceGrotesk.variable} ${hankenGrotesk.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`dark ${spaceGrotesk.variable} ${hankenGrotesk.variable}`}>
       <body
         className="min-h-screen bg-background text-foreground antialiased font-sans"
         suppressHydrationWarning
@@ -52,7 +52,7 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
-          enableSystem
+          enableSystem={false}
           disableTransitionOnChange
         >
           {children}
